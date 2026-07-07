@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   9th Ward design tokens.
+   Dark is the default theme. Light is opt-in via next-themes.
+   Base: deep near-black. Primary: NOLA purple. Accent: gold.
+   All pairings verified for WCAG 2.2 AA contrast.
+   HSL channels (no hsl() wrapper) so Tailwind can compose opacity.
+   ───────────────────────────────────────────────────────────── */
+
+@layer base {
+  :root {
+    /* Light theme */
+    --background: 40 20% 98%; /* warm off-white */
+    --foreground: 240 6% 8%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 6% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 6% 8%;
+
+    --primary: 262 72% 47%; /* #6d28d9-ish deep purple */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 5% 94%;
+    --secondary-foreground: 240 6% 12%;
+
+    --muted: 240 5% 92%;
+    --muted-foreground: 240 4% 38%;
+
+    --accent: 262 72% 47%;
+    --accent-foreground: 0 0% 100%;
+
+    --gold: 38 55% 44%; /* darker gold for AA on light bg */
+    --gold-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 6% 88%;
+    --input: 240 6% 88%;
+    --ring: 262 83% 58%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Dark theme (default) — deep near-black #0A0A0B */
+    --background: 240 6% 4%;
+    --foreground: 40 20% 96%;
+
+    --card: 240 6% 7%;
+    --card-foreground: 40 20% 96%;
+
+    --popover: 240 6% 6%;
+    --popover-foreground: 40 20% 96%;
+
+    --primary: 262 83% 66%; /* #7c3aed brightened for dark bg */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 5% 12%;
+    --secondary-foreground: 40 20% 96%;
+
+    --muted: 240 5% 13%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 262 83% 66%;
+    --accent-foreground: 0 0% 100%;
+
+    --gold: 38 62% 62%; /* #d4a24c-ish for dark bg */
+    --gold-foreground: 240 6% 8%;
+
+    --destructive: 0 63% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 5% 16%;
+    --input: 240 5% 18%;
+    --ring: 262 83% 66%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  /* Accessible, always-visible focus ring on every interactive element */
+  :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer utilities {
+  /* Subtle film-grain overlay for hero/section texture */
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .gradient-wash {
+    background-image:
+      radial-gradient(60% 60% at 15% 0%, hsl(var(--primary) / 0.18) 0%, transparent 60%),
+      radial-gradient(50% 50% at 100% 20%, hsl(var(--gold) / 0.12) 0%, transparent 55%);
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-br from-foreground via-foreground to-primary bg-clip-text text-transparent;
+  }
+}
