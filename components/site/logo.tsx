@@ -2,29 +2,31 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * 9th Ward logo: the real turntable-crosshair mark (public/logo.jpg) plus the
- * label name in the site's display font. Per client direction, the nav uses
- * the mark only — clean and iconic — while the wordmark next to it is optional.
+ * 9th Ward logo: the real turntable-crosshair mark (public/logo.png,
+ * transparent background) plus the label name in the site's display font.
+ * Per client direction, the nav uses the mark alongside the wordmark; the
+ * wordmark can be hidden with showWordmark={false} for tighter placements.
  */
 export function Logo({
   className,
   showWordmark = true,
+  size = 40,
 }: {
   className?: string;
   showWordmark?: boolean;
+  size?: number;
 }) {
   return (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
-      <span className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-md">
-        <Image
-          src="/logo.jpg"
-          alt="9th Ward Production & Promotions logo"
-          width="80"
-          height="80"
-          className="h-full w-full object-cover"
-          priority
-        />
-      </span>
+      <Image
+        src="/logo.png"
+        alt="9th Ward Production & Promotions logo"
+        width={size * 2}
+        height={size * 2}
+        style={{ width: size, height: size }}
+        className="shrink-0 object-contain"
+        priority
+      />
       {showWordmark && (
         <span className="flex flex-col leading-none">
           <span className="font-display text-base font-bold tracking-tight">

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Sparkles } from "lucide-react";
 import type { Release } from "@/lib/airtable/types";
 import { SITE } from "@/lib/site";
@@ -96,10 +97,21 @@ export function HeroRelease({ release }: { release: Release | null }) {
                 )}
               </div>
             ) : (
-              <div className="relative mx-auto grid aspect-square w-full max-w-md place-items-center rounded-xl border border-border bg-card/50">
-                <span className="font-display text-7xl font-bold text-primary/30">
-                  9W
-                </span>
+              <div className="relative mx-auto grid aspect-square w-full max-w-md place-items-center">
+                {/* Subtle purple glow behind the logo, respects reduced motion */}
+                <div
+                  aria-hidden
+                  className="absolute inset-8 rounded-full bg-primary/20 blur-3xl"
+                />
+                <Image
+                  src="/logo.png"
+                  alt="9th Ward Production & Promotions"
+                  width={640}
+                  height={640}
+                  priority
+                  sizes="(max-width: 1024px) 80vw, 480px"
+                  className="relative z-10 h-auto w-[80%] max-w-md object-contain drop-shadow-[0_10px_40px_rgba(124,58,237,0.35)]"
+                />
               </div>
             )}
           </FadeUp>

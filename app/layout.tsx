@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     url: absoluteUrl("/"),
     images: [
       {
-        url: "/logo.jpg",
+        url: "/logo.png",
         width: 300,
         height: 300,
         alt: "9th Ward Production & Promotions",
@@ -48,12 +48,12 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: SITE.name,
     description: SITE.description,
-    images: ["/logo.jpg"],
+    images: ["/logo.png"],
   },
   icons: {
-    icon: "/logo.jpg",
-    shortcut: "/logo.jpg",
-    apple: "/logo.jpg",
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
   robots: { index: true, follow: true },
   alternates: { canonical: absoluteUrl("/") },
