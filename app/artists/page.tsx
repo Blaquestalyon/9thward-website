@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 export const metadata: Metadata = {
   title: "Artists",
   description:
-    "The 9th Ward roster — independent artists we produce, manage, and promote, from New Orleans to the Bronx and beyond.",
+    "The 9th Ward roster — independent artists we produce, manage, and promote, from Houston to New Orleans to the Bronx and beyond.",
 };
 
 export default async function ArtistsPage() {

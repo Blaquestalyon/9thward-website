@@ -6,9 +6,23 @@ export const SITE = {
   legalName: "9th Ward Production & Promotions Company, LLC",
   tagline: "Indie Artist Management Group. Music Production, Management & Promotion.",
   description:
-    "9th Ward Production & Promotions is a New Orleans indie music label and artist-management company. We produce, manage, and promote independent artists.",
-  foundingYear: "2015", // placeholder from the old site's copyright — confirm
+    "9th Ward Production & Promotions is a Houston-based indie music label and artist-management company with New Orleans roots. We produce, manage, and promote independent artists.",
+  productionCompanyFoundedYear: "2010", // Jay Davis started the production company in Houston
+  labelFoundedYear: "2015", // year the production company became a full indie label
+  foundingYear: "2010", // used as the canonical founding year in schema.org
   contactEmail: "info@9thwardproductions.com", // placeholder — confirm
+  address: {
+    street: "2800 Post Oak Blvd, Suite 5600",
+    city: "Houston",
+    region: "TX",
+    postalCode: "77056",
+    country: "US",
+    formatted: "2800 Post Oak Blvd, Suite 5600, Houston, TX 77056",
+  },
+  founders: [
+    { name: "Jay Davis", role: "Co-founder" },
+    { name: "Shakara Weston", role: "Co-founder" },
+  ],
 };
 
 export const NAV_LINKS = [

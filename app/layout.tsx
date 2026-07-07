@@ -14,17 +14,20 @@ import { Toaster } from "sonner";
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: {
-    default: `${SITE.name} — New Orleans Indie Music Label`,
+    default: `${SITE.name} — Houston Indie Music Label`,
     template: `%s · ${SITE.shortName}`,
   },
   description: SITE.description,
   keywords: [
     "indie music label",
+    "Houston music",
+    "Houston indie label",
     "New Orleans",
     "artist management",
     "music production",
     "music promotion",
     "9th Ward",
+    "9th Ward Productions",
   ],
   openGraph: {
     type: "website",
@@ -32,11 +35,25 @@ export const metadata: Metadata = {
     title: SITE.name,
     description: SITE.description,
     url: absoluteUrl("/"),
+    images: [
+      {
+        url: "/logo.jpg",
+        width: 300,
+        height: 300,
+        alt: "9th Ward Production & Promotions",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE.name,
     description: SITE.description,
+    images: ["/logo.jpg"],
+  },
+  icons: {
+    icon: "/logo.jpg",
+    shortcut: "/logo.jpg",
+    apple: "/logo.jpg",
   },
   robots: { index: true, follow: true },
   alternates: { canonical: absoluteUrl("/") },

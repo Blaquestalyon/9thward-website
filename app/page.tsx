@@ -61,7 +61,7 @@ export default async function HomePage() {
             <SectionHeader
               eyebrow="The roster"
               title="Artists we build with"
-              description="Independent talent we produce, manage, and promote — from New Orleans to the Bronx and beyond."
+              description="Independent talent we produce, manage, and promote — from Houston to New Orleans to the Bronx and beyond."
               className="mb-0"
             />
             <Button asChild variant="ghost" className="hidden shrink-0 sm:inline-flex">

@@ -1,6 +1,6 @@
 # 9th Ward Production & Promotions
 
-The official website and electronic press kit (EPK) hub for **9th Ward Production & Promotions Company, LLC** — a New Orleans indie music label and artist-management company.
+The official website and electronic press kit (EPK) hub for **9th Ward Production & Promotions Company, LLC** — a Houston-based indie music label and artist-management company with New Orleans roots, co-founded in 2010 by Jay Davis and Shakara Weston.
 
 Its #1 job is to showcase the roster and the music. Secondary jobs: capture new artist submissions, take booking requests, and field service inquiries. **The site sells nothing — no store, no pricing, no checkout.**
 
@@ -176,8 +176,8 @@ lib/
 
 ## Assumptions (worth confirming)
 
-- **Founding year `[2015]`** is a placeholder taken from the old site's copyright — kept visible in the About copy. Confirm and update.
 - **Contact email** in `lib/site.ts` (`info@9thwardproductions.com`) is a placeholder — confirm the real address.
+- **Office ZIP code** in `lib/site.ts.address.postalCode` is set to `77056` (Post Oak / Galleria area). Update if different.
 - **Social placeholders:** Facebook and SoundCloud are the real, known accounts. Instagram/Spotify/YouTube/TikTok render as muted "coming soon" icons until you add real URLs in `lib/site.ts`.
 - **One Airtable base** holds everything.
 - **Accent color:** deep near-black base, NOLA purple primary, gold secondary accents — chosen to sit well against roster imagery, WCAG 2.2 AA.

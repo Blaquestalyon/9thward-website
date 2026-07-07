@@ -21,7 +21,7 @@ export function HeroRelease({ release }: { release: Release | null }) {
           <FadeUp>
             <p className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-gold">
               <Sparkles className="h-4 w-4" />
-              {release ? "Latest release" : "New Orleans indie label"}
+              {release ? "Latest release" : "Houston-based indie label"}
             </p>
             <h1 className="text-4xl font-bold leading-[1.05] sm:text-5xl md:text-6xl">
               {release ? (

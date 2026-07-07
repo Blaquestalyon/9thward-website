@@ -82,9 +82,13 @@ export default async function ContactPage() {
                     {SITE.contactEmail}
                   </a>
                 </li>
-                <li className="flex items-center gap-2 text-muted-foreground">
-                  <MapPin className="h-4 w-4 shrink-0 text-primary" />
-                  New Orleans, LA
+                <li className="flex items-start gap-2 text-muted-foreground">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                  <span>
+                    2800 Post Oak Blvd, Suite 5600
+                    <br />
+                    Houston, TX 77056
+                  </span>
                 </li>
               </ul>
             </div>

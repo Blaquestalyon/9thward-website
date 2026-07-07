@@ -7,13 +7,41 @@ import type { Artist, EventItem, Release } from "./airtable/types";
 export function organizationLd() {
   return {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "MusicLabel",
     name: SITE.legalName,
     alternateName: SITE.shortName,
     url: absoluteUrl("/"),
+    logo: absoluteUrl("/logo.jpg"),
+    image: absoluteUrl("/logo.jpg"),
     description: SITE.description,
     foundingDate: SITE.foundingYear,
-    foundingLocation: "New Orleans, LA",
+    foundingLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Houston",
+        addressRegion: "TX",
+        addressCountry: "US",
+      },
+    },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: SITE.address.street,
+      addressLocality: SITE.address.city,
+      addressRegion: SITE.address.region,
+      postalCode: SITE.address.postalCode,
+      addressCountry: SITE.address.country,
+    },
+    email: SITE.contactEmail,
+    founder: SITE.founders.map((f) => ({
+      "@type": "Person",
+      name: f.name,
+      jobTitle: f.role,
+    })),
+    sameAs: [
+      "https://facebook.com/9thwardProductions",
+      "https://soundcloud.com/blaquestalyon",
+    ],
   };
 }
 
@@ -23,8 +51,10 @@ export function labelMusicGroupLd() {
     "@type": "MusicGroup",
     name: SITE.name,
     url: absoluteUrl("/"),
+    image: absoluteUrl("/logo.jpg"),
     description: SITE.description,
     genre: "Independent",
+    foundingLocation: "Houston, TX",
   };
 }
 

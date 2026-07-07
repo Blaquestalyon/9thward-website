@@ -16,8 +16,8 @@ export function Footer() {
           <div className="lg:col-span-2">
             <Logo />
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              {SITE.tagline} Rooted in New Orleans, reaching wherever the music
-              takes us.
+              {SITE.tagline} Based in Houston, TX with New Orleans in the DNA,
+              reaching wherever the music takes us.
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-2">
               {SOCIAL_LINKS.map((social) =>
@@ -94,7 +94,8 @@ export function Footer() {
             &copy; {year} {SITE.legalName}. All rights reserved.
           </p>
           <p className="text-xs text-muted-foreground">
-            New Orleans, LA &middot; Independent since {SITE.foundingYear}
+            {SITE.address.formatted} &middot; Independent since{" "}
+            {SITE.foundingYear}
           </p>
         </div>
       </div>

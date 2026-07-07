@@ -99,7 +99,7 @@ export function BookingForm({
           label="Venue / city"
           error={state.errors?.venueCity}
         >
-          {(p) => <Input {...p} placeholder="e.g. The Maison, New Orleans" />}
+          {(p) => <Input {...p} placeholder="e.g. The Continental Club, Houston" />}
         </Field>
       </div>
 

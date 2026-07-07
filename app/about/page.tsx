@@ -7,15 +7,18 @@ import { FadeUp } from "@/components/site/motion";
 import { JsonLd } from "@/components/site/json-ld";
 import { breadcrumbLd } from "@/lib/jsonld";
 import { Button } from "@/components/ui/button";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "9th Ward started in New Orleans with a simple belief: independent artists don't need permission to build a career, they need the right team behind them.",
+    "9th Ward Production & Promotions is a Houston-based indie music label with New Orleans roots. Co-founded in 2010 by Jay Davis and Shakara Weston, working with independent artists across the South.",
 };
 
-// NOTE: Copy below is verbatim from the brand's About page doc. The [2015]
-// founding year is a placeholder from the old site's copyright — kept visible.
+// About copy reflects the real origin story: Jay Davis moved to Houston in 2010
+// and started meeting artists who'd migrated from New Orleans after Katrina;
+// Jay met Shakara Weston in 2012, formed S4TF, and in 2015 the production company
+// became a full independent label. Still based in Houston, TX.
 const WHAT_WE_DO = [
   {
     icon: Disc3,
@@ -46,7 +49,7 @@ export default function AboutPage() {
       <PageHeader
         eyebrow="9th Ward Production & Promotions"
         title="Indie artists, built from the ground up."
-        description="We produce, manage, and promote independent artists who have the talent and the work ethic to go the distance."
+        description="Houston-based, New Orleans in the DNA. We produce, manage, and promote independent artists who have the talent and the work ethic to go the distance."
       />
 
       <Section className="max-w-3xl">
@@ -56,17 +59,49 @@ export default function AboutPage() {
           </h2>
           <div className="mt-4 space-y-4 text-lg leading-relaxed text-foreground/90">
             <p>
-              9th Ward started in New Orleans with a simple belief: independent
-              artists don&apos;t need permission to build a career, they need the
-              right team behind them. Since [2015], we&apos;ve helped indie artists
-              turn raw talent into finished records, real audiences, and paying
-              opportunities.
+              9th Ward started in Houston in 2010, when co-founder Jay Davis
+              moved to the city and set out to build a production company. The
+              first artists he found were people carrying New Orleans with them
+              &mdash; musicians who had landed in Houston after Katrina and were
+              still making the sound of home. That&apos;s where the name comes
+              from, and it&apos;s never left the work.
             </p>
             <p>
-              The name is a nod to where we come from. The reach is wherever the
-              music takes us. Our roster runs from New Orleans to the Bronx and
-              beyond, and every artist on it shares the same thing: they show up,
-              they put in the work, and they mean it.
+              In 2012 Jay met Shakara Weston, a Houston native with the ear and
+              the drive to match. Together they built the group
+              {" "}<strong className="font-semibold text-foreground">Somethin&apos; 4 The Fellas (S4TF)</strong>{" "}
+              &mdash; Jay producing, Shakara the first member. That partnership
+              became the foundation of what 9th Ward is now.
+            </p>
+            <p>
+              In 2015 we grew from a production company into a full independent
+              label. Since then we&apos;ve helped indie artists turn raw talent
+              into finished records, real audiences, and paying opportunities.
+              We&apos;re still based in Houston, TX, and our roster runs from
+              Houston to New Orleans to the Bronx and beyond &mdash; every artist
+              on it shares the same thing: they show up, they put in the work,
+              and they mean it.
+            </p>
+          </div>
+        </FadeUp>
+
+        <FadeUp className="mt-10 grid gap-6 sm:grid-cols-3">
+          <div className="rounded-lg border border-border bg-card p-5">
+            <p className="font-display text-2xl font-bold text-primary">2010</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Production company founded in Houston by Jay Davis.
+            </p>
+          </div>
+          <div className="rounded-lg border border-border bg-card p-5">
+            <p className="font-display text-2xl font-bold text-primary">2012</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Shakara Weston joins as co-founder; S4TF is formed.
+            </p>
+          </div>
+          <div className="rounded-lg border border-border bg-card p-5">
+            <p className="font-display text-2xl font-bold text-primary">2015</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              9th Ward becomes a full independent record label.
             </p>
           </div>
         </FadeUp>
@@ -135,6 +170,9 @@ export default function AboutPage() {
               <Link href="/services">Explore Our Services</Link>
             </Button>
           </div>
+          <p className="mt-6 text-xs text-muted-foreground">
+            Based in Houston, TX &middot; {SITE.address.formatted}
+          </p>
         </FadeUp>
       </Section>
     </>
