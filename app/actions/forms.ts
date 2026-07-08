@@ -24,11 +24,9 @@ import { headers } from "next/headers";
 import {
   bookingSchema,
   contactSchema,
-  initialFormState,
   isHoneypotFilled,
   newsletterSchema,
   serviceInquirySchema,
-  submissionSchema,
   zodErrors,
   type FormState,
 } from "@/lib/validation/schemas";
@@ -37,7 +35,6 @@ import {
   createContactMessage,
   createNewsletterSignup,
   createServiceInquiry,
-  createSubmission,
 } from "@/lib/airtable/write";
 import { sendNotification } from "@/lib/email/resend";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
@@ -67,65 +64,12 @@ const UNEXPECTED: FormState = {
 const s = (v: FormDataEntryValue | null): string =>
   typeof v === "string" ? v : "";
 
-// ─────────────────────────────────────────────────────────────
-// SUBMISSIONS  (/submit)
-// ─────────────────────────────────────────────────────────────
-export async function submitMusicAction(
-  _prev: FormState,
-  formData: FormData
-): Promise<FormState> {
-  try {
-    if (isHoneypotFilled(s(formData.get("hp_field")))) {
-      return { status: "success", message: "Thanks — we got your submission." };
-    }
-    const rl = rateLimit(await clientKey("submit"));
-    if (!rl.ok) return RATE_LIMITED;
-
-    const parsed = submissionSchema.safeParse({
-      artistBandName: s(formData.get("artistBandName")),
-      contactName: s(formData.get("contactName")),
-      email: s(formData.get("email")),
-      phone: s(formData.get("phone")),
-      genre: s(formData.get("genre")),
-      city: s(formData.get("city")),
-      musicLink: s(formData.get("musicLink")),
-      socialLinks: s(formData.get("socialLinks")),
-      message: s(formData.get("message")),
-      hp_field: s(formData.get("hp_field")),
-    });
-    if (!parsed.success) {
-      return { status: "error", errors: zodErrors(parsed.error), message: "Please fix the highlighted fields." };
-    }
-
-    const d = parsed.data;
-    const id = await createSubmission(d);
-    if (!id) return WRITE_FAILED;
-
-    await sendNotification({
-      subject: "Artist Submission",
-      replyTo: d.email,
-      fields: [
-        ["Artist / Band", d.artistBandName],
-        ["Contact", d.contactName],
-        ["Email", d.email],
-        ["Phone", d.phone],
-        ["Genre", d.genre],
-        ["City", d.city],
-        ["Music Link", d.musicLink],
-        ["Socials", d.socialLinks],
-        ["Message", d.message],
-      ],
-    });
-
-    return {
-      status: "success",
-      message: "Thanks — your music is in. We listen to everything and reach out when there's a fit.",
-    };
-  } catch (err) {
-    console.error("[forms:submit] threw:", err);
-    return UNEXPECTED;
-  }
-}
+// NOTE: The /submit page used to POST to `submitMusicAction` and write to the
+// `Submissions` table. As of the artist-profile-form migration, /submit
+// embeds an Airtable form that writes directly to the `Artists` table. The
+// server action and the `Submissions` writer were removed. If we ever need a
+// separate demo-intake queue again, restore createSubmission + submissionSchema
+// from git history.
 
 // ─────────────────────────────────────────────────────────────
 // CONTACT  (/contact)

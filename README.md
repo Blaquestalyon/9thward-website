@@ -74,7 +74,7 @@ npm run typecheck      # tsc --noEmit
 2. In Railway: **New Project → Deploy from GitHub repo** and pick the repo. Railway auto-detects Next.js.
 3. Open the service → **Variables** tab → add every variable from the table above.
 4. Deploy. Railway runs `npm run build`, then `npm start` (which runs `next start -p ${PORT:-3000}` — the app binds to Railway's injected `$PORT`).
-5. Load the site. Confirm reads (roster/releases render) and a test write (submit the artist form and check it lands in the Airtable `Submissions` table).
+5. Load the site. Confirm reads (roster/releases render) and a test write (submit the contact form and check it lands in the Airtable `ContactMessages` table).
 
 `next.config.mjs` sets `output: "standalone"` for a lean production server, and configures `images.remotePatterns` for Airtable attachment CDNs plus common cover-art/artist image hosts.
 
@@ -110,15 +110,15 @@ Valid `tag` values: `artists`, `releases`, `events`, `services`, `posts`. The ro
 
 ## Forms & spam protection
 
-Five intake forms all follow the same pattern (server actions in `app/actions/forms.ts`, Zod schemas in `lib/validation/schemas.ts`):
+The four Next.js intake forms all follow the same pattern (server actions in `app/actions/forms.ts`, Zod schemas in `lib/validation/schemas.ts`). The `/submit` page is different: it embeds an Airtable-hosted form that writes directly to the `Artists` table — no server action, no Zod schema, no Resend hook.
 
-| Form                     | Writes to Airtable table |
-| ------------------------ | ------------------------ |
-| `/submit`                | `Submissions`            |
-| `/contact` (general)     | `ContactMessages`        |
-| Booking (events + contact) | `BookingRequests`      |
-| Service inquiry (services modal) | `ServiceInquiries` |
-| Newsletter (footer)      | `NewsletterSignups`      |
+| Form                     | Writes to Airtable table | How |
+| ------------------------ | ------------------------ | --- |
+| `/submit`                | `Artists`                | Embedded Airtable form (page `pagxwnnGAwHRT7m1e`) |
+| `/contact` (general)     | `ContactMessages`        | Next.js server action |
+| Booking (events + contact) | `BookingRequests`      | Next.js server action |
+| Service inquiry (services modal) | `ServiceInquiries` | Next.js server action |
+| Newsletter (footer)      | `NewsletterSignups`      | Next.js server action |
 
 Each submission:
 
@@ -150,7 +150,7 @@ app/
   music/                # releases grid + [slug] smart link
   events/               # upcoming + past shows, booking CTA
   services/             # 3 services, inquiry modal (no pricing)
-  submit/               # artist submission form
+  submit/               # embedded Airtable form → Artists table
   blog/                 # list + [slug] markdown article
   about/                # brand About copy (verbatim)
   contact/              # contact + booking forms, socials

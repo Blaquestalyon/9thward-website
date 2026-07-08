@@ -45,8 +45,8 @@
 │   ├── services/                 # Studio services + pricing
 │   ├── blog/                     # Editorial posts
 │   ├── contact/                  # Contact form (WORKING as of 07 Jul 2026)
-│   ├── submit/                   # Artist demo submissions
-│   ├── actions/forms.ts          # ALL server actions (contact/booking/submit/inquiry/newsletter)
+│   ├── submit/                   # Airtable form embed → writes directly to Artists table
+│   ├── actions/forms.ts          # Server actions (contact/booking/inquiry/newsletter). /submit is Airtable-hosted.
 │   ├── api/revalidate/           # ISR revalidation webhook (uses REVALIDATE_SECRET)
 │   ├── icon.png, apple-icon.png  # Favicons
 │   ├── robots.ts, sitemap.ts     # SEO
@@ -221,30 +221,30 @@ Railway build command: `npm run build`. Start: `npm start`. Health via Next's de
 
 ## 8. Current state (as of 08 Jul 2026)
 
+- **Artists roster**: sourced solely from Airtable `Artists` table — no seed fallback. Only records with `Status = "Active"` render on the site (`toArtist` in `lib/airtable/read.ts`).
+- **/submit page**: **Airtable-hosted form** (page id `pagxwnnGAwHRT7m1e` in base `app3HHnUsEOOvO9ND`) embedded via iframe. Writes directly to the `Artists` table. New submissions land with blank `Status`; must be reviewed and manually flipped to `Active` in Airtable to appear on the site. The old Next.js `SubmitForm`, `submitMusicAction`, `createSubmission`, `submissionSchema`, and `SubmissionPayload` were removed — restore from git history if a separate demo-intake queue is ever needed. The `Submissions` table itself is preserved in Airtable for archival.
 - Contact form: **WORKING** end-to-end after Airtable base-ID typo fix
-- Other write forms (booking, submit, service inquiry, newsletter): built and wired, use the same `createRecord` path — should work but not exhaustively re-tested since the fix
+- Other write forms (booking, service inquiry, newsletter): built and wired, use the same `createRecord` path — should work but not exhaustively re-tested since the base-ID fix
 - Homepage, About, Artists, Music, Events, Services, Blog, Contact, Submit: all live
 - ImUsed.ai feature block + featured YouTube videos + press strip: added in commit `06d3ab2`
 - Logo: real 1080x1080 transparent PNG, live in nav/footer/hero
 - Recent commits (newest first):
+  - `fc968b7` feat(artists): drop seed roster fallback, source artists solely from Airtable
+  - `33f1ef4` docs: add HANDOFF.md for fresh-chat continuity
   - `75c5065` cleanup(contact): restore friendly WRITE_FAILED message
-  - `821990f` debug(contact): include base/table/pat-tail in 404 error surface *(diagnostic, reverted by 75c5065)*
-  - `2b8963e` debug(contact): surface exact Airtable failure reason to browser *(diagnostic, reverted by 75c5065)*
   - `4b74a95` fix(actions): restore direct async exports for server actions
   - `431f439` chore(icons): add app/icon.png, apple-icon.png, favicon.ico
   - `8bc0dd1` fix(forms): guard server actions and harden URL parsing
   - `6b27b21` feat(roster): feature Blaquestalyon, S4TF, Var Don on homepage
   - `06d3ab2` feat: ImUsed.ai feature block, featured YouTube videos, press strip
-  - `2d1a3f4` chore: remove stray debug file and ignore gws.err
-  - `7cf99c6` chore(logo): finalize 1080x1080 transparent PNG logo
 
 ---
 
 ## 9. Suggested next tasks (not committed to)
 
-- Exercise + verify the other write forms (booking, submit, service inquiry, newsletter) with real submissions
+- Exercise + verify the other write forms (booking, service inquiry, newsletter) with real submissions
 - Add a lightweight `/admin/inbox` route (protected by a header token) to view contact submissions without opening Airtable
-- Wire up Resend for real email notifications on contact/booking
+- Wire up Resend for real email notifications on contact/booking + Airtable-form artist submissions (Airtable automation can email you on new Artist row)
 - Add Plausible or PostHog for analytics
 - Content pass on Services page (real pricing, packages)
 - Blog post pipeline: draft first 3 posts and publish

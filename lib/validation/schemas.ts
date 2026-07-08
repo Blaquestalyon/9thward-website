@@ -9,34 +9,12 @@ import { z } from "zod";
  */
 
 const email = z.string().trim().email("Enter a valid email address.");
-const optionalUrl = z
-  .string()
-  .trim()
-  .url("Enter a valid URL (including https://).")
-  .optional()
-  .or(z.literal(""));
-const requiredUrl = z
-  .string()
-  .trim()
-  .min(1, "A link to your music is required.")
-  .url("Enter a valid URL (including https://).");
 
 const honeypot = z.string().optional();
 
-// ── /submit ──
-export const submissionSchema = z.object({
-  artistBandName: z.string().trim().min(1, "Artist or band name is required.").max(120),
-  contactName: z.string().trim().min(1, "Your name is required.").max(120),
-  email,
-  phone: z.string().trim().max(40).optional().or(z.literal("")),
-  genre: z.string().trim().max(80).optional().or(z.literal("")),
-  city: z.string().trim().max(120).optional().or(z.literal("")),
-  musicLink: requiredUrl,
-  socialLinks: z.string().trim().max(500).optional().or(z.literal("")),
-  message: z.string().trim().max(2000).optional().or(z.literal("")),
-  hp_field: honeypot,
-});
-export type SubmissionInput = z.infer<typeof submissionSchema>;
+// NOTE: `submissionSchema` (for the old /submit → Submissions table form)
+// was removed when /submit was migrated to an Airtable-hosted form. Restore
+// from git history if a separate demo-intake queue is ever needed again.
 
 // ── /contact (general) ──
 export const contactSchema = z.object({
