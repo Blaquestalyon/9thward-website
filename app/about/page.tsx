@@ -82,10 +82,32 @@ export default function AboutPage() {
               on it shares the same thing: they show up, they put in the work,
               and they mean it.
             </p>
+            <p id="imused">
+              In 2025 we took the mission further. Together with the{" "}
+              <strong className="font-semibold text-foreground">144K Collective</strong>,
+              we launched{" "}
+              <a
+                href="https://imused.ai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary underline-offset-4 hover:underline"
+              >
+                ImUsed.ai
+              </a>{" "}
+              &mdash; the first ethical AI music platform. Where most AI tools
+              treat artists as training data, ImUsed protects them: every song
+              built from an artist&apos;s{" "}
+              <em className="font-medium text-foreground">Musical DNA</em>{" "}
+              earns them an auditable 10&ndash;20% royalty share and full
+              co-producer credit, with public attribution and PRO registration
+              on every commercial release. Same principle we&apos;ve stood on
+              since 2010: protect the art, pay the artist, and build without
+              compromise.
+            </p>
           </div>
         </FadeUp>
 
-        <FadeUp className="mt-10 grid gap-6 sm:grid-cols-3">
+        <FadeUp className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-lg border border-border bg-card p-5">
             <p className="font-display text-2xl font-bold text-primary">2010</p>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -102,6 +124,13 @@ export default function AboutPage() {
             <p className="font-display text-2xl font-bold text-primary">2015</p>
             <p className="mt-1 text-sm text-muted-foreground">
               9th Ward becomes a full independent record label.
+            </p>
+          </div>
+          <div className="rounded-lg border border-gold/40 bg-gold/[0.06] p-5">
+            <p className="font-display text-2xl font-bold text-gold">2025</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              ImUsed.ai launches with the 144K Collective &mdash; the first
+              ethical AI music platform.
             </p>
           </div>
         </FadeUp>

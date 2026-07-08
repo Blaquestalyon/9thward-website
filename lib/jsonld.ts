@@ -41,6 +41,25 @@ export function organizationLd() {
     sameAs: [
       "https://facebook.com/9thwardProductions",
       "https://soundcloud.com/blaquestalyon",
+      "https://www.youtube.com/@blaquestalyon",
+    ],
+    subOrganization: [
+      {
+        "@type": "Organization",
+        name: "ImUsed.ai",
+        alternateName: "iMused.ai",
+        url: "https://imused.ai",
+        description:
+          "The first ethical AI music platform. Analyzes artists' Musical DNA and guarantees 10–20% royalty share plus co-producer credit on every commercial release.",
+        foundingDate: "2025",
+      },
+    ],
+    knowsAbout: [
+      "Ethical AI music generation",
+      "Musical DNA Technology",
+      "Independent music production",
+      "Artist management",
+      "Music publishing and PRO registration",
     ],
   };
 }

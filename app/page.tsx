@@ -5,13 +5,16 @@ import {
   listFeaturedArtists,
   listReleases,
 } from "@/lib/airtable/read";
-import { SOCIAL_LINKS } from "@/lib/site";
+import { SOCIAL_LINKS, YOUTUBE_CHANNEL } from "@/lib/site";
 import { HeroRelease } from "@/components/site/hero-release";
 import { Section, SectionHeader } from "@/components/site/section";
 import { ArtistCard } from "@/components/site/artist-card";
 import { ReleaseCard } from "@/components/site/release-card";
 import { StaggerGrid, StaggerItem, FadeUp } from "@/components/site/motion";
 import { SocialIcon } from "@/components/site/social-icons";
+import { ImUsedFeature } from "@/components/site/imused-feature";
+import { FeaturedVideos } from "@/components/site/featured-videos";
+import { PressStrip } from "@/components/site/press-strip";
 import { Button } from "@/components/ui/button";
 
 export default async function HomePage() {
@@ -104,6 +107,38 @@ export default async function HomePage() {
           </StaggerGrid>
         </Section>
       )}
+
+      {/* Featured videos from YouTube */}
+      <Section className="pt-4 md:pt-4">
+        <div className="mb-8 flex items-end justify-between gap-4">
+          <SectionHeader
+            eyebrow="On the screen"
+            title="Most-watched videos"
+            description={`From the Blaquestalyon / 9th Ward channel — ${YOUTUBE_CHANNEL.subscriberCount} subscribers and counting.`}
+            className="mb-0"
+          />
+          <Button asChild variant="ghost" className="hidden shrink-0 sm:inline-flex">
+            <a
+              href={YOUTUBE_CHANNEL.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Full channel <ArrowRight className="h-4 w-4" />
+            </a>
+          </Button>
+        </div>
+        <FeaturedVideos />
+      </Section>
+
+      {/* ImUsed.ai feature block */}
+      <Section className="pt-4 md:pt-4">
+        <ImUsedFeature />
+      </Section>
+
+      {/* Press */}
+      <Section className="pt-4 md:pt-4">
+        <PressStrip />
+      </Section>
 
       {/* Social proof / follow */}
       <Section className="pt-4">
