@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 export default async function HomePage() {
   const [featuredRelease, featuredArtists, releases] = await Promise.all([
     getLatestFeaturedRelease(),
-    listFeaturedArtists(4),
+    listFeaturedArtists(3),
     listReleases(),
   ]);
   const latestReleases = releases.slice(0, 4);
@@ -64,7 +64,7 @@ export default async function HomePage() {
             <SectionHeader
               eyebrow="The roster"
               title="Artists we build with"
-              description="Independent talent we produce, manage, and promote — from Houston to New Orleans to the Bronx and beyond."
+              description="Independent talent we produce, manage, and promote — rooted in Houston, reaching from New Orleans to the Bronx and beyond."
               className="mb-0"
             />
             <Button asChild variant="ghost" className="hidden shrink-0 sm:inline-flex">
@@ -73,7 +73,7 @@ export default async function HomePage() {
               </Link>
             </Button>
           </div>
-          <StaggerGrid className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          <StaggerGrid className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
             {featuredArtists.map((artist) => (
               <StaggerItem key={artist.id}>
                 <ArtistCard artist={artist} />
