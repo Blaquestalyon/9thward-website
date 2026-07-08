@@ -9,7 +9,7 @@
  */
 
 import "server-only";
-import { createRecord } from "./client";
+import { createRecord, createRecordDetailed, type CreateResult } from "./client";
 import { TABLES, FIELDS } from "./config";
 import type {
   BookingRequestPayload,
@@ -100,6 +100,25 @@ export async function createContactMessage(
 ): Promise<string | null> {
   const F = FIELDS.ContactMessages;
   return createRecord(
+    TABLES.ContactMessages,
+    clean({
+      [F.Name]: p.name,
+      [F.Email]: p.email,
+      [F.Subject]: p.subject,
+      [F.Message]: p.message,
+      [F.SubmittedAt]: now(),
+      [F.Source]: SOURCE,
+      [F.Status]: NEW,
+    })
+  );
+}
+
+/** Debug variant that returns the detailed failure reason. */
+export async function createContactMessageDetailed(
+  p: ContactMessagePayload
+): Promise<CreateResult> {
+  const F = FIELDS.ContactMessages;
+  return createRecordDetailed(
     TABLES.ContactMessages,
     clean({
       [F.Name]: p.name,

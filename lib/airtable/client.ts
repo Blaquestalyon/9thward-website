@@ -107,15 +107,29 @@ export async function listRecords<T>(
  * Create a record in a table. Returns the created record id, or null on
  * failure / missing config. Never throws — callers decide how to react.
  */
-export async function createRecord(
+/** Detailed result surface for writes so callers can surface *why* it failed. */
+export type CreateResult =
+  | { ok: true; id: string }
+  | { ok: false; reason: "not_configured" }
+  | { ok: false; reason: "http"; status: number; detail: string }
+  | { ok: false; reason: "threw"; message: string };
+
+export async function createRecordDetailed(
   table: string,
   fields: Record<string, unknown>
-): Promise<string | null> {
+): Promise<CreateResult> {
   const c = creds();
   if (!c) {
-    console.warn(`[airtable] createRecord skipped — not configured (${table})`);
-    return null;
+    console.error(
+      `[airtable] createRecord SKIPPED (not configured) table=${table} pat_set=${!!process.env.AIRTABLE_PAT} base_set=${!!process.env.AIRTABLE_BASE_ID}`
+    );
+    return { ok: false, reason: "not_configured" };
   }
+
+  const patTail = c.pat.slice(-4);
+  console.log(
+    `[airtable] createRecord → base=${c.baseId} table=${table} pat=***${patTail} fieldCount=${Object.keys(fields).length}`
+  );
 
   try {
     const url = buildUrl(c.baseId, table);
@@ -130,17 +144,39 @@ export async function createRecord(
     });
 
     if (!res || !res.ok) {
-      const detail = res ? await res.text().catch(() => "") : "";
-      console.error(`[airtable] create ${table} failed:`, res?.status, detail);
-      return null;
+      const detail = res ? await res.text().catch(() => "") : "no response";
+      console.error(
+        `[airtable] create ${table} HTTP ${res?.status ?? "n/a"}: ${detail}`
+      );
+      return {
+        ok: false,
+        reason: "http",
+        status: res?.status ?? 0,
+        detail: detail.slice(0, 400),
+      };
     }
 
     const json = (await res.json()) as AirtableRecord<unknown>;
-    return json.id ?? null;
+    if (!json.id) {
+      console.error(`[airtable] create ${table} succeeded but no id in response`);
+      return { ok: false, reason: "threw", message: "no id in response" };
+    }
+    console.log(`[airtable] create ${table} ✓ id=${json.id}`);
+    return { ok: true, id: json.id };
   } catch (err) {
-    console.error(`[airtable] create ${table} threw:`, err);
-    return null;
+    const message = err instanceof Error ? err.message : String(err);
+    console.error(`[airtable] create ${table} THREW:`, message, err);
+    return { ok: false, reason: "threw", message };
   }
+}
+
+/** Legacy signature preserved for existing callers. */
+export async function createRecord(
+  table: string,
+  fields: Record<string, unknown>
+): Promise<string | null> {
+  const r = await createRecordDetailed(table, fields);
+  return r.ok ? r.id : null;
 }
 
 /**
