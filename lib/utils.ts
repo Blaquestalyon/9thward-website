@@ -31,8 +31,11 @@ export function formatDateTime(input?: string | null): string {
   }).format(d);
 }
 
-/** Absolute URL helper for canonical/OG tags. */
+/** Absolute URL helper for canonical/OG tags. Tolerates missing scheme so a
+ *  misconfigured NEXT_PUBLIC_SITE_URL never crashes rendering. */
 export function absoluteUrl(path = ""): string {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  return `${base.replace(/\/$/, "")}${path.startsWith("/") ? path : `/${path}`}`;
+  const raw = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const withScheme = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+  const base = withScheme.replace(/\/$/, "");
+  return `${base}${path.startsWith("/") ? path : `/${path}`}`;
 }

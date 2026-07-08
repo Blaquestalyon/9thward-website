@@ -11,8 +11,20 @@ import { JsonLd } from "@/components/site/json-ld";
 import { organizationLd, labelMusicGroupLd } from "@/lib/jsonld";
 import { Toaster } from "sonner";
 
+function safeMetadataBase(): URL {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  // Tolerate values like "www.9thwardrecording.com" (missing scheme) so a
+  // misconfigured env var never crashes rendering.
+  const normalized = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+  try {
+    return new URL(normalized);
+  } catch {
+    return new URL("http://localhost:3000");
+  }
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+  metadataBase: safeMetadataBase(),
   title: {
     default: `${SITE.name} — Houston Indie Music Label`,
     template: `%s · ${SITE.shortName}`,

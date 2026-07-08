@@ -52,13 +52,39 @@ const WRITE_FAILED: FormState = {
     "Something went wrong saving your message. Please try again shortly, or email us directly.",
 };
 
+const UNEXPECTED: FormState = {
+  status: "error",
+  message:
+    "Something went wrong on our end. Please try again shortly, or email us directly.",
+};
+
 const s = (v: FormDataEntryValue | null): string =>
   typeof v === "string" ? v : "";
+
+/**
+ * Wraps a server action so ANY unexpected throw is logged and returned as a
+ * friendly FormState, rather than becoming a Next.js `Application error` with
+ * a server-side digest. Every user-visible form failure must be a FormState,
+ * not a runtime crash.
+ */
+function guarded(
+  name: string,
+  fn: (prev: FormState, data: FormData) => Promise<FormState>
+): (prev: FormState, data: FormData) => Promise<FormState> {
+  return async (prev, data) => {
+    try {
+      return await fn(prev, data);
+    } catch (err) {
+      console.error(`[forms:${name}] threw:`, err);
+      return UNEXPECTED;
+    }
+  };
+}
 
 // ─────────────────────────────────────────────────────────────
 // SUBMISSIONS  (/submit)
 // ─────────────────────────────────────────────────────────────
-export async function submitMusicAction(
+async function submitMusicActionImpl(
   _prev: FormState,
   formData: FormData
 ): Promise<FormState> {
@@ -113,7 +139,7 @@ export async function submitMusicAction(
 // ─────────────────────────────────────────────────────────────
 // CONTACT  (/contact)
 // ─────────────────────────────────────────────────────────────
-export async function contactAction(
+async function contactActionImpl(
   _prev: FormState,
   formData: FormData
 ): Promise<FormState> {
@@ -155,7 +181,7 @@ export async function contactAction(
 // ─────────────────────────────────────────────────────────────
 // BOOKING  (/events + /contact)
 // ─────────────────────────────────────────────────────────────
-export async function bookingAction(
+async function bookingActionImpl(
   _prev: FormState,
   formData: FormData
 ): Promise<FormState> {
@@ -205,7 +231,7 @@ export async function bookingAction(
 // ─────────────────────────────────────────────────────────────
 // SERVICE INQUIRY  (/services modal)
 // ─────────────────────────────────────────────────────────────
-export async function serviceInquiryAction(
+async function serviceInquiryActionImpl(
   _prev: FormState,
   formData: FormData
 ): Promise<FormState> {
@@ -251,7 +277,7 @@ export async function serviceInquiryAction(
 // ─────────────────────────────────────────────────────────────
 // NEWSLETTER  (footer)
 // ─────────────────────────────────────────────────────────────
-export async function newsletterAction(
+async function newsletterActionImpl(
   _prev: FormState,
   formData: FormData
 ): Promise<FormState> {
@@ -274,5 +300,12 @@ export async function newsletterAction(
 
   return { status: "success", message: "You're on the list — thanks!" };
 }
+
+// Exported, guarded wrappers — these are what the client components import.
+export const submitMusicAction = guarded("submit", submitMusicActionImpl);
+export const contactAction = guarded("contact", contactActionImpl);
+export const bookingAction = guarded("booking", bookingActionImpl);
+export const serviceInquiryAction = guarded("service", serviceInquiryActionImpl);
+export const newsletterAction = guarded("newsletter", newsletterActionImpl);
 
 export { initialFormState };
