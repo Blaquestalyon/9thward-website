@@ -59,71 +59,183 @@ export default function AboutPage() {
           </h2>
           <div className="mt-4 space-y-4 text-lg leading-relaxed text-foreground/90">
             <p>
-              9th Ward started in Houston in 2010, when co-founder Jay Davis
-              moved to the city and set out to build a production company. The
-              first artists he found were people carrying New Orleans with them
-              &mdash; musicians who had landed in Houston after Katrina and were
-              still making the sound of home. That&apos;s where the name comes
-              from, and it&apos;s never left the work.
+              The name 9th Ward began in Houston in 2010, before there was a
+              company, a label, or a roster.
             </p>
             <p>
-              In 2012 Jay met Shakara Weston, a Houston native with the ear and
-              the drive to match. Together they built the group
-              {" "}<strong className="font-semibold text-foreground">Somethin&apos; 4 The Fellas (S4TF)</strong>{" "}
-              &mdash; Jay producing, Shakara the first member. That partnership
-              became the foundation of what 9th Ward is now.
+              When Jay Davis, also known as{" "}
+              <strong className="font-semibold text-foreground">Blaquestalyon</strong>,
+              moved to Houston, he started connecting with independent artists
+              and testing a simple idea: that indie artists could build real
+              careers, make real money, and keep control of their work without
+              surrendering themselves to the predatory side of the music
+              industry.
             </p>
             <p>
-              In 2015 we grew from a production company into a full independent
-              label. Since then we&apos;ve helped indie artists turn raw talent
-              into finished records, real audiences, and paying opportunities.
-              We&apos;re still based in Houston, TX, and our roster runs from
-              Houston to New Orleans to the Bronx and beyond &mdash; every artist
-              on it shares the same thing: they show up, they put in the work,
-              and they mean it.
+              As Jay worked the Houston music scene, he kept meeting artists
+              from New Orleans who had been displaced by Hurricane Katrina and
+              had made Houston their new home. Many of them were still carrying
+              the sound, culture, pain, and pride of New Orleans with them.
+              That connection gave the name its first layer of meaning.
             </p>
-            <p id="imused">
-              In 2025 we took the mission further. Together with the{" "}
+          </div>
+        </FadeUp>
+
+        <FadeUp className="mt-10">
+          <h3 className="font-display text-xl font-semibold sm:text-2xl">
+            A play on words
+          </h3>
+          <div className="mt-4 space-y-4 text-lg leading-relaxed text-foreground/90">
+            <p>
+              9th Ward also became a play on words. The Ninth Ward is a real
+              place in New Orleans. The number nine is the last and highest
+              single digit in our number system. And a ward is a place of
+              protection. So, at first, Jay used the name almost like a saying:
+              if you were an indie artist trying to survive, stay independent,
+              and make a living without being exploited, you needed to come to
+              the 9th Ward.
+            </p>
+          </div>
+          <blockquote className="mt-6 border-l-2 border-primary/70 pl-5 font-display text-lg italic text-foreground/90 sm:text-xl">
+            <p>It meant protection.</p>
+            <p>It meant independence.</p>
+            <p>
+              It meant this is where artists could live safely inside the
+              music business.
+            </p>
+          </blockquote>
+        </FadeUp>
+
+        <FadeUp className="mt-10">
+          <h3 className="font-display text-xl font-semibold sm:text-2xl">
+            From a name to a company
+          </h3>
+          <div className="mt-4 space-y-4 text-lg leading-relaxed text-foreground/90">
+            <p>
+              In 2012, Jay met{" "}
+              <strong className="font-semibold text-foreground">Shakara Weston</strong>,
+              a Houston native with the ear, discipline, and belief to help
+              turn the idea into something real. Shakara became the first
+              artist to fully buy into Jay&apos;s model, even vetting the plan
+              through her father before committing to the journey.
+            </p>
+            <p>
+              Together, Jay and Shakara formed the female group{" "}
+              <strong className="font-semibold text-foreground">Somethin&apos; 4 The Fellas</strong>,
+              also known as{" "}
+              <strong className="font-semibold text-foreground">S4TF</strong>,
+              with Jay producing and Shakara as the first member. The model
+              worked. It was no longer just a theory, a pitch, or a name Jay
+              was using in the Houston music scene. It had an artist, a sound,
+              a system, and proof.
+            </p>
+            <p>
+              That partnership became the foundation of{" "}
+              <strong className="font-semibold text-foreground">
+                9th Ward Production &amp; Promotions Company, LLC
+              </strong>.
+            </p>
+            <p>
+              Jay brought the brand, the model, and the mission. Shakara
+              brought belief, talent, discipline, and the desire to help other
+              artists benefit from the same system. Together, they turned 9th
+              Ward from a name associated with Jay into a company, then into
+              an independent label built around the same principle that
+              started it all:
+            </p>
+          </div>
+          <blockquote className="mt-6 border-l-2 border-primary/70 pl-5 font-display text-lg italic text-foreground sm:text-xl">
+            protect the artist, protect the art, and build without compromise.
+          </blockquote>
+        </FadeUp>
+
+        <FadeUp className="mt-10">
+          <h3 className="font-display text-xl font-semibold sm:text-2xl">
+            Houston to New Orleans to the Bronx and beyond
+          </h3>
+          <div className="mt-4 space-y-4 text-lg leading-relaxed text-foreground/90">
+            <p>
+              Since then, 9th Ward has helped independent artists turn raw
+              talent into finished records, real audiences, and paying
+              opportunities. We are still based in Houston, Texas, with New
+              Orleans in our DNA, and our roster reaches from Houston to New
+              Orleans to the Bronx and beyond.
+            </p>
+            <p>
+              The artists may come from different cities and different sounds,
+              but they all share the same thing: they show up, they put in the
+              work, and they mean it.
+            </p>
+          </div>
+        </FadeUp>
+
+        <FadeUp className="mt-10" id="imused">
+          <h3 className="font-display text-xl font-semibold sm:text-2xl">
+            2025 &mdash; the mission enters a new era
+          </h3>
+          <div className="mt-4 space-y-4 text-lg leading-relaxed text-foreground/90">
+            <p>
+              In 2025, we took the mission further. Together with the{" "}
               <strong className="font-semibold text-foreground">144K Collective</strong>,
-              we launched{" "}
+              9th Ward helped launch{" "}
               <a
                 href="https://imused.ai"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-semibold text-primary underline-offset-4 hover:underline"
               >
-                ImUsed.ai
-              </a>{" "}
-              &mdash; the first ethical AI music platform. Where most AI tools
-              treat artists as training data, ImUsed protects them: every song
-              built from an artist&apos;s{" "}
-              <em className="font-medium text-foreground">Musical DNA</em>{" "}
-              earns them an auditable 10&ndash;20% royalty share and full
-              co-producer credit, with public attribution and PRO registration
-              on every commercial release. Same principle we&apos;ve stood on
-              since 2010: protect the art, pay the artist, and build without
-              compromise.
+                iMused.ai
+              </a>, introduced publicly as the first ethical AI music platform
+              built to protect, credit, and pay artists when their Musical DNA
+              helps inspire new music.
+            </p>
+            <p>
+              For 9th Ward, iMused.ai was not a departure from the original
+              mission. It was the same mission entering a new era.
+            </p>
+            <p>
+              Where many AI music tools raise questions about consent, credit,
+              ownership, and exploitation, iMused.ai was built around the
+              opposite principle: artists should not disappear inside the
+              machine. They should be seen, credited, protected, and paid.
+            </p>
+            <p>
+              Through{" "}
+              <em className="font-medium text-foreground">
+                Musical DNA Technology&trade;
+              </em>, public attribution, PRO registration, co-producer credit,
+              and auditable royalty participation, iMused.ai gives artists a
+              way to participate in AI-powered music creation without being
+              erased by it.
             </p>
           </div>
+          <blockquote className="mt-6 border-l-2 border-gold/70 pl-5 font-display text-lg italic text-foreground sm:text-xl">
+            <p>Different technology. Same mission.</p>
+            <p className="mt-1">
+              Protect the art. Pay the artist. Build without compromise.
+            </p>
+          </blockquote>
         </FadeUp>
 
         <FadeUp className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-lg border border-border bg-card p-5">
             <p className="font-display text-2xl font-bold text-primary">2010</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Production company founded in Houston by Jay Davis.
+              Jay Davis lands in Houston. The name, and the model behind it,
+              take shape.
             </p>
           </div>
           <div className="rounded-lg border border-border bg-card p-5">
             <p className="font-display text-2xl font-bold text-primary">2012</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Shakara Weston joins as co-founder; S4TF is formed.
+              Shakara Weston joins the mission; S4TF is formed and the
+              9th Ward LLC takes root.
             </p>
           </div>
           <div className="rounded-lg border border-border bg-card p-5">
             <p className="font-display text-2xl font-bold text-primary">2015</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              9th Ward becomes a full independent record label.
+              9th Ward grows into a full independent record label.
             </p>
           </div>
           <div className="rounded-lg border border-gold/40 bg-gold/[0.06] p-5">
