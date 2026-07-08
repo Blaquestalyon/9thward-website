@@ -12,7 +12,6 @@
 import "server-only";
 import { listRecords } from "./client";
 import { TABLES, FIELDS, CACHE_TAGS, REVALIDATE_SECONDS } from "./config";
-import { SEED_ARTISTS } from "./seed";
 import type {
   AirtableAttachment,
   AirtableRecord,
@@ -88,20 +87,11 @@ export async function listArtists(): Promise<Artist[]> {
     tags: [CACHE_TAGS.artists],
   });
 
-  const artists = records
+  return records
     .map(toArtist)
     .filter((a): a is Artist => a !== null)
     .filter((a) => a.status === "Active")
     .sort((a, b) => a.sortOrder - b.sortOrder);
-
-  // Fallback to seed roster ONLY when Airtable returns no artists.
-  // See lib/airtable/seed.ts — remove once Airtable is populated.
-  if (artists.length === 0) {
-    return SEED_ARTISTS.filter((a) => a.status === "Active").sort(
-      (a, b) => a.sortOrder - b.sortOrder
-    );
-  }
-  return artists;
 }
 
 export async function getArtistBySlug(slug: string): Promise<Artist | null> {

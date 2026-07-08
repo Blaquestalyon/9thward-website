@@ -41,7 +41,7 @@ Copy `.env.example` → `.env.local` for local dev, and set the same variables i
 | `RESEND_FROM_EMAIL`        | Optional | Verified Resend "from" address. Defaults to Resend's test sender.          |
 | `NEXT_PUBLIC_ANALYTICS_ID` | Optional | If set, mounts the (cookieless) Plausible script. Value = your domain.     |
 
-\* The site **builds and renders without Airtable configured** — pages show empty states, and the Artists page falls back to a seed roster (see below). But no content or form intake works until Airtable is wired up. Follow **[AIRTABLE_SETUP.md](./AIRTABLE_SETUP.md)** to create the base.
+\* The site **builds and renders without Airtable configured** — pages show empty states. No content or form intake works until Airtable is wired up. Follow **[AIRTABLE_SETUP.md](./AIRTABLE_SETUP.md)** to create the base.
 
 ---
 
@@ -80,13 +80,9 @@ npm run typecheck      # tsc --noEmit
 
 ---
 
-## Content model & the seed roster
+## Content model
 
-All content lives in **Airtable** (see AIRTABLE_SETUP.md for the full schema). The code reads via typed readers in `lib/airtable/read.ts` and never crashes a page over one malformed row.
-
-**Seed roster fallback:** `lib/airtable/read.ts → listArtists()` falls back to `lib/airtable/seed.ts` (the 9 known roster names, with clearly-bracketed placeholder bios/genres/hometowns) **only when Airtable returns zero artists.** This gives the site content on first deploy before the base is populated.
-
-> ⚠️ Once the Airtable `Artists` table has records, the seed is never used. To fully retire it, set `SEED_ARTISTS = []` in `lib/airtable/seed.ts` (or delete the file and its import). No fabricated stats, links, quotes, or collabs are included — only real, known names.
+All content lives in **Airtable** (see AIRTABLE_SETUP.md for the full schema). The code reads via typed readers in `lib/airtable/read.ts` and never crashes a page over one malformed row. If Airtable is empty or unreachable, the site renders empty states — there is no hardcoded fallback roster.
 
 Services copy on `/services` and the About page copy are the brand's real approved copy; the `Services` page prefers Airtable records and falls back to the built-in copy if the table is empty.
 
@@ -165,7 +161,7 @@ components/
   ui/                   # shadcn/ui primitives
   site/                 # Nav, Footer, cards, embeds, forms, motion, logo…
 lib/
-  airtable/             # client, config (field contract), types, read, write, seed
+  airtable/             # client, config (field contract), types, read, write
   email/resend.ts       # optional notifications
   validation/schemas.ts # Zod schemas
   rate-limit.ts         # in-memory IP rate limiter
