@@ -35,7 +35,6 @@ import {
 import {
   createBookingRequest,
   createContactMessage,
-  createContactMessageDetailed,
   createNewsletterSignup,
   createServiceInquiry,
   createSubmission,
@@ -154,22 +153,8 @@ export async function contactAction(
     }
 
     const d = parsed.data;
-    const result = await createContactMessageDetailed(d);
-    if (!result.ok) {
-      // TEMPORARY: surface the exact Airtable failure reason to the browser so we
-      // can diagnose without needing Railway logs. Revert to WRITE_FAILED once fixed.
-      let debugMessage: string;
-      if (result.reason === "not_configured") {
-        debugMessage =
-          "Server misconfiguration: AIRTABLE_PAT or AIRTABLE_BASE_ID is not set on the server.";
-      } else if (result.reason === "http") {
-        debugMessage = `Airtable rejected the write (HTTP ${result.status}). Detail: ${result.detail || "(empty)"}.`;
-      } else {
-        debugMessage = `Airtable write threw: ${result.message}.`;
-      }
-      console.error("[forms:contact] createContactMessage failed:", result);
-      return { status: "error", message: debugMessage };
-    }
+    const id = await createContactMessage(d);
+    if (!id) return WRITE_FAILED;
 
     await sendNotification({
       subject: "Contact Message",
@@ -184,9 +169,8 @@ export async function contactAction(
 
     return { status: "success", message: "Thanks for reaching out — we'll get back to you soon." };
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
     console.error("[forms:contact] threw:", err);
-    return { status: "error", message: `Unexpected error in contactAction: ${message}` };
+    return UNEXPECTED;
   }
 }
 
