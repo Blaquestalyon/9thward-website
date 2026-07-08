@@ -1,5 +1,10 @@
 import Link from "next/link";
 import { ArrowRight, Disc3, Send, Users, Wrench } from "lucide-react";
+
+// Render on every request so Airtable edits (Featured, Status, Sort Order)
+// take effect immediately. The Airtable client still caches for 60s via
+// fetch() tag caching, so this is at most one API call per minute per node.
+export const dynamic = "force-dynamic";
 import {
   getLatestFeaturedRelease,
   listFeaturedArtists,

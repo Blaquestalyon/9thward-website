@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { listArtists } from "@/lib/airtable/read";
+
+// Render on every request so Airtable edits propagate immediately.
+export const dynamic = "force-dynamic";
 import { PageHeader } from "@/components/site/page-header";
 import { Section, EmptyState } from "@/components/site/section";
 import { ArtistCard } from "@/components/site/artist-card";
