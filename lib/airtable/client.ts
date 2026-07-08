@@ -148,11 +148,14 @@ export async function createRecordDetailed(
       console.error(
         `[airtable] create ${table} HTTP ${res?.status ?? "n/a"}: ${detail}`
       );
+      // Include the base+table+pat-tail we actually used so we can tell which
+      // env var is wrong when Airtable returns NOT_FOUND.
+      const context = `base=${c.baseId} table=${table} pat=***${patTail}`;
       return {
         ok: false,
         reason: "http",
         status: res?.status ?? 0,
-        detail: detail.slice(0, 400),
+        detail: `${detail.slice(0, 300)} [${context}]`,
       };
     }
 
