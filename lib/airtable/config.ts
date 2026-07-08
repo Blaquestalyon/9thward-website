@@ -162,5 +162,7 @@ export const CACHE_TAGS = {
 
 export type CacheTag = (typeof CACHE_TAGS)[keyof typeof CACHE_TAGS];
 
-/** Default ISR revalidation window (seconds). */
-export const REVALIDATE_SECONDS = 300;
+/** Default ISR revalidation window (seconds). Short so Airtable edits
+ *  (Featured, Status, Sort Order, etc.) propagate quickly without needing
+ *  a manual /api/revalidate call. */
+export const REVALIDATE_SECONDS = 60;

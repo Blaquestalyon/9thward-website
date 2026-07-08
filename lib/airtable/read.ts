@@ -105,8 +105,9 @@ export async function getArtistBySlug(slug: string): Promise<Artist | null> {
 
 export async function listFeaturedArtists(limit = 4): Promise<Artist[]> {
   const all = await listArtists();
-  const featured = all.filter((a) => a.featured);
-  return (featured.length > 0 ? featured : all).slice(0, limit);
+  // Strict: only artists with Featured=true render on the home page.
+  // No fallback to "all" — an empty featured set means an empty section.
+  return all.filter((a) => a.featured).slice(0, limit);
 }
 
 // ─────────────────────────────────────────────────────────────
