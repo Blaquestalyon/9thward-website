@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { listPosts } from "@/lib/airtable/read";
 import { PageHeader } from "@/components/site/page-header";
 import { Section, EmptyState } from "@/components/site/section";
 import { Artwork } from "@/components/site/artwork";
-import { StaggerGrid, StaggerItem } from "@/components/site/motion";
+import { BlogList } from "@/components/site/blog-list";
+import { FadeUp } from "@/components/site/motion";
 import { JsonLd } from "@/components/site/json-ld";
 import { breadcrumbLd } from "@/lib/jsonld";
-import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -18,6 +19,8 @@ export const metadata: Metadata = {
 
 export default async function BlogPage() {
   const posts = await listPosts();
+  const featured = posts[0];
+  const rest = posts.slice(1);
 
   return (
     <>
@@ -32,60 +35,72 @@ export default async function BlogPage() {
         title="Blog"
         description="News, releases, and stories from the label and the roster."
       />
-      <Section>
-        {posts.length === 0 ? (
+
+      {posts.length === 0 ? (
+        <Section>
           <EmptyState
             title="No posts yet"
             description="Published articles from the Airtable BlogPosts table will appear here."
           />
-        ) : (
-          <StaggerGrid className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post) => (
-              <StaggerItem key={post.id}>
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary/60"
-                >
-                  <div className="relative aspect-[16/9] w-full overflow-hidden">
-                    <Artwork
-                      src={post.coverImage}
-                      alt={post.title}
-                      kind="event"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-5">
-                    {post.publishedDate && (
-                      <span className="text-xs text-muted-foreground">
-                        {formatDate(post.publishedDate)}
-                        {post.author ? ` · ${post.author}` : ""}
+        </Section>
+      ) : (
+        <>
+          {/* Featured lead post */}
+          <Section>
+            <FadeUp>
+              <Link
+                href={`/blog/${featured.slug}`}
+                className="group grid overflow-hidden rounded-2xl border border-border bg-card transition-colors hover:border-primary/60 md:grid-cols-2"
+              >
+                <div className="relative aspect-[16/10] w-full overflow-hidden md:aspect-auto md:min-h-[20rem]">
+                  <Artwork
+                    src={featured.coverImage}
+                    alt={featured.title}
+                    kind="event"
+                    priority
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="flex flex-col justify-center p-6 md:p-10">
+                  <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+                    <span>Featured</span>
+                    {featured.tags?.[0] && (
+                      <span className="text-muted-foreground">
+                        · {featured.tags[0]}
                       </span>
                     )}
-                    <h2 className="mt-1 font-display text-lg font-semibold group-hover:text-primary">
-                      {post.title}
-                    </h2>
-                    {post.excerpt && (
-                      <p className="mt-2 line-clamp-3 flex-1 text-sm text-muted-foreground">
-                        {post.excerpt}
-                      </p>
-                    )}
-                    {post.tags && post.tags.length > 0 && (
-                      <div className="mt-3 flex flex-wrap gap-1.5">
-                        {post.tags.slice(0, 3).map((t) => (
-                          <Badge key={t} variant="secondary">
-                            {t}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
                   </div>
-                </Link>
-              </StaggerItem>
-            ))}
-          </StaggerGrid>
-        )}
-      </Section>
+                  <h2 className="mt-3 font-display text-2xl font-bold group-hover:text-primary sm:text-3xl">
+                    {featured.title}
+                  </h2>
+                  {featured.publishedDate && (
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      {formatDate(featured.publishedDate)}
+                      {featured.author ? ` · ${featured.author}` : ""}
+                    </p>
+                  )}
+                  {featured.excerpt && (
+                    <p className="mt-3 line-clamp-3 text-muted-foreground">
+                      {featured.excerpt}
+                    </p>
+                  )}
+                  <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                    Read article <ArrowRight className="h-4 w-4" />
+                  </span>
+                </div>
+              </Link>
+            </FadeUp>
+          </Section>
+
+          {/* The rest, filterable by category */}
+          {rest.length > 0 && (
+            <Section className="pt-0">
+              <BlogList posts={rest} />
+            </Section>
+          )}
+        </>
+      )}
     </>
   );
 }

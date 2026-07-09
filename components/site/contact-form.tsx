@@ -37,8 +37,25 @@ export function ContactForm() {
         </Field>
       </div>
 
-      <Field name="subject" label="Subject" required error={state.errors?.subject}>
-        {(p) => <Input {...p} />}
+      <Field
+        name="subject"
+        label="Reason for reaching out"
+        required
+        error={state.errors?.subject}
+      >
+        {(p) => (
+          <select
+            {...p}
+            defaultValue="General inquiry"
+            className="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            <option>General inquiry</option>
+            <option>Submit music / join the roster</option>
+            <option>Booking / services</option>
+            <option>Press &amp; partnerships</option>
+            <option>Something else</option>
+          </select>
+        )}
       </Field>
 
       <Field name="message" label="Message" required error={state.errors?.message}>
