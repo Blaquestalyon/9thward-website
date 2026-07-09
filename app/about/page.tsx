@@ -12,7 +12,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "9th Ward Production & Promotions is a Houston-based indie music label with New Orleans roots. Co-founded in 2010 by Jay Davis and Shakara Weston, working with independent artists across the South.",
+    "9th Ward Production & Promotions was born to protect independent artists. New Orleans gave the name meaning. Houston gave the mission a home. Artists give it purpose. Founded by Jay Davis in 2010 and built into a company with Shakara Weston in 2012.",
 };
 
 // About copy reflects the real origin story: Jay Davis moved to Houston in 2010
@@ -49,7 +49,7 @@ export default function AboutPage() {
       <PageHeader
         eyebrow="9th Ward Production & Promotions"
         title="Indie artists, built from the ground up."
-        description="Houston-based, New Orleans in the DNA. We produce, manage, and promote independent artists who have the talent and the work ethic to go the distance."
+        description="Born to protect independent artists. New Orleans gave the name meaning. Houston gave the mission a home. Artists give it purpose."
       />
 
       <Section className="max-w-3xl">

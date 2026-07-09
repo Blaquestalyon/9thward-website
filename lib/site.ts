@@ -6,7 +6,7 @@ export const SITE = {
   legalName: "9th Ward Production & Promotions Company, LLC",
   tagline: "Indie Artist Management Group. Music Production, Management & Promotion.",
   description:
-    "9th Ward Production & Promotions is a Houston-based indie music label and artist-management company with New Orleans roots. We produce, manage, and promote independent artists.",
+    "Born to protect independent artists. New Orleans gave the name meaning. Houston gave the mission a home. Artists give it purpose.",
   productionCompanyFoundedYear: "2010", // Jay Davis started the production company in Houston
   labelFoundedYear: "2015", // year the production company became a full indie label
   foundingYear: "2010", // used as the canonical founding year in schema.org
