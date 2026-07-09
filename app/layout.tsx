@@ -5,7 +5,7 @@ import { SITE } from "@/lib/site";
 import { absoluteUrl } from "@/lib/utils";
 import { ThemeProvider } from "@/components/site/theme-provider";
 import { Nav } from "@/components/site/nav";
-import { Footer } from "@/components/site/footer";
+import { SiteFooter } from "@/components/site/site-footer";
 import { Analytics } from "@/components/site/analytics";
 import { JsonLd } from "@/components/site/json-ld";
 import { organizationLd, labelMusicGroupLd } from "@/lib/jsonld";
@@ -97,7 +97,7 @@ export default function RootLayout({
           </a>
           <Nav />
           <main id="main">{children}</main>
-          <Footer />
+          <SiteFooter />
           <Toaster richColors position="top-center" />
         </ThemeProvider>
         <Analytics />
