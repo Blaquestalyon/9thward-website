@@ -90,13 +90,13 @@ export default function AboutPage() {
           </h3>
           <div className="mt-4 space-y-4 text-lg leading-relaxed text-foreground/90">
             <p>
-              9th Ward also became a play on words. The Ninth Ward is a real
-              place in New Orleans. The number nine is the highest and final
-              single digit in our number system. And a ward is a place of
-              protection. So, at first, Jay used the name almost like a saying:
-              if you were an independent artist trying to survive, stay
-              independent, and make a living without being exploited, you
-              needed to come to the 9th Ward.
+              &ldquo;9th Ward&rdquo; is a deliberate play on words. The Ninth
+              Ward is a real place in New Orleans. The number nine is the
+              highest and final single digit in our number system. And a ward
+              is a place of protection. So, at first, Jay used the name almost
+              like a saying: if you were an independent artist trying to
+              survive, stay independent, and make a living without being
+              exploited, you needed to &ldquo;come to the 9th Ward&rdquo;.
             </p>
           </div>
           <blockquote className="mt-6 border-l-2 border-primary/70 pl-5 font-display text-lg italic text-foreground/90 sm:text-xl">
