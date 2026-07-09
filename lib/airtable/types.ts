@@ -120,9 +120,17 @@ export interface BlogPost {
 // Write payloads (form intake)
 // ─────────────────────────────────────────────────────────────
 
-// NOTE: `SubmissionPayload` was removed when /submit was migrated to an
-// Airtable-hosted form that writes directly to the `Artists` table. Restore
-// from git history if a separate demo-intake queue is ever needed again.
+export interface SubmissionPayload {
+  artistBandName: string;
+  contactName: string;
+  email: string;
+  phone?: string;
+  genre?: string;
+  city?: string;
+  musicLink: string;
+  socialLinks?: string;
+  message?: string;
+}
 
 export interface BookingRequestPayload {
   name: string;

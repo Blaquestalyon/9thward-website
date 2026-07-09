@@ -16,6 +16,7 @@ import type {
   ContactMessagePayload,
   NewsletterSignupPayload,
   ServiceInquiryPayload,
+  SubmissionPayload,
 } from "./types";
 
 const now = () => new Date().toISOString();
@@ -31,11 +32,26 @@ function clean(fields: Record<string, unknown>): Record<string, unknown> {
   return out;
 }
 
-// NOTE: `createSubmission` (writing to the `Submissions` table) was removed
-// when /submit was migrated to an Airtable-hosted form that writes directly
-// to the `Artists` table. The Submissions table is preserved in Airtable
-// for archival. Restore this writer + `SubmissionPayload` from git history
-// if a separate demo-intake queue is ever needed again.
+export async function createSubmission(p: SubmissionPayload): Promise<string | null> {
+  const F = FIELDS.Submissions;
+  return createRecord(
+    TABLES.Submissions,
+    clean({
+      [F.ArtistBandName]: p.artistBandName,
+      [F.ContactName]: p.contactName,
+      [F.Email]: p.email,
+      [F.Phone]: p.phone,
+      [F.Genre]: p.genre,
+      [F.City]: p.city,
+      [F.MusicLink]: p.musicLink,
+      [F.SocialLinks]: p.socialLinks,
+      [F.Message]: p.message,
+      [F.SubmittedAt]: now(),
+      [F.Source]: SOURCE,
+      [F.Status]: NEW,
+    })
+  );
+}
 
 export async function createBookingRequest(
   p: BookingRequestPayload

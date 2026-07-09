@@ -77,10 +77,8 @@ function toArtist(rec: AirtableRecord<Record<string, unknown>>): Artist | null {
     instagramUrl: str(f[F.InstagramURL]),
     bandcampUrl: str(f[F.BandcampURL]),
     bookingEmail: str(f[F.BookingEmail]),
-    // Blank / unrecognized Status = treat as Inactive. Only records with the
-    // literal Airtable single-select value "Active" are ever rendered on the
-    // site. New submissions from the Airtable form land with a blank Status
-    // and must be reviewed + manually flipped to Active before they appear.
+    // Strict: only literal "Active" renders on the site. Blank Status stays
+    // hidden until manually flipped to Active during review.
     status: str(f[F.Status]) === "Active" ? "Active" : "Inactive",
   };
 }
