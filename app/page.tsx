@@ -67,9 +67,9 @@ export default async function HomePage() {
         <Section className="pt-4 md:pt-4">
           <div className="mb-8 flex items-end justify-between gap-4">
             <SectionHeader
-              eyebrow="The roster"
+              eyebrow="Featured artists"
               title="Artists we build with"
-              description="Independent talent we produce, manage, and promote — rooted in Houston, reaching from New Orleans to the Bronx and beyond."
+              description="Independent artists we produce, manage, and promote. We're in Houston, but we build with talent anywhere. Great music doesn't need a zip code."
               className="mb-0"
             />
             <Button asChild variant="ghost" className="hidden shrink-0 sm:inline-flex">
