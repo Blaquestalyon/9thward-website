@@ -12,18 +12,21 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "9th Ward Production & Promotions was born to protect independent artists. New Orleans gave the name meaning. Houston gave the mission a home. Artists give it purpose. Founded by Jay Davis in 2010 and built into a company with Shakara Weston in 2012.",
+    "9th Ward Production & Promotions was born to protect independent artists. New Orleans gave the name meaning. Houston gave the mission a home. El Paso proved the model could scale. Today, 9th Ward is international.",
 };
 
-// About copy reflects the real origin story: Jay Davis moved to Houston in 2010
-// and started meeting artists who'd migrated from New Orleans after Katrina;
-// Jay met Shakara Weston in 2012, formed S4TF, and in 2015 the production company
-// became a full independent label. Still based in Houston, TX.
+// About copy reflects the founder-led origin: the 9th Ward name and model began
+// in Houston in 2010 as Jay Davis' artist-protection brand, shaped in part by
+// post-Katrina New Orleans artists he met in Houston. Shakara Weston became the
+// first artist to fully buy in in 2012. Jay and Shakara co-founded
+// 9th Ward Production & Promotions Company, LLC in 2015. In 2017-18 the model
+// extended into venue ownership via The Foundation in El Paso. Today the reach
+// is international.
 const WHAT_WE_DO = [
   {
     icon: Disc3,
     title: "Production",
-    body: "Beats, recording, mixing, and mastering. We help artists get a record that sounds like it belongs next to anything on the charts. [Add your in-house producers, studio, or notable credits here.]",
+    body: "Beats, recording, mixing, and mastering. We help artists get a record that sounds like it belongs next to anything on the charts.",
   },
   {
     icon: LineChart,
@@ -49,7 +52,7 @@ export default function AboutPage() {
       <PageHeader
         eyebrow="9th Ward Production & Promotions"
         title="Indie artists, built from the ground up."
-        description="Born to protect independent artists. New Orleans gave the name meaning. Houston gave the mission a home. Artists give it purpose."
+        description="Born to protect independent artists. New Orleans gave the name meaning. Houston gave the mission a home. El Paso proved the model could scale. Today, 9th Ward reaches wherever serious artists are building without compromise."
       />
 
       <Section className="max-w-3xl">
@@ -75,8 +78,8 @@ export default function AboutPage() {
               As Jay worked the Houston music scene, he kept meeting artists
               from New Orleans who had been displaced by Hurricane Katrina and
               had made Houston their new home. Many of them were still carrying
-              the sound, culture, pain, and pride of New Orleans with them.
-              That connection gave the name its first layer of meaning.
+              the pride, culture, and survival spirit of New Orleans with them.
+              That connection helped give the name its meaning.
             </p>
           </div>
         </FadeUp>
@@ -88,12 +91,12 @@ export default function AboutPage() {
           <div className="mt-4 space-y-4 text-lg leading-relaxed text-foreground/90">
             <p>
               9th Ward also became a play on words. The Ninth Ward is a real
-              place in New Orleans. The number nine is the last and highest
+              place in New Orleans. The number nine is the highest and final
               single digit in our number system. And a ward is a place of
               protection. So, at first, Jay used the name almost like a saying:
-              if you were an indie artist trying to survive, stay independent,
-              and make a living without being exploited, you needed to come to
-              the 9th Ward.
+              if you were an independent artist trying to survive, stay
+              independent, and make a living without being exploited, you
+              needed to come to the 9th Ward.
             </p>
           </div>
           <blockquote className="mt-6 border-l-2 border-primary/70 pl-5 font-display text-lg italic text-foreground/90 sm:text-xl">
@@ -141,37 +144,58 @@ export default function AboutPage() {
               artists benefit from the same system. Together, they turned 9th
               Ward from a name associated with Jay into a company, then into
               an independent label built around the same principle that
-              started it all:
+              started it all: protect the artist, protect the art, and build
+              without compromise.
             </p>
           </div>
-          <blockquote className="mt-6 border-l-2 border-primary/70 pl-5 font-display text-lg italic text-foreground sm:text-xl">
-            protect the artist, protect the art, and build without compromise.
-          </blockquote>
         </FadeUp>
 
         <FadeUp className="mt-10">
           <h3 className="font-display text-xl font-semibold sm:text-2xl">
-            Houston to New Orleans to the Bronx and beyond
+            The story did not stay in one city
           </h3>
           <div className="mt-4 space-y-4 text-lg leading-relaxed text-foreground/90">
             <p>
-              Since then, 9th Ward has helped independent artists turn raw
-              talent into finished records, real audiences, and paying
-              opportunities. We are still based in Houston, Texas, with New
-              Orleans in our DNA, and our roster reaches from Houston to New
-              Orleans to the Bronx and beyond.
+              New Orleans gave the name meaning. Houston gave the mission a
+              home. The Bronx helped carry the roster and creative reach
+              beyond its first borders. And in El Paso, 9th Ward helped push
+              the model even further through{" "}
+              <a
+                href="https://www.power-in-numbers.net/track-record/2017-foundation-venu/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary underline-offset-4 hover:underline"
+              >
+                The Foundation
+              </a>
+              , a community-owned venue concept designed around artist
+              participation, public access, and shared ownership.
             </p>
             <p>
-              The artists may come from different cities and different sounds,
-              but they all share the same thing: they show up, they put in the
-              work, and they mean it.
+              The Foundation matters because it showed that 9th Ward was
+              never only about making records. The mission was bigger than
+              the studio. It was about building systems where artists could
+              own more, earn more, and participate more fully in the business
+              created around their work.
+            </p>
+            <p>
+              Today, 9th Ward is still based in Houston, Texas, but its reach
+              is international. Our foundation runs through New Orleans,
+              Houston, El Paso, and the Bronx, and our artists and
+              collaborators now connect us to South Korea, Aruba, the UK by
+              way of Nigeria, and beyond.
+            </p>
+            <p>
+              Every artist may come from a different place, but the standard
+              is the same: they show up, they put in the work, and they mean
+              it.
             </p>
           </div>
         </FadeUp>
 
         <FadeUp className="mt-10" id="imused">
           <h3 className="font-display text-xl font-semibold sm:text-2xl">
-            2025 &mdash; the mission enters a new era
+            2025: the mission enters a new era
           </h3>
           <div className="mt-4 space-y-4 text-lg leading-relaxed text-foreground/90">
             <p>
@@ -217,32 +241,69 @@ export default function AboutPage() {
           </blockquote>
         </FadeUp>
 
-        <FadeUp className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <FadeUp className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <div className="rounded-lg border border-border bg-card p-5">
             <p className="font-display text-2xl font-bold text-primary">2010</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Jay Davis lands in Houston. The name, and the model behind it,
-              take shape.
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+              The 9th Ward name begins in Houston as Jay Davis&apos;
+              artist-protection brand, independent music model, and
+              production/promotion philosophy, shaped in part by New Orleans
+              artists who had relocated to Houston after Hurricane Katrina.
             </p>
           </div>
           <div className="rounded-lg border border-border bg-card p-5">
             <p className="font-display text-2xl font-bold text-primary">2012</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Shakara Weston joins the mission; S4TF is formed and the
-              9th Ward LLC takes root.
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+              Jay meets Shakara Weston. She becomes the first artist to fully
+              commit to the model, and together they form Somethin&apos; 4
+              The Fellas, also known as S4TF.
             </p>
           </div>
           <div className="rounded-lg border border-border bg-card p-5">
             <p className="font-display text-2xl font-bold text-primary">2015</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              9th Ward grows into a full independent record label.
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+              Jay Davis and Shakara Weston formally build 9th Ward Production
+              &amp; Promotions Company, LLC, turning the 9th Ward brand into
+              a company and independent label.
+            </p>
+          </div>
+          <div className="rounded-lg border border-border bg-card p-5">
+            <p className="font-display text-2xl font-bold text-primary">
+              2017&ndash;2018
+            </p>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+              <a
+                href="https://www.power-in-numbers.net/track-record/2017-foundation-venu/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-foreground underline-offset-4 hover:underline"
+              >
+                The Foundation
+              </a>{" "}
+              develops in El Paso as a community-owned venue model operated
+              through 9th Ward Production and Promotions Company, LLC and
+              funded through S4TF, LTD, proving the mission can extend into
+              artist ownership, venue access, and economic infrastructure.
             </p>
           </div>
           <div className="rounded-lg border border-gold/40 bg-gold/[0.06] p-5">
             <p className="font-display text-2xl font-bold text-gold">2025</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              ImUsed.ai launches with the 144K Collective &mdash; the first
-              ethical AI music platform.
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+              9th Ward expands the artist-protection mission with the 144K
+              Collective through iMused.ai, an ethical AI music platform
+              centered on artist attribution, royalty participation, and
+              creative transparency.
+            </p>
+          </div>
+          <div className="rounded-lg border border-border bg-card p-5">
+            <p className="font-display text-2xl font-bold text-primary">
+              Today
+            </p>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+              9th Ward remains based in Houston while operating with an
+              international reach, including artists and collaborators
+              connected to New Orleans, Houston, El Paso, the Bronx, South
+              Korea, Aruba, and the UK by way of Nigeria.
             </p>
           </div>
         </FadeUp>

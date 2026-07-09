@@ -1,6 +1,6 @@
 # 9th Ward Production & Promotions
 
-The official website and electronic press kit (EPK) hub for **9th Ward Production & Promotions Company, LLC** — an indie artist management group born to protect independent artists. New Orleans gave the name meaning. Houston gave the mission a home. Artists give it purpose. Founded by Jay Davis in 2010; the company took shape in 2012 with Shakara Weston.
+The official website and electronic press kit (EPK) hub for **9th Ward Production & Promotions Company, LLC** — an indie artist management group born to protect independent artists. New Orleans gave the name meaning. Houston gave the mission a home. El Paso proved the model could scale. Founded by Jay Davis in 2010; formally built into a company by Jay and Shakara Weston in 2015.
 
 Its #1 job is to showcase the roster and the music. Secondary jobs: capture new artist submissions, take booking requests, and field service inquiries. **The site sells nothing — no store, no pricing, no checkout.**
 
