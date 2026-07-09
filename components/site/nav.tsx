@@ -50,6 +50,18 @@ export function Nav() {
 
         {/* Desktop links */}
         <ul className="hidden items-center gap-1 lg:flex">
+          <li>
+            <Link
+              href="/"
+              aria-current={isActive("/") ? "page" : undefined}
+              className={cn(
+                "rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
+                isActive("/") ? "text-foreground" : "text-muted-foreground"
+              )}
+            >
+              Home
+            </Link>
+          </li>
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <Link
@@ -91,6 +103,22 @@ export function Nav() {
                 <Logo />
               </SheetTitle>
               <ul className="flex flex-col gap-1">
+                <li>
+                  <SheetClose asChild>
+                    <Link
+                      href="/"
+                      aria-current={isActive("/") ? "page" : undefined}
+                      className={cn(
+                        "block rounded-md px-3 py-3 text-base font-medium transition-colors",
+                        isActive("/")
+                          ? "bg-secondary text-foreground"
+                          : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                      )}
+                    >
+                      Home
+                    </Link>
+                  </SheetClose>
+                </li>
                 {NAV_LINKS.map((link) => (
                   <li key={link.href}>
                     <SheetClose asChild>
