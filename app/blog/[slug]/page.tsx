@@ -75,7 +75,7 @@ export default async function BlogPostPage({
       </PageHeader>
 
       <Section>
-        <article className="mx-auto max-w-3xl">
+        <article className="mx-auto max-w-[68ch]">
           <Link
             href="/blog"
             className="mb-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
@@ -84,19 +84,19 @@ export default async function BlogPostPage({
           </Link>
 
           {post.coverImage && (
-            <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-xl border border-border">
+            <div className="relative mb-10 aspect-[16/9] w-full overflow-hidden rounded-xl border border-border">
               <Artwork
                 src={post.coverImage}
                 alt={post.title}
                 kind="event"
                 priority
-                sizes="(max-width: 768px) 100vw, 768px"
+                sizes="(max-width: 768px) 100vw, 720px"
               />
             </div>
           )}
 
           {post.tags && post.tags.length > 0 && (
-            <div className="mb-6 flex flex-wrap gap-1.5">
+            <div className="mb-8 flex flex-wrap gap-1.5">
               {post.tags.map((t) => (
                 <Badge key={t} variant="secondary">
                   {t}
@@ -105,13 +105,28 @@ export default async function BlogPostPage({
             </div>
           )}
 
+          {post.excerpt && post.body && (
+            <p className="mb-8 border-l-2 border-primary pl-5 text-lg font-medium leading-relaxed text-foreground/95">
+              {post.excerpt}
+            </p>
+          )}
+
           {post.body ? (
             <Markdown content={post.body} />
           ) : post.excerpt ? (
-            <p className="leading-relaxed text-foreground/90">{post.excerpt}</p>
+            <p className="text-lg leading-relaxed text-foreground/90">{post.excerpt}</p>
           ) : (
             <p className="text-muted-foreground">Content coming soon.</p>
           )}
+
+          <hr className="my-12 border-border" />
+
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" /> More from the blog
+          </Link>
         </article>
       </Section>
     </>
