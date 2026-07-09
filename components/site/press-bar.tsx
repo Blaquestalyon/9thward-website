@@ -5,9 +5,18 @@ import { PRESS } from "@/lib/site";
  * real estate, so a partner or journalist sees the press credibility right
  * away. The linked outlets come from PRESS (they also feed the fuller press
  * section lower on the page); EXTRA_OUTLETS are additional "featured in"
- * mentions shown as wordmarks. Give one an href here to make it clickable.
+ * mentions. Both link to their iMused.ai coverage.
  */
-const EXTRA_OUTLETS = ["The AI Journal", "Monthly Mixing"];
+const EXTRA_OUTLETS = [
+  {
+    name: "The AI Journal",
+    href: "https://aijourn.com/imused-marks-first-official-platform-song-release-with-the-bag-written-by-cleo-p-using-arya-starrs-musical-dna-as-the-muse-source/",
+  },
+  {
+    name: "Monthly Mixing",
+    href: "https://mixing.co.kr/en/38610",
+  },
+];
 
 export function PressBar() {
   return (
@@ -27,13 +36,16 @@ export function PressBar() {
             {p.outlet}
           </a>
         ))}
-        {EXTRA_OUTLETS.map((name) => (
-          <span
-            key={name}
-            className="font-display text-sm font-semibold text-foreground/85"
+        {EXTRA_OUTLETS.map((o) => (
+          <a
+            key={o.name}
+            href={o.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-display text-sm font-semibold text-foreground/85 transition-colors hover:text-primary"
           >
-            {name}
-          </span>
+            {o.name}
+          </a>
         ))}
         <span className="font-display text-sm font-semibold text-gold">
           144K Collective
