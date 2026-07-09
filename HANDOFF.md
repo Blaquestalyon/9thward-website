@@ -2,7 +2,7 @@
 
 **Purpose:** Drop this whole file into a fresh Perplexity Computer chat to resume website editing without re-explaining anything. Everything Computer needs — repo, stack, conventions, deploy path, gotchas — is below.
 
-Last updated: **08 Jul 2026** — reflects the About page rewrite, the "Born to protect" tagline, strict Featured/Status rendering, and the /submit rollback.
+Last updated: **09 Jul 2026** — reflects the release-embed fallback reorder (YouTube-first), the blog article typography overhaul, the Airtable slug sanitizer safety net, the persistent Home link in the top nav, and Jay's rebuilds of the About and Services pages.
 
 ---
 
@@ -156,6 +156,12 @@ The `airtable_oauth__pipedream` connector **cannot reliably write string/single-
 - Have the user do it manually in Airtable, or
 - Hit the Airtable REST API directly with the PAT (out-of-band, not from the site's runtime).
 
+### BlogPost rendering rules (updated 09 Jul 2026)
+
+- **Slug sanitization at read time.** `toPost()` in `lib/airtable/read.ts` passes every Airtable `Slug` value through `sanitizeSlug()`, which lowercases and replaces any run of non-alphanumeric characters with a single hyphen. So an Airtable slug like `What Happened to Hip Hop? Pt.1` becomes `what-happened-to-hip-hop-pt-1` on both the listing link and the `[slug]` route. **You still want authors to type URL-safe slugs in Airtable** — the sanitizer is a safety net, not a naming style.
+- **Airtable long-text body → real prose.** `components/site/markdown.tsx` treats every non-empty line as its own paragraph (Airtable's Enter key produces a single `\n`, not the `\n\n` markdown expects), and any paragraph longer than ~500 chars is auto-split on sentence boundaries into ~2–3-sentence paragraphs. Combined with the Markdown wrapper's typography classes (17px body, 1.75 line-height, drop cap on the first paragraph, 68ch measure, primary-color links) this turns raw pasted prose into a readable article without asking the author for markdown syntax.
+- **Publish gate:** `listPosts()` filters to `status === "Published"`. Draft posts never appear in the listing or at their slug URL.
+
 ---
 
 ## 5. Server actions (the important one)
@@ -251,24 +257,47 @@ Railway build command: `npm run build`. Start: `npm start`.
 10. **The `guarded()` helper does not exist anymore.** Ignore any reference to it in old chat context.
 11. **/submit uses the built-in Next.js form, NOT an Airtable form embed.** On 08 Jul 2026 we briefly tried replacing /submit with an iframe embed of an Airtable form (commit `42a278b`) that was meant to write straight to the Artists table. The URL was a base-editor page ID, not a shareable form ID, so Airtable returned 404 and X-Frame-Options blocked the iframe anyway. Commit `1e2d61f` reverted it back to the Next.js form writing to the **Submissions** table. If you want to switch to an Airtable-hosted form later, you must create a proper shared form view in Airtable, use its `Share form → Embed this form on your site` snippet (URL will look like `https://airtable.com/embed/shrXXXXX`), and iframe THAT URL — not the base-editor page URL.
 12. **Static prerender vs. dynamic rendering.** `/` and `/artists` are Airtable-driven and MUST stay `dynamic = "force-dynamic"`. If you accidentally let them go back to static prerender, unchecking Featured on an artist will still show the stale version because Next's stale-while-revalidate serves the cached HTML.
+13. **Spotify's plain `/embed/` iframe does NOT scale up.** Regardless of the container height you allocate, Spotify's iframe renders a fixed ~80px mini-player card for `/embed/album/` and `/embed/track/`. Setting the container to 152/166/232/352 all produce visible dead space below the card because Spotify won't fill it. On 08 Jul 2026 we cycled through 166 → 352 → 152 → 80 chasing this before landing on **80px in `lib/embed.ts`** (`audioHeight: 80`) to hug the natural card. If you ever want the taller Spotify player with big cover art + full track list, you have to switch to Spotify's iframe JS API (not the plain `/embed/` endpoint). See commit `62a5af4`.
+14. **Release-embed platform preference is YouTube-first.** `app/music/[slug]/page.tsx` picks the primary embed in this order: explicit Airtable `Embed URL` → `youtubeUrl` → `appleMusicUrl` → `soundcloudUrl` → `spotifyUrl`. YouTube is preferred because its 16:9 iframe fills the container cleanly and Spotify's plain embed does not (see gotcha #13). The `Where to stream` button row still shows all four platforms so listeners can click through to their preferred one. See commit `7ce770c`.
+15. **Slugs in Airtable must be URL-safe.** `toPost()` sanitizes them, but an Airtable slug containing `?`, spaces, or other unsafe characters will still route as the sanitized version — meaning old shared links to the raw slug will 404. On 09 Jul 2026 a blog post authored with slug `what-happened-to-hip-hop?-1` 404'd because the `?` was parsed as a query string. Fixed by editing the Airtable slug to `what-happened-to-hip-hop-pt-1` AND adding the sanitizer safety net (commit `6bca95e`). Rule of thumb for authors: **lowercase letters, digits, and hyphens only.**
+16. **Airtable long-text ≠ markdown.** Authors don't type `\n\n` between paragraphs; they press Enter once. The blog renderer in `components/site/markdown.tsx` treats every non-empty line as a paragraph and auto-splits paragraphs longer than ~500 chars on sentence boundaries so pasted walls of text look like prose. Do NOT tell authors to "use markdown syntax" — they won't. Fix rendering, not the CMS.
 
 ---
 
-## 8. Current state (as of 08 Jul 2026)
+## 8. Current state (as of 09 Jul 2026)
 
 - **Contact form:** WORKING end-to-end (Airtable base-ID typo fixed earlier)
 - **/submit form:** Next.js form writing to Submissions table (rolled back from Airtable embed attempt — see gotcha #11)
 - **Other write forms** (booking, service inquiry, newsletter): built and wired, same `createRecord` path
-- **About page:** rewritten with founder-approved narrative — see §1a for rules
+- **About page:** rebuilt on 09 Jul 2026 (commit `c0eef6b`, authored by Jay) — founders block for Jay + Shakara, five-card timeline (2010 / 2012 / 2015 / 2017–18 / 2025), international-reach band (New Orleans / Houston / El Paso / The Bronx + South Korea, Aruba, UK/Nigeria), two-column story layout. Still respects the brand-voice rules in §1a.
 - **Homepage + /artists:** `force-dynamic`, source only from Airtable, strict Status='Active' and Featured=true gates
+- **Nav:** persistent **Home** link is now the leftmost item in the top menu (added by Jay in commit `ec94e15`)
+- **Services page:** rebuilt on 09 Jul 2026 (commit `f3cd620`, authored by Jay) with a 4-step **process** section, a **proof band**, and a closing **CTA**. Still driven by the Airtable `Services` table for the individual service cards, but the surrounding narrative + funnel is now hard-coded.
+- **Release detail pages (`/music/[slug]`):** primary embed prefers YouTube (16:9, reliable) with fallback order YouTube → Apple Music → SoundCloud → Spotify; explicit Airtable `Embed URL` still overrides. Spotify container locked to 80px to hug its fixed mini-player card (gotcha #13)
+- **Blog article page (`/blog/[slug]`):** real prose typography — 68ch measure, 17px/1.75 body, drop cap on first paragraph, primary-color links, roomier headings/lists; excerpt renders as a bordered lead pull-quote above the body when both are present; divider + "More from the blog" outro link
+- **Blog markdown renderer:** every non-empty line = paragraph; walls of text >500 chars auto-split on sentence boundaries so pasted Airtable prose reads naturally without any markdown syntax from the author
+- **Blog slug safety net:** `toPost()` sanitizes any Airtable slug to lowercase-alphanumeric-and-hyphens; unsafe characters (`?`, spaces, ampersands, apostrophes) can no longer break routing
 - **Site-wide tagline (SITE.description):** "Indie Artist Management Group. Music Production, Management & Promotion. Born to protect independent artists. Shaped by New Orleans. Built in Houston. Proven in El Paso. Reaching the world." — fans out to root `<meta>`, Open Graph, Twitter card, JSON-LD, and the footer
 - **Footer:** renders `SITE.description` directly (no more hardcoded "New Orleans in the DNA" fragment)
-- **Timeline on About:** 2010, 2012, 2015, 2017–2018 (The Foundation, linked to power-in-numbers.net), 2025 (iMused.ai, linked, gold accent), Today
+- **Timeline on About:** 2010, 2012, 2015, 2017–18 (The Foundation), 2025 (present state) — 5 cards after Jay's 09 Jul rebuild. Prior version (6 cards, separate iMused.ai gold-accent card + Today card) was superseded by commit `c0eef6b`. Confirm current copy in `app/about/page.tsx` before editing.
 - **Logo:** real 1080×1080 transparent PNG, live in nav/footer/hero
 - **ImUsed.ai feature block, featured YouTube videos, press strip:** live
+- **First live blog post:** *What Happened to Hip Hop? Pt.1* by CL, published 09 Jul 2026, slug `what-happened-to-hip-hop-pt-1`
 
 ### Recent commits (newest first)
 
+- `f3cd620` Rebuild Services page: add process, proof band, and CTA *(Jay)*
+- `aed769c` Merge branch 'main' *(Jay)*
+- `c0eef6b` Rebuild About page: founders, timeline, reach band, two-column story *(Jay)*
+- `6bca95e` feat(blog): humane article typography + slug sanitization safety net
+- `ec94e15` Add persistent Home link to top menu *(authored by Jay directly)*
+- `9f15641` Promote Home 2 to homepage; remove preview route, Home dropdown, preview footer wrapper *(Jay)*
+- `45ce6dd` Refine Home 2: two music sections; fix #imused anchor offset *(Jay)*
+- `d8a015e` Add Home 2 homepage preview + cascading Home menu; centered footer on preview *(Jay)*
+- `7ce770c` feat(music): prefer YouTube as primary release embed, then Apple, SoundCloud, Spotify
+- `62a5af4` fix(music-embed): drop Spotify container to 80px to match its mini-player *(supersedes fa438d9 and 2735e94 in the height-chasing sequence)*
+- `2735e94` fix(music-embed): lock Spotify audio embed to 152px to eliminate dead space *(superseded by 62a5af4)*
+- `fa438d9` fix(music-embed): size audio players to each platform's natural height *(first attempt — set Spotify album to 352; made the gap worse; superseded by 62a5af4)*
 - `3608b78` content(about): link iMused.ai on the 2025 timeline card
 - `a376190` content(about): rewrite Our Story with El Paso, international reach, and updated timeline
 - `1e2d61f` revert(submit): restore Next.js submit form writing to Submissions table
@@ -283,6 +312,8 @@ Railway build command: `npm run build`. Start: `npm start`.
 ---
 
 ## 9. Suggested next tasks (not committed to)
+
+> **Session log — 09 Jul 2026:** release-embed fallback reordered to YouTube-first (`7ce770c`), Spotify player container locked to 80px (`62a5af4`) after cycling through 166/352/152 chasing whitespace; blog first live post routed correctly after Airtable slug `what-happened-to-hip-hop?-1` was corrected to `what-happened-to-hip-hop-pt-1` and a `sanitizeSlug()` safety net was added; blog article typography rebuilt for real prose (68ch measure, drop cap, 17px/1.75 body, auto-paragraphing, lead pull-quote from excerpt) in `6bca95e`; Jay independently rebuilt About + Services pages (`c0eef6b`, `f3cd620`) and added a persistent Home link to the nav (`ec94e15`).
 
 - Exercise + verify the other write forms (booking, submit, service inquiry, newsletter) with real submissions
 - Add a lightweight `/admin/inbox` route (protected by a header token) to view contact submissions without opening Airtable
