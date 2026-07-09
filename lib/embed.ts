@@ -45,13 +45,14 @@ export function toEmbed(url?: string | null): EmbedInfo | null {
       // https://open.spotify.com/track/ID -> /embed/track/ID
       const path = raw.pathname.replace(/^\/embed/, "");
       const finalPath = path.startsWith("/embed") ? path : `/embed${path}`;
-      // Multi-track content needs the taller player; single track/episode fits in 152.
-      const isMulti = /\/embed\/(album|playlist|show)\//.test(finalPath);
+      // Spotify's current iframe embed always renders in a compact card ~152px
+      // tall regardless of the height we allocate. Give it exactly what it uses
+      // so there's no dead space inside the container.
       return {
         platform,
         src: `https://open.spotify.com${finalPath}`,
         ratio: "audio",
-        audioHeight: isMulti ? 352 : 152,
+        audioHeight: 152,
       };
     }
     case "soundcloud": {
