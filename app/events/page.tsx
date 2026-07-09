@@ -89,12 +89,13 @@ export default async function EventsPage() {
           <Section>
             <FadeUp className="overflow-hidden rounded-2xl border border-gold/30 bg-gradient-to-br from-gold/10 via-card to-card">
               {next.flyer && (
-                <div className="relative aspect-[21/9] w-full md:aspect-[3/1]">
+                <div className="relative aspect-video w-full overflow-hidden border-b border-gold/20 bg-background/40">
                   <Artwork
                     src={next.flyer}
                     alt={`${next.title} flyer`}
                     kind="event"
                     priority
+                    className="object-contain"
                     sizes="(max-width: 1024px) 100vw, 1000px"
                   />
                 </div>

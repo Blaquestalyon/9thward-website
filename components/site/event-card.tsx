@@ -58,18 +58,19 @@ export function EventCard({
   past?: boolean;
 }) {
   return (
-    <div className="flex flex-col gap-4 overflow-hidden rounded-lg border border-border bg-card p-4 sm:flex-row">
+    <div className="overflow-hidden rounded-lg border border-border bg-card">
       {event.flyer && (
-        <div className="relative aspect-square w-full shrink-0 overflow-hidden rounded-md sm:h-32 sm:w-32">
+        <div className="relative aspect-video w-full overflow-hidden border-b border-border bg-background/40">
           <Artwork
             src={event.flyer}
             alt={`${event.title} flyer`}
             kind="event"
-            sizes="128px"
+            className="object-contain"
+            sizes="(max-width: 768px) 100vw, 720px"
           />
         </div>
       )}
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col p-4 sm:p-5">
         <div className="flex items-start justify-between gap-2">
           <h3 className="font-display text-lg font-semibold">{event.title}</h3>
           {past ? (
