@@ -45,14 +45,16 @@ export function toEmbed(url?: string | null): EmbedInfo | null {
       // https://open.spotify.com/track/ID -> /embed/track/ID
       const path = raw.pathname.replace(/^\/embed/, "");
       const finalPath = path.startsWith("/embed") ? path : `/embed${path}`;
-      // Spotify's current iframe embed always renders in a compact card ~152px
-      // tall regardless of the height we allocate. Give it exactly what it uses
-      // so there's no dead space inside the container.
+      // Spotify's iframe renders a fixed mini-player card ~80px tall for
+      // /embed/album/ and /embed/track/ regardless of the iframe height we
+      // reserve. Any extra height shows as dead space (measured on caribbean-
+      // connection: 152px reserved, ~80px filled, ~70px of empty page bg).
+      // Match the natural card height exactly.
       return {
         platform,
         src: `https://open.spotify.com${finalPath}`,
         ratio: "audio",
-        audioHeight: 152,
+        audioHeight: 80,
       };
     }
     case "soundcloud": {
