@@ -1,15 +1,60 @@
+import Link from "next/link";
 import { Calendar, MapPin, Ticket } from "lucide-react";
-import type { EventItem } from "@/lib/airtable/types";
-import { formatDateTime } from "@/lib/utils";
+import type { EventItem, Artist } from "@/lib/airtable/types";
+import { cn, formatDateTime } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Artwork } from "./artwork";
 
+/**
+ * Lineup row: linked avatar + name chips for the artists booked on an event.
+ * Renders nothing when there are no (resolved, active) performers.
+ */
+export function EventPerformers({
+  performers,
+  label = "Performing",
+  className,
+}: {
+  performers?: Artist[];
+  label?: string;
+  className?: string;
+}) {
+  if (!performers || performers.length === 0) return null;
+  return (
+    <div className={cn("flex flex-wrap items-center gap-2", className)}>
+      <span className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+        {label}
+      </span>
+      {performers.map((a) => (
+        <Link
+          key={a.id}
+          href={`/artists/${a.slug}`}
+          className="group inline-flex items-center gap-1.5 rounded-full border border-border bg-background/50 py-1 pl-1 pr-3 text-sm transition-colors hover:border-primary/60"
+        >
+          <span className="relative h-6 w-6 shrink-0 overflow-hidden rounded-full border border-border">
+            <Artwork
+              src={a.photo}
+              alt={a.stageName || a.name}
+              kind="artist"
+              sizes="24px"
+            />
+          </span>
+          <span className="font-medium text-foreground/90 group-hover:text-primary">
+            {a.stageName || a.name}
+          </span>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
 export function EventCard({
   event,
+  performers,
   past = false,
 }: {
   event: EventItem;
+  performers?: Artist[];
   past?: boolean;
 }) {
   return (
@@ -54,6 +99,8 @@ export function EventCard({
             {event.description}
           </p>
         )}
+
+        <EventPerformers performers={performers} className="mt-3" />
 
         {!past && (event.ticketUrl || event.rsvpUrl) && (
           <div className="mt-auto flex flex-wrap gap-2 pt-3">

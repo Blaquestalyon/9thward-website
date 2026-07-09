@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { MapPin, Ticket } from "lucide-react";
 import { listEvents, listArtists } from "@/lib/airtable/read";
+import type { Artist, EventItem } from "@/lib/airtable/types";
 import { PageHeader } from "@/components/site/page-header";
 import { Section, SectionHeader, EmptyState } from "@/components/site/section";
-import { EventCard } from "@/components/site/event-card";
+import { EventCard, EventPerformers } from "@/components/site/event-card";
 import { BookingDialog } from "@/components/site/booking-dialog";
 import { Artwork } from "@/components/site/artwork";
 import { FadeUp } from "@/components/site/motion";
@@ -24,7 +25,12 @@ export default async function EventsPage() {
     listArtists(),
   ]);
   const nameById = new Map(artists.map((a) => [a.id, a.stageName || a.name]));
+  const artistById = new Map(artists.map((a) => [a.id, a]));
   const artistOptions = artists.map((a) => a.stageName || a.name);
+  const performersFor = (e: EventItem): Artist[] =>
+    e.artistIds
+      .map((id) => artistById.get(id))
+      .filter((a): a is Artist => Boolean(a));
 
   const next = upcoming[0];
   const restUpcoming = upcoming.slice(1);
@@ -123,6 +129,10 @@ export default async function EventsPage() {
                       {next.description}
                     </p>
                   )}
+                  <EventPerformers
+                    performers={performersFor(next)}
+                    className="mt-4"
+                  />
                   {(next.ticketUrl || next.rsvpUrl) && (
                     <div className="mt-5 flex flex-wrap gap-3">
                       {next.ticketUrl && (
@@ -164,7 +174,7 @@ export default async function EventsPage() {
               <div className="space-y-4">
                 {restUpcoming.map((e) => (
                   <FadeUp key={e.id}>
-                    <EventCard event={e} />
+                    <EventCard event={e} performers={performersFor(e)} />
                   </FadeUp>
                 ))}
               </div>
@@ -205,6 +215,13 @@ export default async function EventsPage() {
                   {(e.venue || e.city) && (
                     <p className="truncate text-xs text-muted-foreground">
                       {[e.venue, e.city].filter(Boolean).join(" · ")}
+                    </p>
+                  )}
+                  {performersFor(e).length > 0 && (
+                    <p className="truncate text-xs text-muted-foreground/80">
+                      {performersFor(e)
+                        .map((a) => a.stageName || a.name)
+                        .join(", ")}
                     </p>
                   )}
                 </div>
