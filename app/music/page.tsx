@@ -1,13 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { listReleases, listFeaturedReleases } from "@/lib/airtable/read";
+import { ArrowRight } from "lucide-react";
+import { listReleases, getLatestFeaturedRelease } from "@/lib/airtable/read";
+
+// Render on every request so Airtable edits propagate immediately.
+export const dynamic = "force-dynamic";
 import { PageHeader } from "@/components/site/page-header";
-import { Section, SectionHeader, EmptyState } from "@/components/site/section";
-import { ReleaseCard } from "@/components/site/release-card";
-import { StaggerGrid, StaggerItem } from "@/components/site/motion";
+import { Section, EmptyState } from "@/components/site/section";
+import { Artwork } from "@/components/site/artwork";
+import { MusicEmbed } from "@/components/site/music-embed";
+import { PlatformButtons } from "@/components/site/platform-button";
+import { MusicCatalog } from "@/components/site/music-catalog";
+import { FadeUp } from "@/components/site/motion";
 import { JsonLd } from "@/components/site/json-ld";
 import { breadcrumbLd } from "@/lib/jsonld";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Music",
@@ -18,10 +27,16 @@ export const metadata: Metadata = {
 export default async function MusicPage() {
   const [all, featured] = await Promise.all([
     listReleases(),
-    listFeaturedReleases(),
+    getLatestFeaturedRelease(),
   ]);
-  const featuredIds = new Set(featured.map((r) => r.id));
-  const rest = all.filter((r) => !featuredIds.has(r.id));
+  const rest = featured ? all.filter((r) => r.id !== featured.id) : all;
+  const embedSrc = featured
+    ? featured.embedUrl ||
+      featured.youtubeUrl ||
+      featured.appleMusicUrl ||
+      featured.soundcloudUrl ||
+      featured.spotifyUrl
+    : undefined;
 
   return (
     <>
@@ -51,31 +66,74 @@ export default async function MusicPage() {
         </Section>
       ) : (
         <>
-          {featured.length > 0 && (
-            <Section className="pb-8">
-              <SectionHeader eyebrow="Spotlight" title="Featured" />
-              <StaggerGrid className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-                {featured.map((r) => (
-                  <StaggerItem key={r.id}>
-                    <ReleaseCard release={r} />
-                  </StaggerItem>
-                ))}
-              </StaggerGrid>
+          {featured && (
+            <Section>
+              <FadeUp className="grid gap-8 overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-primary/10 via-card to-card p-6 md:grid-cols-[minmax(0,300px)_1fr] md:items-center md:p-8">
+                <div className="relative aspect-square w-full overflow-hidden rounded-xl border border-border shadow-xl">
+                  <Artwork
+                    src={featured.coverArt}
+                    alt={`${featured.title} cover art`}
+                    kind="release"
+                    priority
+                    sizes="(max-width: 768px) 100vw, 300px"
+                  />
+                </div>
+                <div>
+                  <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-gold">
+                    Featured release
+                  </p>
+                  <h2 className="font-display text-3xl font-bold sm:text-4xl">
+                    {featured.title}
+                  </h2>
+                  {featured.artistNames?.length ? (
+                    <p className="mt-1 text-muted-foreground">
+                      {featured.artistNames.join(", ")}
+                    </p>
+                  ) : null}
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {featured.type && <Badge variant="gold">{featured.type}</Badge>}
+                    {featured.releaseDate && (
+                      <Badge variant="outline">
+                        {formatDate(featured.releaseDate)}
+                      </Badge>
+                    )}
+                  </div>
+                  {embedSrc && (
+                    <MusicEmbed
+                      url={embedSrc}
+                      title={`${featured.title} player`}
+                      className="mt-5 lg:max-w-xl"
+                    />
+                  )}
+                  <PlatformButtons
+                    className="mt-4"
+                    platforms={[
+                      { key: "spotify", label: "Spotify", url: featured.spotifyUrl },
+                      { key: "apple", label: "Apple Music", url: featured.appleMusicUrl },
+                      { key: "soundcloud", label: "SoundCloud", url: featured.soundcloudUrl },
+                      { key: "youtube", label: "YouTube", url: featured.youtubeUrl },
+                      { key: "bandcamp", label: "Bandcamp", url: featured.bandcampUrl },
+                    ]}
+                  />
+                  <div className="mt-5">
+                    <Button
+                      asChild
+                      variant="ghost"
+                      className="px-0 hover:bg-transparent hover:text-primary"
+                    >
+                      <Link href={`/music/${featured.slug}`}>
+                        Full release page <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </FadeUp>
             </Section>
           )}
 
           {rest.length > 0 && (
-            <Section className={featured.length > 0 ? "pt-4" : ""}>
-              {featured.length > 0 && (
-                <SectionHeader eyebrow="Catalog" title="All releases" />
-              )}
-              <StaggerGrid className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-                {rest.map((r) => (
-                  <StaggerItem key={r.id}>
-                    <ReleaseCard release={r} />
-                  </StaggerItem>
-                ))}
-              </StaggerGrid>
+            <Section className={featured ? "pt-0" : ""}>
+              <MusicCatalog releases={rest} />
             </Section>
           )}
         </>
