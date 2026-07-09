@@ -10,6 +10,13 @@ export interface EmbedInfo {
   src: string;
   /** Recommended aspect: "video" (16:9) or "audio" (compact). */
   ratio: "video" | "audio";
+  /**
+   * Recommended pixel height for audio embeds. Ignored for video (uses aspect-video).
+   * Spotify single-track/episode = 152, album/playlist/show = 352.
+   * SoundCloud compact = 166. Apple Music single = 175, album/playlist = 450.
+   * Bandcamp defaults to 120.
+   */
+  audioHeight?: number;
 }
 
 export function detectPlatform(url: string): EmbedPlatform {
@@ -37,18 +44,20 @@ export function toEmbed(url?: string | null): EmbedInfo | null {
     case "spotify": {
       // https://open.spotify.com/track/ID -> /embed/track/ID
       const path = raw.pathname.replace(/^\/embed/, "");
+      const finalPath = path.startsWith("/embed") ? path : `/embed${path}`;
+      // Multi-track content needs the taller player; single track/episode fits in 152.
+      const isMulti = /\/embed\/(album|playlist|show)\//.test(finalPath);
       return {
         platform,
-        src: `https://open.spotify.com${
-          path.startsWith("/embed") ? path : `/embed${path}`
-        }`,
+        src: `https://open.spotify.com${finalPath}`,
         ratio: "audio",
+        audioHeight: isMulti ? 352 : 152,
       };
     }
     case "soundcloud": {
       // If already an embed player URL, keep it; otherwise wrap via widget.
       if (raw.hostname.includes("w.soundcloud.com")) {
-        return { platform, src: url, ratio: "audio" };
+        return { platform, src: url, ratio: "audio", audioHeight: 166 };
       }
       return {
         platform,
@@ -56,6 +65,7 @@ export function toEmbed(url?: string | null): EmbedInfo | null {
           url
         )}&color=%237c3aed&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false`,
         ratio: "audio",
+        audioHeight: 166,
       };
     }
     case "youtube": {
@@ -79,16 +89,19 @@ export function toEmbed(url?: string | null): EmbedInfo | null {
       const embedHost = raw.hostname.startsWith("embed.")
         ? raw.hostname
         : `embed.${raw.hostname}`;
+      // Apple: album/playlist pages are taller than single track pages.
+      const isMulti = /\/(album|playlist)\//.test(raw.pathname) && !raw.searchParams.get("i");
       return {
         platform,
         src: `https://${embedHost}${raw.pathname}${raw.search}`,
         ratio: "audio",
+        audioHeight: isMulti ? 450 : 175,
       };
     }
     case "bandcamp": {
       // Bandcamp embeds require an EmbeddedPlayer URL; pass through if present.
       if (raw.pathname.includes("EmbeddedPlayer")) {
-        return { platform, src: url, ratio: "audio" };
+        return { platform, src: url, ratio: "audio", audioHeight: 120 };
       }
       return null;
     }

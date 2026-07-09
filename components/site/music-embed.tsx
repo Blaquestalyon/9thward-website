@@ -43,16 +43,19 @@ export function MusicEmbed({
   if (!info) return null;
 
   const isVideo = info.ratio === "video";
-  const heightClass = isVideo ? "aspect-video" : "h-[166px]";
+  // Audio embeds use an inline pixel height matched to the platform's natural
+  // player height so there is no extra whitespace inside the container.
+  const audioHeight = info.audioHeight ?? 166;
 
   return (
     <div
       ref={ref}
       className={cn(
         "relative w-full overflow-hidden rounded-lg border border-border bg-secondary",
-        heightClass,
+        isVideo && "aspect-video",
         className
       )}
+      style={isVideo ? undefined : { height: audioHeight }}
     >
       {inView ? (
         <iframe
