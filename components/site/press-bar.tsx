@@ -1,12 +1,14 @@
 import { PRESS } from "@/lib/site";
 
 /**
- * Slim "Featured in" trust bar for the Home 2 (preview) page.
- *
- * Sits directly under the hero — the highest-trust real estate — so a partner
- * or journalist sees the press credibility immediately. Reuses the PRESS data
- * that already feeds the fuller press section lower on the page.
+ * Slim "Featured in" trust bar under the homepage hero — the highest-trust
+ * real estate, so a partner or journalist sees the press credibility right
+ * away. The linked outlets come from PRESS (they also feed the fuller press
+ * section lower on the page); EXTRA_OUTLETS are additional "featured in"
+ * mentions shown as wordmarks. Give one an href here to make it clickable.
  */
+const EXTRA_OUTLETS = ["The AI Journal", "Monthly Mixing"];
+
 export function PressBar() {
   return (
     <div className="border-b border-border bg-card/40">
@@ -24,6 +26,14 @@ export function PressBar() {
           >
             {p.outlet}
           </a>
+        ))}
+        {EXTRA_OUTLETS.map((name) => (
+          <span
+            key={name}
+            className="font-display text-sm font-semibold text-foreground/85"
+          >
+            {name}
+          </span>
         ))}
         <span className="font-display text-sm font-semibold text-gold">
           144K Collective
