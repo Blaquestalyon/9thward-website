@@ -193,7 +193,7 @@ export default function AboutPage() {
           </div>
         </FadeUp>
 
-        <FadeUp className="mt-10" id="imused">
+        <FadeUp className="mt-10 scroll-mt-28" id="imused">
           <h3 className="font-display text-xl font-semibold sm:text-2xl">
             2025: the mission enters a new era
           </h3>

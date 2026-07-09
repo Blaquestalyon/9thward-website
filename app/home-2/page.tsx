@@ -124,32 +124,46 @@ export default async function Home2Page() {
         </Section>
       )}
 
-      {/* The work — releases + video in one section (was two) */}
-      <Section className="pt-4 md:pt-4">
-        <div className="mb-8 flex items-end justify-between gap-4">
-          <SectionHeader
-            eyebrow="The work"
-            title="Releases & video, in one place"
-            description={`New music and the most-watched videos from the Blaquestalyon / 9th Ward channel — ${YOUTUBE_CHANNEL.subscriberCount} subscribers and counting.`}
-            className="mb-0"
-          />
-          <Button asChild variant="ghost" className="hidden shrink-0 sm:inline-flex">
-            <Link href="/music">
-              All music <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-
-        {latestReleases.length > 0 && (
-          <StaggerGrid className="mb-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+      {/* Latest music */}
+      {latestReleases.length > 0 && (
+        <Section className="pt-4 md:pt-4">
+          <div className="mb-8 flex items-end justify-between gap-4">
+            <SectionHeader
+              eyebrow="New music"
+              title="Latest releases"
+              className="mb-0"
+            />
+            <Button asChild variant="ghost" className="hidden shrink-0 sm:inline-flex">
+              <Link href="/music">
+                All music <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+          <StaggerGrid className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {latestReleases.map((release) => (
               <StaggerItem key={release.id}>
                 <ReleaseCard release={release} />
               </StaggerItem>
             ))}
           </StaggerGrid>
-        )}
+        </Section>
+      )}
 
+      {/* Featured videos from YouTube */}
+      <Section className="pt-4 md:pt-4">
+        <div className="mb-8 flex items-end justify-between gap-4">
+          <SectionHeader
+            eyebrow="On the screen"
+            title="Most-watched videos"
+            description={`From the Blaquestalyon / 9th Ward channel — ${YOUTUBE_CHANNEL.subscriberCount} subscribers and counting.`}
+            className="mb-0"
+          />
+          <Button asChild variant="ghost" className="hidden shrink-0 sm:inline-flex">
+            <a href={YOUTUBE_CHANNEL.href} target="_blank" rel="noopener noreferrer">
+              Full channel <ArrowRight className="h-4 w-4" />
+            </a>
+          </Button>
+        </div>
         <FeaturedVideos />
       </Section>
 
