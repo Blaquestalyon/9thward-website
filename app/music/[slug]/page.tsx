@@ -49,12 +49,13 @@ export default async function ReleaseDetailPage({
   const linkedArtists = artists.filter((a) => release.artistIds.includes(a.id));
 
   // Primary embed: Embed URL, else first available platform URL.
+  // Preference: YouTube (reliable 16:9 iframe) → Apple → SoundCloud → Spotify.
   const embedSrc =
     release.embedUrl ||
-    release.spotifyUrl ||
-    release.soundcloudUrl ||
     release.youtubeUrl ||
-    release.appleMusicUrl;
+    release.appleMusicUrl ||
+    release.soundcloudUrl ||
+    release.spotifyUrl;
 
   return (
     <>
