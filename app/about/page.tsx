@@ -290,9 +290,16 @@ export default function AboutPage() {
             <p className="font-display text-2xl font-bold text-gold">2025</p>
             <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
               9th Ward expands the artist-protection mission with the 144K
-              Collective through iMused.ai, an ethical AI music platform
-              centered on artist attribution, royalty participation, and
-              creative transparency.
+              Collective through{" "}
+              <a
+                href="https://imused.ai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-gold underline-offset-4 hover:underline"
+              >
+                iMused.ai
+              </a>, an ethical AI music platform centered on artist
+              attribution, royalty participation, and creative transparency.
             </p>
           </div>
           <div className="rounded-lg border border-border bg-card p-5">
