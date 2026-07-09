@@ -1,26 +1,32 @@
 import Link from "next/link";
-import { ArrowRight, Disc3, Send, Users, Wrench } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 // Render on every request so Airtable edits (Featured, Status, Sort Order)
 // take effect immediately. The Airtable client still caches for 60s via
 // fetch() tag caching, so this is at most one API call per minute per node.
 export const dynamic = "force-dynamic";
+
 import {
   getLatestFeaturedRelease,
   listFeaturedArtists,
   listReleases,
 } from "@/lib/airtable/read";
-import { SOCIAL_LINKS, YOUTUBE_CHANNEL } from "@/lib/site";
-import { HeroRelease } from "@/components/site/hero-release";
+import { YOUTUBE_CHANNEL } from "@/lib/site";
+import { HeroHome2 } from "@/components/site/hero-home2";
+import { PressBar } from "@/components/site/press-bar";
 import { Section, SectionHeader } from "@/components/site/section";
 import { ArtistCard } from "@/components/site/artist-card";
 import { ReleaseCard } from "@/components/site/release-card";
 import { StaggerGrid, StaggerItem, FadeUp } from "@/components/site/motion";
-import { SocialIcon } from "@/components/site/social-icons";
 import { ImUsedFeature } from "@/components/site/imused-feature";
 import { FeaturedVideos } from "@/components/site/featured-videos";
 import { PressStrip } from "@/components/site/press-strip";
 import { Button } from "@/components/ui/button";
+
+const FOUNDERS = [
+  { name: "Jay Davis", role: "Co-founder · aka Blaquestalyon", initials: "JD" },
+  { name: "Shakara Weston", role: "Co-founder", initials: "SW" },
+];
 
 export default async function HomePage() {
   const [featuredRelease, featuredArtists, releases] = await Promise.all([
@@ -30,46 +36,69 @@ export default async function HomePage() {
   ]);
   const latestReleases = releases.slice(0, 4);
 
-  const quickLinks = [
-    { href: "/music", label: "Music", icon: Disc3, desc: "Releases & smart links" },
-    { href: "/artists", label: "Artists", icon: Users, desc: "Meet the roster" },
-    { href: "/submit", label: "Submit", icon: Send, desc: "Send us your music" },
-    { href: "/services", label: "Services", icon: Wrench, desc: "How we help" },
-  ];
-
   return (
     <>
-      <HeroRelease release={featuredRelease} />
+      <HeroHome2 release={featuredRelease} />
 
-      {/* Quick links */}
+      {/* Press trust bar — highest-trust real estate, right under the hero */}
+      <PressBar />
+
+      {/* Who we are — pulls the label's story forward from the About page */}
       <Section className="py-14 md:py-16">
-        <StaggerGrid className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {quickLinks.map((q) => (
-            <StaggerItem key={q.href}>
-              <Link
-                href={q.href}
-                className="group flex h-full flex-col rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary/60"
-              >
-                <q.icon className="h-6 w-6 text-primary" />
-                <span className="mt-4 font-display text-lg font-semibold group-hover:text-primary">
-                  {q.label}
-                </span>
-                <span className="text-sm text-muted-foreground">{q.desc}</span>
-                <ArrowRight className="mt-4 h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
+        <FadeUp className="grid items-center gap-8 rounded-2xl border border-border bg-card p-8 md:grid-cols-[1.2fr_0.8fr] md:p-10">
+          <div>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-gold">
+              Who we are
+            </p>
+            <h2 className="font-display text-2xl font-bold sm:text-3xl">
+              Born to protect independent artists
+            </h2>
+            <p className="mt-4 max-w-xl text-muted-foreground">
+              The name began in Houston in 2010. New Orleans gave it meaning; a
+              ward is a place of protection. Sixteen years later the standard is
+              the same: protect the art, pay the artist, and build without
+              compromise.
+            </p>
+            <Button asChild variant="ghost" className="mt-5 px-0 hover:bg-transparent hover:text-primary">
+              <Link href="/about">
+                Read our story <ArrowRight className="h-4 w-4" />
               </Link>
-            </StaggerItem>
-          ))}
-        </StaggerGrid>
+            </Button>
+          </div>
+          <ul className="grid gap-4">
+            {FOUNDERS.map((f) => (
+              <li key={f.name} className="flex items-center gap-4">
+                <span
+                  aria-hidden
+                  className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-border bg-primary/15 font-display text-lg font-bold text-primary"
+                >
+                  {f.initials}
+                </span>
+                <div>
+                  <p className="font-display text-base font-semibold">
+                    {f.name}
+                  </p>
+                  <p className="text-sm text-muted-foreground">{f.role}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </FadeUp>
       </Section>
 
-      {/* Featured roster */}
+      {/* Flagship venture — moved up: the press hook and innovation proof */}
+      <Section className="pt-0">
+        <ImUsedFeature />
+      </Section>
+
+      {/* Roster */}
       {featuredArtists.length > 0 && (
         <Section className="pt-4 md:pt-4">
           <div className="mb-8 flex items-end justify-between gap-4">
             <SectionHeader
-              eyebrow="Featured artists"
+              eyebrow="The roster"
               title="Artists we build with"
-              description="Independent artists we produce, manage, and promote. We're in Houston, but we build with talent anywhere. Great music doesn't need a zip code."
+              description="Independent artists we produce, manage, and promote. Great music doesn't need a zip code."
               className="mb-0"
             />
             <Button asChild variant="ghost" className="hidden shrink-0 sm:inline-flex">
@@ -123,11 +152,7 @@ export default async function HomePage() {
             className="mb-0"
           />
           <Button asChild variant="ghost" className="hidden shrink-0 sm:inline-flex">
-            <a
-              href={YOUTUBE_CHANNEL.href}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={YOUTUBE_CHANNEL.href} target="_blank" rel="noopener noreferrer">
               Full channel <ArrowRight className="h-4 w-4" />
             </a>
           </Button>
@@ -135,38 +160,32 @@ export default async function HomePage() {
         <FeaturedVideos />
       </Section>
 
-      {/* ImUsed.ai feature block */}
-      <Section className="pt-4 md:pt-4">
-        <ImUsedFeature />
-      </Section>
-
-      {/* Press */}
+      {/* Press coverage — the detailed version */}
       <Section className="pt-4 md:pt-4">
         <PressStrip />
       </Section>
 
-      {/* Social proof / follow */}
+      {/* Closing CTA — work with us, not just follow us */}
       <Section className="pt-4">
-        <FadeUp className="rounded-2xl border border-border bg-card p-8 text-center md:p-12">
-          <h2 className="font-display text-2xl font-bold sm:text-3xl">
-            Follow the movement
-          </h2>
-          <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
-            New releases, shows, and roster news across the platforms.
-          </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            {SOCIAL_LINKS.filter((s) => s.href).map((s) => (
-              <a
-                key={s.key}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={s.label}
-                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary hover:text-foreground"
-              >
-                <SocialIcon keyName={s.key} />
-              </a>
-            ))}
+        <FadeUp className="flex flex-col items-start justify-between gap-6 rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/12 via-card to-card p-8 md:flex-row md:items-center md:p-12">
+          <div>
+            <h2 className="font-display text-2xl font-bold sm:text-3xl">
+              Work with 9th Ward
+            </h2>
+            <p className="mt-2 max-w-md text-muted-foreground">
+              Artists, partners, and press — start here.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Button asChild size="lg">
+              <Link href="/submit">Submit your music</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <Link href="/contact">Partner with us</Link>
+            </Button>
+            <Button asChild size="lg" variant="ghost">
+              <Link href="/services">Explore services</Link>
+            </Button>
           </div>
         </FadeUp>
       </Section>
