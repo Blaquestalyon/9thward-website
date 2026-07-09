@@ -117,7 +117,11 @@ export default async function ReleaseDetailPage({
                 <h2 className="mb-3 font-display text-xl font-semibold">
                   Listen
                 </h2>
-                <MusicEmbed url={embedSrc} title={`${release.title} player`} />
+                <MusicEmbed
+                  url={embedSrc}
+                  title={`${release.title} player`}
+                  className="lg:max-w-xl"
+                />
               </div>
             )}
 
