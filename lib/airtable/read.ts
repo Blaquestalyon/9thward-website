@@ -276,12 +276,28 @@ export async function listServices(): Promise<Service[]> {
 // ─────────────────────────────────────────────────────────────
 // BLOG POSTS
 // ─────────────────────────────────────────────────────────────
+/**
+ * Normalize a user-authored slug into a URL-safe form.
+ * Airtable authors sometimes paste slugs containing characters that break
+ * routing ("?", spaces, ampersands, etc). Sanitize to lowercase alphanumeric
+ * + hyphens so the listing link and the [slug] route always agree.
+ */
+function sanitizeSlug(raw: string): string {
+  return raw
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-") // any run of non-safe chars becomes a hyphen
+    .replace(/^-+|-+$/g, "");     // trim leading/trailing hyphens
+}
+
 function toPost(rec: AirtableRecord<Record<string, unknown>>): BlogPost | null {
   const f = rec.fields;
   const F = FIELDS.BlogPosts;
   const title = str(f[F.Title]);
-  const slug = str(f[F.Slug]);
-  if (!title || !slug) return null;
+  const rawSlug = str(f[F.Slug]);
+  if (!title || !rawSlug) return null;
+  const slug = sanitizeSlug(rawSlug);
+  if (!slug) return null;
   return {
     id: rec.id,
     title,
