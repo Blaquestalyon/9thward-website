@@ -47,13 +47,22 @@ export function Footer({
     </div>
   );
 
+  const exploreLinks = [
+    ...NAV_LINKS,
+    { href: "/submit", label: "Submit Music" },
+  ];
+  const exploreRows = Math.ceil(exploreLinks.length / 2);
+
   const exploreNav = (
     <nav aria-label="Footer navigation">
       <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-foreground">
         Explore
       </h3>
-      <ul className="mt-4 space-y-2.5">
-        {NAV_LINKS.map((link) => (
+      <ul
+        className="mt-4 grid grid-flow-col gap-x-10 gap-y-2.5"
+        style={{ gridTemplateRows: `repeat(${exploreRows}, auto)` }}
+      >
+        {exploreLinks.map((link) => (
           <li key={link.href}>
             <Link
               href={link.href}
@@ -63,23 +72,34 @@ export function Footer({
             </Link>
           </li>
         ))}
-        <li>
-          <Link
-            href="/submit"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Submit Music
-          </Link>
-        </li>
       </ul>
     </nav>
   );
 
   const bottomBar = (
     <div className="flex flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
-      <p className="text-xs text-muted-foreground">
-        &copy; {year} {SITE.legalName}. All rights reserved.
-      </p>
+      <div className="flex flex-col items-center gap-x-4 gap-y-1 sm:flex-row sm:items-baseline">
+        <p className="text-xs text-muted-foreground">
+          &copy; {year} {SITE.legalName}. All rights reserved.
+        </p>
+        <nav
+          aria-label="Legal"
+          className="flex items-center gap-4"
+        >
+          <Link
+            href="/terms"
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Terms
+          </Link>
+          <Link
+            href="/privacy"
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Privacy
+          </Link>
+        </nav>
+      </div>
       <p className="text-xs text-muted-foreground">
         {SITE.address.formatted} &middot; Independent since {SITE.foundingYear}
       </p>

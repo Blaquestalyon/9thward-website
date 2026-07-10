@@ -15,13 +15,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/blog",
     "/about",
     "/contact",
+    "/terms",
+    "/privacy",
   ];
+
+  const legalPaths = new Set(["/terms", "/privacy"]);
 
   const base: MetadataRoute.Sitemap = staticPaths.map((p) => ({
     url: absoluteUrl(p),
     lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: p === "/" ? 1 : 0.7,
+    changeFrequency: legalPaths.has(p) ? "yearly" : "weekly",
+    priority: p === "/" ? 1 : legalPaths.has(p) ? 0.3 : 0.7,
   }));
 
   // Dynamic slugs — guarded so a failed read never breaks the sitemap.

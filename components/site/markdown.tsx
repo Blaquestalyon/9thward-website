@@ -155,7 +155,14 @@ function render(md: string): string {
   return html.join("\n");
 }
 
-export function Markdown({ content }: { content: string }) {
+export function Markdown({
+  content,
+  dropCap = true,
+}: {
+  content: string;
+  /** Decorative large first letter on the opening paragraph. Off for legal pages. */
+  dropCap?: boolean;
+}) {
   return (
     <div
       className={[
@@ -165,11 +172,15 @@ export function Markdown({ content }: { content: string }) {
         // Paragraph rhythm
         "[&>p]:my-5 [&>p:first-child]:mt-0 [&>p:last-child]:mb-0",
         // Drop cap on first paragraph — bold visual anchor at the top of the piece
-        "[&>p:first-of-type::first-letter]:float-left",
-        "[&>p:first-of-type::first-letter]:mr-2 [&>p:first-of-type::first-letter]:mt-1",
-        "[&>p:first-of-type::first-letter]:font-display [&>p:first-of-type::first-letter]:font-bold",
-        "[&>p:first-of-type::first-letter]:text-[3.5rem] [&>p:first-of-type::first-letter]:leading-[0.9]",
-        "[&>p:first-of-type::first-letter]:text-primary",
+        ...(dropCap
+          ? [
+              "[&>p:first-of-type::first-letter]:float-left",
+              "[&>p:first-of-type::first-letter]:mr-2 [&>p:first-of-type::first-letter]:mt-1",
+              "[&>p:first-of-type::first-letter]:font-display [&>p:first-of-type::first-letter]:font-bold",
+              "[&>p:first-of-type::first-letter]:text-[3.5rem] [&>p:first-of-type::first-letter]:leading-[0.9]",
+              "[&>p:first-of-type::first-letter]:text-primary",
+            ]
+          : []),
         // Headings
         "[&_h1]:mt-10 [&_h2]:mt-10 [&_h3]:mt-8 [&_h4]:mt-6",
         // Links: readable in-flow underline
