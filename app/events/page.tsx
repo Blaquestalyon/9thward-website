@@ -13,6 +13,11 @@ import { eventLd, breadcrumbLd } from "@/lib/jsonld";
 import { Button } from "@/components/ui/button";
 import { formatDateTime } from "@/lib/utils";
 
+// Render on every request so event flyer/photo URLs are always freshly fetched
+// from Airtable. Airtable attachment URLs are temporary and expire; a cached
+// (static/ISR) page can serve an expired URL → broken image on first load.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Events",
   description:

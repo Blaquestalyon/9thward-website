@@ -11,6 +11,11 @@ import { JsonLd } from "@/components/site/json-ld";
 import { breadcrumbLd } from "@/lib/jsonld";
 import { formatDate } from "@/lib/utils";
 
+// Render on every request so post cover-image URLs are always freshly fetched
+// from Airtable. Airtable attachment URLs are temporary and expire; a cached
+// (static/ISR) page can serve an expired URL → broken image on first load.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Blog",
   description:
