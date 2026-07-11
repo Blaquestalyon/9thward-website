@@ -53,6 +53,13 @@ function splitLongParagraph(text: string): string[] {
   const sentences = text.match(/[^.!?]+[.!?]+(?:["')\]]+)?(?:\s+|$)/g);
   if (!sentences || sentences.length < 2) return [text];
 
+  // Safety net: the regex can skip over text with mid-sentence periods —
+  // statute citations ("§ 521.052"), decimals, or emails ("name@site.com").
+  // Rebuilding only from the matched pieces would silently drop characters,
+  // which is unacceptable on legal pages. If the matches don't reconstruct the
+  // input exactly, leave the paragraph whole rather than lose any words.
+  if (sentences.join("") !== text) return [text];
+
   const paragraphs: string[] = [];
   let buf = "";
   for (const s of sentences) {
