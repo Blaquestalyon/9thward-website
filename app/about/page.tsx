@@ -63,7 +63,7 @@ const TIMELINE = [
   },
   {
     year: "Today",
-    text: "Based in Houston with international reach — from El Paso and the Bronx to Seoul, Aruba, and beyond.",
+    text: "Based in Houston with reach across four continents — from El Paso and the Bronx to the Caribbean, Europe, and East Asia.",
   },
 ];
 
@@ -72,9 +72,13 @@ const REACH = [
   "Houston",
   "El Paso",
   "The Bronx",
-  "South Korea",
+  "Jamaica",
+  "Dominican Republic",
   "Aruba",
+  "Curaçao",
+  "Netherlands",
   "UK / Nigeria",
+  "South Korea",
 ];
 
 const WHAT_WE_DO = [
@@ -197,8 +201,9 @@ export default function AboutPage() {
           </p>
           <p className="max-w-3xl text-muted-foreground">
             Our foundation runs through New Orleans, Houston, El Paso, and the
-            Bronx — and our artists and collaborators now connect us to South
-            Korea, Aruba, and the UK by way of Nigeria.
+            Bronx. Our artists and collaborators carry it across the Caribbean
+            in Jamaica, the Dominican Republic, Aruba, and Curaçao, and on to
+            the Netherlands, the UK by way of Nigeria, and South Korea.
           </p>
           <div className="mt-5 flex flex-wrap gap-2">
             {REACH.map((place) => (
@@ -330,10 +335,10 @@ export default function AboutPage() {
                 </p>
                 <p>
                   Today, 9th Ward is still based in Houston, Texas, but its reach
-                  is international. Our foundation runs through New Orleans,
+                  spans four continents. Our foundation runs through New Orleans,
                   Houston, El Paso, and the Bronx, and our artists and
-                  collaborators now connect us to South Korea, Aruba, the UK by
-                  way of Nigeria, and beyond.
+                  collaborators now connect us to the Caribbean, Europe, West
+                  Africa, and East Asia.
                 </p>
                 <p>
                   Every artist may come from a different place, but the standard
