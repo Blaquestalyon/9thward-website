@@ -29,7 +29,7 @@ Last updated: **09 Jul 2026 (evening)** — the full 8-page layout redesign is n
 | **Data** | Airtable base `app3HHnUsEOOvO9ND` ("9th Ward Website" in workspace "144K COLLECTIVE") |
 | **Email** | Resend (optional — falls back gracefully if not configured) |
 | **Package manager** | npm |
-| **Node** | 20.x (Railway default) |
+| **Node** | 18.x — pinned by the Railway variable `RAILPACK_NODE_VERSION` (builder: Railpack) |
 | **Design tokens** | Dark-first: near-black `#0A0A0B` bg, NOLA-purple primary, gold accent. Fonts: Inter (body), Space Grotesk (display). Do NOT change colors/fonts — the redesign is layout-only. |
 
 ---
@@ -106,7 +106,6 @@ The 9th Ward story has been rewritten with founder-approved copy. **Do not parap
 ├── AIRTABLE_SETUP.md             # Full Airtable schema + setup guide
 ├── README.md                     # Local dev + deploy overview
 ├── HANDOFF.md                    # ← this file
-├── railway.json                  # Railway build/start command
 ├── next.config.mjs               # Next config (images, redirects)
 ├── tailwind.config.ts            # Design tokens
 ├── .env.example                  # Env var template
