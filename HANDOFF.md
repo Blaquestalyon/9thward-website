@@ -25,11 +25,11 @@ Last updated: **09 Jul 2026 (evening)** — the full 8-page layout redesign is n
 | **Hosting** | Railway (auto-deploy on push to `main`) |
 | **Repo on Jay's PC** | `C:\Users\jdavi\Claude\Projects\9thward-website` — in Claude Cowork, Claude works in its own cloud clone and writes finished files here via the desktop bridge; Jay pushes from gitbash |
 | **Local path (Perplexity Computer)** | `/home/user/workspace/9th-ward-site/` |
-| **Framework** | Next.js 15.5.20 (App Router) + TypeScript + Tailwind + shadcn/ui |
+| **Framework** | Next.js 15.5.28 (App Router) + TypeScript + Tailwind + shadcn/ui |
 | **Data** | Airtable base `app3HHnUsEOOvO9ND` ("9th Ward Website" in workspace "144K COLLECTIVE") |
 | **Email** | Resend (optional — falls back gracefully if not configured) |
 | **Package manager** | npm |
-| **Node** | 18.x — pinned by the Railway variable `RAILPACK_NODE_VERSION` (builder: Railpack) |
+| **Node** | 22.x — pinned by the Railway variable `RAILPACK_NODE_VERSION` (builder: Railpack); sharp 0.35.5 needs Node 20.9+ |
 | **Design tokens** | Dark-first: near-black `#0A0A0B` bg, NOLA-purple primary, gold accent. Fonts: Inter (body), Space Grotesk (display). Do NOT change colors/fonts — the redesign is layout-only. |
 
 ---
