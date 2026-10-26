@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+// zod 4 words a length limit as "Too big: expected string to have <=120 characters". The forms
+// show these to visitors, so they keep zod 3's wording; a message set on a field still wins.
+z.config({
+  customError: (issue) =>
+    issue.code === "too_big" && issue.origin === "string"
+      ? `String must contain at most ${issue.maximum} character(s)`
+      : undefined,
+});
+
 /**
  * Zod schemas for every intake form. Shared by client (react-hook-form/inline
  * errors) and server actions (authoritative validation).
@@ -68,7 +77,7 @@ export const serviceInquirySchema = z.object({
   email,
   phone: z.string().trim().max(40).optional().or(z.literal("")),
   serviceInterestedIn: z.enum(["Production", "Management", "Promotion"], {
-    errorMap: () => ({ message: "Choose a service." }),
+    error: "Choose a service.",
   }),
   artistProject: z.string().trim().max(160).optional().or(z.literal("")),
   details: z.string().trim().max(2000).optional().or(z.literal("")),
