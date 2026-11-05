@@ -413,6 +413,7 @@ Built in Claude Code (desktop) on branch `claude/9thward-site-redesign-fa96b5`, 
 
 **Images** (`public/img/`, all WebP q80 at 2200 px wide except OG)
 - `hero-9thward.webp`: the regenerated feature art. `og-9thward.jpg`: 1200×630 crop of it (JPEG on purpose, scrapers handle it best).
+- `hero-9thward.mp4`: intro clip (Higgsfield Seedance job `28fc71b2…`), H.264, no audio, **cut at 2.3s** because the source's later frames say "Roots in New Orleans". It fades in, plays once, then dissolves into the still (`useIntro` in `hero-art.tsx`, `.hero-intro`/`.hero-still` in globals.css). Reduced motion and print skip it; a stalled clip falls back to the still after 3s (JS) or 6s (CSS).
 - `banner-{about,artists,music,events,services,blog,contact,submit}.webp`: GPT Image 2 (`gpt_image_2`, 2k, high, 21:9) on Higgsfield with the feature art uploaded as a **style-only** reference. Every banner has **no people** (no invented likeness of real artists), subject on the right, left half dark for headlines. Legal pages reuse `blog`; detail pages reuse their parent's banner.
 - Sources live in `design/source/` (gitignored, Jay's machine only). Rebuild web files with `node scripts/build-images.mjs`. Cost: 74 credits (2 hero variants × 11 + 8 banners × 6.5).
 

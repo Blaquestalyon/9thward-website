@@ -303,7 +303,19 @@ html.js .reveal:not(.in) {
     0 0 32px 4px hsl(var(--gold) / 0.35);
 }
 
+/* Intro clip: fades in from black, plays once, then dissolves into the still.
+   The still is hidden only while the clip runs and comes back after 6s no
+   matter what, so a stalled video can never leave the hero empty. */
+.hero-intro { opacity: 0; transition: opacity 1.6s ease-out; }
+[data-hero="play"] .hero-intro { opacity: 1; }
+[data-hero="done"] .hero-intro { opacity: 0; transition-duration: 1.2s; }
+html.js [data-hero="intro"] .hero-still,
+html.js [data-hero="play"] .hero-still { opacity: 0; animation: hero-still-failsafe 0s 6s forwards; }
+@keyframes hero-still-failsafe { to { opacity: 1; } }
+
 @media (prefers-reduced-motion: reduce) {
+  .hero-intro { display: none; }
+  html.js .hero-still { opacity: 1 !important; animation: none !important; }
   html { scroll-behavior: auto; }
   .reveal, html.js .reveal:not(.in) {
     opacity: 1 !important;
@@ -320,5 +332,6 @@ html.js .reveal:not(.in) {
     opacity: 1 !important;
     transform: none !important;
   }
-  .dust, body::after { display: none !important; }
+  .dust, body::after, .hero-intro { display: none !important; }
+  html.js .hero-still { opacity: 1 !important; animation: none !important; }
 }

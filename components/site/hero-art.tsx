@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -55,7 +56,30 @@ function comingSoon(what: string) {
   toast(`${what}: coming soon`, { id: "coming-soon" });
 }
 
+/**
+ * Intro clip (public/img/hero-9thward.mp4) plays once, muted, then dissolves
+ * into the still. It's cut at 2.3s on purpose: the source clip's later frames
+ * still read "Roots in New Orleans", which breaks the brand rules.
+ */
+function useIntro() {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [phase, setPhase] = useState<"intro" | "play" | "done">("intro");
+  useEffect(() => {
+    const v = ref.current;
+    if (!v || matchMedia("(prefers-reduced-motion: reduce)").matches) return setPhase("done");
+    const end = () => (v.pause(), setPhase("done"));
+    const stall = setTimeout(end, 3000); // never started: show the still
+    v.muted = true;
+    v.play().then(() => (clearTimeout(stall), setPhase((p) => (p === "intro" ? "play" : p))), end);
+    v.addEventListener("ended", end);
+    v.addEventListener("error", end);
+    return () => (clearTimeout(stall), v.removeEventListener("ended", end), v.removeEventListener("error", end));
+  }, []);
+  return { ref, phase };
+}
+
 export function HeroArt() {
+  const intro = useIntro();
   return (
     <section aria-labelledby="hero-title" className="relative">
       <h1 id="hero-title" className="sr-only">
@@ -65,6 +89,7 @@ export function HeroArt() {
       </h1>
 
       <div
+        data-hero={intro.phase}
         className="relative mx-auto w-full max-w-[1920px]"
         style={{ aspectRatio: `${HERO_W} / ${HERO_H}` }}
       >
@@ -74,7 +99,17 @@ export function HeroArt() {
           fill
           priority
           sizes="(max-width: 1920px) 100vw, 1920px"
-          className="object-cover"
+          className="hero-still object-cover"
+        />
+        <video
+          ref={intro.ref}
+          src="/img/hero-9thward.mp4"
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden
+          tabIndex={-1}
+          className="hero-intro pointer-events-none absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 max-[759px]:hidden">
           {SPOTS.map((s) => {
