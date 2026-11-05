@@ -58,8 +58,8 @@ function comingSoon(what: string) {
 
 /**
  * Intro clip (public/img/hero-9thward.mp4) plays once, muted, then dissolves
- * into the still. It's cut at 2.3s on purpose: the source clip's later frames
- * still read "Roots in New Orleans", which breaks the brand rules.
+ * into the still. Its last frame was generated to match the still, so the
+ * hand-off has no size jump. Hotspots stay off until "done" (globals.css).
  */
 function useIntro() {
   const ref = useRef<HTMLVideoElement>(null);

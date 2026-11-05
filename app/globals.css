@@ -304,17 +304,17 @@ html.js .reveal:not(.in) {
 }
 
 /* Intro clip: fades in from black, plays once, then dissolves into the still.
-   The still is hidden only while the clip runs and comes back after 6s no
+   The still is hidden only while the clip runs and comes back after 9s no
    matter what, so a stalled video can never leave the hero empty. */
 .hero-intro { opacity: 0; transition: opacity 1.6s ease-out; }
 [data-hero="play"] .hero-intro { opacity: 1; }
 [data-hero="done"] .hero-intro { opacity: 0; transition-duration: 1.2s; }
 html.js [data-hero="intro"] .hero-still,
-html.js [data-hero="play"] .hero-still { opacity: 0; animation: hero-still-failsafe 0s 6s forwards; }
+html.js [data-hero="play"] .hero-still { opacity: 0; animation: hero-still-failsafe 0s 9s forwards; }
 @keyframes hero-still-failsafe { to { opacity: 1; } }
 /* Hotspots stay off (no click, hover or tab focus) until the still is up. */
 html.js [data-hero="intro"] .hero-spots,
-html.js [data-hero="play"] .hero-spots { visibility: hidden; animation: hero-spots-failsafe 0s 6s forwards; }
+html.js [data-hero="play"] .hero-spots { visibility: hidden; animation: hero-spots-failsafe 0s 9s forwards; }
 @keyframes hero-spots-failsafe { to { visibility: visible; } }
 
 @media (prefers-reduced-motion: reduce) {
