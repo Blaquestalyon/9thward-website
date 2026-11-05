@@ -3,97 +3,85 @@
 @tailwind utilities;
 
 /* ─────────────────────────────────────────────────────────────
-   9th Ward design tokens.
-   Dark is the default theme. Light is opt-in via next-themes.
-   Base: deep near-black. Primary: NOLA purple. Accent: gold.
-   All pairings verified for WCAG 2.2 AA contrast.
+   9th Ward design tokens — "live studio session" (Nov 2026).
+   Pulled from the home-page feature art: warm studio black,
+   brushed gold, spotlight glow, one red "on air" accent (the
+   logo's crosshair dot). Dark only; there is no light theme.
    HSL channels (no hsl() wrapper) so Tailwind can compose opacity.
+   Token NAMES are used across every component — rename-unsafe.
    ───────────────────────────────────────────────────────────── */
 
 @layer base {
   :root {
-    /* Light theme */
-    --background: 40 20% 98%; /* warm off-white */
-    --foreground: 240 6% 8%;
+    --background: 30 14% 4%; /* #0b0a08 studio black */
+    --foreground: 40 33% 94%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 6% 8%;
+    --card: 30 10% 7%;
+    --card-foreground: 40 33% 94%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 6% 8%;
+    --popover: 30 12% 6%;
+    --popover-foreground: 40 33% 94%;
 
-    --primary: 262 72% 47%; /* #6d28d9-ish deep purple */
-    --primary-foreground: 0 0% 100%;
+    --primary: 41 72% 58%; /* brushed gold */
+    --primary-foreground: 30 20% 6%;
 
-    --secondary: 240 5% 94%;
-    --secondary-foreground: 240 6% 12%;
+    --secondary: 30 8% 11%;
+    --secondary-foreground: 40 33% 94%;
 
-    --muted: 240 5% 92%;
-    --muted-foreground: 240 4% 38%;
+    --muted: 30 8% 12%;
+    --muted-foreground: 38 14% 68%;
 
-    --accent: 262 72% 47%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 41 72% 58%;
+    --accent-foreground: 30 20% 6%;
 
-    --gold: 38 55% 44%; /* darker gold for AA on light bg */
-    --gold-foreground: 0 0% 100%;
+    --gold: 42 78% 63%;
+    --gold-foreground: 30 20% 6%;
+    --gold-deep: 36 62% 38%;
 
-    --destructive: 0 72% 45%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 240 6% 88%;
-    --input: 240 6% 88%;
-    --ring: 262 83% 58%;
-
-    --radius: 0.75rem;
-  }
-
-  .dark {
-    /* Dark theme (default) — deep near-black #0A0A0B */
-    --background: 240 6% 4%;
-    --foreground: 40 20% 96%;
-
-    --card: 240 6% 7%;
-    --card-foreground: 40 20% 96%;
-
-    --popover: 240 6% 6%;
-    --popover-foreground: 40 20% 96%;
-
-    --primary: 262 83% 66%; /* #7c3aed brightened for dark bg */
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 240 5% 12%;
-    --secondary-foreground: 40 20% 96%;
-
-    --muted: 240 5% 13%;
-    --muted-foreground: 240 5% 65%;
-
-    --accent: 262 83% 66%;
-    --accent-foreground: 0 0% 100%;
-
-    --gold: 38 62% 62%; /* #d4a24c-ish for dark bg */
-    --gold-foreground: 240 6% 8%;
+    --live: 0 82% 55%; /* "on air" red */
 
     --destructive: 0 63% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 5% 16%;
-    --input: 240 5% 18%;
-    --ring: 262 83% 66%;
+    --border: 38 26% 19%;
+    --input: 38 22% 18%;
+    --ring: 42 80% 60%;
+
+    --radius: 0.9rem;
+    color-scheme: dark;
   }
 }
 
 @layer base {
+  [hidden] {
+    display: none !important;
+  }
   * {
     @apply border-border;
   }
   html {
     scroll-behavior: smooth;
+    background: hsl(var(--background));
   }
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    /* Overhead studio spotlights; never a flat colour */
+    background-image:
+      radial-gradient(70rem 36rem at 50% -12rem, hsl(var(--gold) / 0.09), transparent 70%),
+      radial-gradient(40rem 30rem at 100% 40%, hsl(var(--gold) / 0.04), transparent 70%),
+      radial-gradient(40rem 30rem at 0% 80%, hsl(var(--gold) / 0.035), transparent 70%);
   }
-  /* Accessible, always-visible focus ring on every interactive element */
+  /* Film grain over the whole page, like the art's texture */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
   :where(a, button, input, textarea, select, [tabindex]):focus-visible {
     @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
   }
@@ -104,10 +92,13 @@
   p {
     text-wrap: pretty;
   }
+  ::selection {
+    background: hsl(var(--gold) / 0.35);
+  }
 }
 
 @layer utilities {
-  /* Subtle film-grain overlay for hero/section texture */
+  /* Kept for existing markup: grain on a section */
   .grain::before {
     content: "";
     position: absolute;
@@ -120,11 +111,214 @@
 
   .gradient-wash {
     background-image:
-      radial-gradient(60% 60% at 15% 0%, hsl(var(--primary) / 0.18) 0%, transparent 60%),
-      radial-gradient(50% 50% at 100% 20%, hsl(var(--gold) / 0.12) 0%, transparent 55%);
+      radial-gradient(60% 70% at 20% 0%, hsl(var(--gold) / 0.16) 0%, transparent 60%),
+      radial-gradient(50% 50% at 100% 20%, hsl(var(--gold) / 0.08) 0%, transparent 55%);
   }
 
-  .text-gradient {
-    @apply bg-gradient-to-br from-foreground via-foreground to-primary bg-clip-text text-transparent;
+  /* Metallic gold lettering, like "9TH WARD" in the art */
+  .text-gradient,
+  .text-metal {
+    background-image: linear-gradient(180deg, #fbeec2 0%, #e9c46f 38%, #b98a34 70%, #f0d58c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
+
+  /* Wide-tracked gold label flanked by hairlines: "— PRODUCTION & PROMOTIONS —" */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: hsl(var(--gold));
+  }
+  .eyebrow::before {
+    content: "";
+    width: 2rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--gold)));
+  }
+
+  /* Glass cards with a gold edge, lit from above (the art's floating panels) */
+  .bg-card {
+    background-image: linear-gradient(180deg, hsl(var(--gold) / 0.07), transparent 38%);
+    box-shadow:
+      inset 0 1px 0 hsl(var(--gold) / 0.16),
+      0 24px 48px -28px rgb(0 0 0 / 0.9);
+  }
+
+  /* Hover lift + gold glow on cards */
+  .lift {
+    transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.35s ease,
+      border-color 0.35s ease;
+  }
+  .lift:hover {
+    transform: translateY(-6px);
+    border-color: hsl(var(--gold) / 0.55);
+    box-shadow:
+      inset 0 1px 0 hsl(var(--gold) / 0.3),
+      0 0 0 1px hsl(var(--gold) / 0.15),
+      0 18px 50px -12px hsl(var(--gold) / 0.28);
+  }
+
+  /* Gold hairline divider */
+  .rule-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--gold) / 0.7), transparent);
+  }
+
+  /* Atmospheric CTA band: spotlight cone + glow */
+  .stage {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .stage > :not(.dust) {
+    position: relative;
+  }
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: -40% 10% auto;
+    height: 160%;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(50% 45% at 50% 0%, hsl(var(--gold) / 0.22), transparent 70%);
+  }
+}
+
+/* ── Reveal on scroll ──────────────────────────────────────────
+   Only hides anything when html.js is set (inline script in the
+   head). components/site/reveal-observer.tsx adds .in. Reduced
+   motion and print always show everything. */
+html.js .reveal:not(.in) {
+  opacity: 0;
+  transform: translateY(22px);
+}
+.reveal {
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.stagger > .reveal:nth-child(2) { transition-delay: 0.08s; }
+.stagger > .reveal:nth-child(3) { transition-delay: 0.16s; }
+.stagger > .reveal:nth-child(4) { transition-delay: 0.24s; }
+.stagger > .reveal:nth-child(5) { transition-delay: 0.32s; }
+.stagger > .reveal:nth-child(6) { transition-delay: 0.4s; }
+
+/* ── Ambient gold dust (components/site/gold-dust.tsx) ── */
+.dust {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.dust i {
+  position: absolute;
+  bottom: -10px;
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: hsl(var(--gold));
+  box-shadow: 0 0 8px 2px hsl(var(--gold) / 0.6);
+  opacity: 0;
+  animation: dust-rise linear infinite;
+}
+@keyframes dust-rise {
+  0% { transform: translate(0, 0); opacity: 0; }
+  15% { opacity: 0.9; }
+  100% { transform: translate(var(--dx, 20px), -110vh); opacity: 0; }
+}
+
+/* ── Header equalizer + on-air dot ── */
+.eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+.eq i {
+  width: 2px;
+  height: 100%;
+  border-radius: 1px;
+  background: hsl(var(--gold));
+  transform-origin: bottom;
+  animation: eq 1.1s ease-in-out infinite;
+}
+.eq i:nth-child(2) { animation-delay: -0.4s; }
+.eq i:nth-child(3) { animation-delay: -0.8s; }
+.eq i:nth-child(4) { animation-delay: -0.2s; }
+.eq i:nth-child(5) { animation-delay: -0.6s; }
+@keyframes eq {
+  0%, 100% { transform: scaleY(0.25); }
+  50% { transform: scaleY(1); }
+}
+.on-air {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: hsl(var(--live));
+  box-shadow: 0 0 10px 2px hsl(var(--live) / 0.7);
+  animation: on-air 2.4s ease-in-out infinite;
+}
+@keyframes on-air {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* ── Interior banner: image fades into the page via mask, not an overlay ── */
+.banner-img {
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 30%),
+    linear-gradient(to bottom, #000 55%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 30%),
+    linear-gradient(to bottom, #000 55%, transparent 100%);
+  mask-composite: intersect;
+}
+@media (max-width: 767px) {
+  .banner-img {
+    -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 50%, transparent 100%);
+  }
+}
+
+/* ── Home hero hotspots ── */
+.hotspot {
+  position: absolute;
+  border-radius: 0.75rem;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+.hotspot:hover,
+.hotspot:focus-visible {
+  background: hsl(var(--gold) / 0.06);
+  box-shadow:
+    0 0 0 1.5px hsl(var(--gold) / 0.75),
+    0 0 32px 4px hsl(var(--gold) / 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal, html.js .reveal:not(.in) {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .dust, .eq i, .on-air { animation: none !important; }
+  .dust { display: none; }
+  .lift:hover { transform: none; }
+}
+
+@media print {
+  .reveal, html.js .reveal:not(.in) {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .dust, body::after { display: none !important; }
 }

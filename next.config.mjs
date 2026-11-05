@@ -2,6 +2,16 @@
 const nextConfig = {
   output: "standalone",
   reactStrictMode: true,
+  // /_next/static is content-hashed by Next. Everything else revalidates on
+  // every visit (ETag), so a redesign never pairs new HTML with stale images.
+  async headers() {
+    return [
+      {
+        source: "/:path((?!_next/static|_next/image).*)",
+        headers: [{ key: "Cache-Control", value: "no-cache" }],
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       // Airtable attachment CDNs

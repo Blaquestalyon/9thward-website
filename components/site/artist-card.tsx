@@ -3,15 +3,14 @@ import { ArrowUpRight } from "lucide-react";
 import type { Artist } from "@/lib/airtable/types";
 import { Badge } from "@/components/ui/badge";
 import { Artwork } from "./artwork";
-import { HoverLift } from "./motion";
 
 export function ArtistCard({ artist }: { artist: Artist }) {
   const title = artist.stageName || artist.name;
   return (
-    <HoverLift>
+    <>
       <Link
         href={`/artists/${artist.slug}`}
-        className="group block overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary/60"
+        className="group block overflow-hidden rounded-lg border border-border bg-card lift"
       >
         <div className="relative aspect-[3/4] w-full overflow-hidden">
           <Artwork
@@ -44,6 +43,6 @@ export function ArtistCard({ artist }: { artist: Artist }) {
           </div>
         )}
       </Link>
-    </HoverLift>
+    </>
   );
 }

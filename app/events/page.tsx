@@ -67,6 +67,7 @@ export default async function EventsPage() {
         ]}
       />
       <PageHeader
+        banner="events"
         eyebrow="Live"
         title="Events"
         description="Catch the roster on stage. Booking an artist for your own event? Reach out."
@@ -193,7 +194,7 @@ export default async function EventsPage() {
       {past.length > 0 && (
         <Section className="pt-0">
           <SectionHeader eyebrow="Archive" title="Past shows" />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {past.map((e) => (
               <FadeUp
                 key={e.id}

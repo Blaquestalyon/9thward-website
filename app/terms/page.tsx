@@ -24,6 +24,7 @@ export default function TermsPage() {
         ])}
       />
       <PageHeader
+        banner="blog"
         eyebrow="Legal"
         title={TERMS.title}
         description={`Effective ${TERMS.effectiveDate}. Last updated ${TERMS.lastUpdated}.`}

@@ -9,12 +9,12 @@ import { Artwork } from "./artwork";
 import { FadeUp } from "./motion";
 
 /**
- * Home 2 (preview) hero.
+ * Home "label" band (sits under the art hero; was the old hero).
  *
- * Reframed for label credibility: the label positioning is the H1, a proof
+ * Reframed for label credibility: the label positioning leads, a proof
  * stat row sits under the CTAs, and the featured release moves to a supporting
- * card on the right instead of being the headline. Colors + fonts are
- * unchanged from the live site — only the hierarchy differs.
+ * card on the right instead of being the headline. The page h1 is the
+ * screen-reader title in HeroArt, so this headline is an h2.
  */
 const STATS = [
   { value: "16 yrs", label: "independent" },
@@ -25,19 +25,19 @@ const STATS = [
 
 export function HeroHome2({ release }: { release: Release | null }) {
   return (
-    <section className="grain gradient-wash relative overflow-hidden border-b border-border">
-      <div className="container relative z-10 py-20 md:py-28">
+    <section className="relative overflow-hidden">
+      <div className="container relative z-10 py-14 md:py-20">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <FadeUp>
-            <p className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-gold">
+            <p className="mb-4 flex items-center gap-2 eyebrow">
               <Sparkles className="h-4 w-4" />
               Independent since 2010 · Houston
             </p>
-            <h1 className="text-4xl font-bold leading-[1.05] sm:text-5xl md:text-6xl">
+            <h2 className="text-4xl font-bold leading-[1.05] sm:text-5xl md:text-6xl">
               Indie <span className="text-gradient">artists,</span>
               <br />
               built from the ground up.
-            </h1>
+            </h2>
             <p className="mt-5 max-w-md text-lg text-muted-foreground">
               Music production, management, and promotion. Born to protect
               independent artists.
@@ -58,7 +58,7 @@ export function HeroHome2({ release }: { release: Release | null }) {
               {STATS.map((s) => (
                 <div
                   key={s.label}
-                  className="rounded-lg border border-border bg-card/70 px-3 py-3"
+                  className="lift rounded-lg border border-gold/25 bg-card px-3 py-3"
                 >
                   <dt className="font-display text-lg font-bold leading-tight text-primary">
                     {s.value}
@@ -111,7 +111,7 @@ export function HeroHome2({ release }: { release: Release | null }) {
               <div className="relative mx-auto grid aspect-square w-full max-w-md place-items-center">
                 <div
                   aria-hidden
-                  className="absolute inset-8 rounded-full bg-primary/20 blur-3xl"
+                  className="absolute inset-8 rounded-full bg-gold/20 blur-3xl"
                 />
                 <Image
                   src="/logo.png"
@@ -120,7 +120,7 @@ export function HeroHome2({ release }: { release: Release | null }) {
                   height={640}
                   priority
                   sizes="(max-width: 1024px) 80vw, 480px"
-                  className="relative z-10 h-auto w-[80%] max-w-md object-contain drop-shadow-[0_10px_40px_rgba(124,58,237,0.35)]"
+                  className="relative z-10 h-auto w-[80%] max-w-md object-contain drop-shadow-[0_10px_40px_rgba(212,162,76,0.35)]"
                 />
               </div>
             )}

@@ -89,7 +89,7 @@ export default async function ArtistDetailPage({
         ]}
       />
 
-      <PageHeader eyebrow="Artist" title={title}>
+      <PageHeader eyebrow="Artist" title={title} banner="artists">
         <div className="flex flex-wrap items-center gap-2">
           {artist.genre && <Badge variant="secondary">{artist.genre}</Badge>}
           {artist.hometown && (

@@ -36,6 +36,7 @@ export default async function BlogPage() {
         ])}
       />
       <PageHeader
+        banner="blog"
         eyebrow="The latest"
         title="Blog"
         description="News, releases, and stories from the label and the roster."
@@ -55,7 +56,7 @@ export default async function BlogPage() {
             <FadeUp>
               <Link
                 href={`/blog/${featured.slug}`}
-                className="group grid overflow-hidden rounded-2xl border border-border bg-card transition-colors hover:border-primary/60 md:grid-cols-2"
+                className="group grid overflow-hidden rounded-2xl border border-border bg-card lift md:grid-cols-2"
               >
                 <div className="relative aspect-[16/10] w-full overflow-hidden md:aspect-auto md:min-h-[20rem]">
                   <Artwork

@@ -2,7 +2,9 @@
 
 **Purpose:** Drop this whole file into a fresh AI coding session (Claude Cowork, Perplexity Computer, or similar) to resume website editing without re-explaining anything. Everything needed — repo, stack, conventions, deploy path, gotchas — is below.
 
-Last updated: **09 Jul 2026 (evening)** — the full 8-page layout redesign is now LIVE. Credibility-first homepage (HeroHome2 + proof stats + "Featured in" press bar + founders band + ImUsed.ai + CTA), plus rebuilds of About, Services, Artists (featured spotlight + genre/city filter), Music (featured-release banner + type filter/sort), Events (next-show banner + compact archive), Blog listing (featured lead + category filter), and Contact (routing tiles + reason selector + fuller sidebar). New client filter components; centered-newsletter footer site-wide; persistent Home nav link. Builds on the same-day YouTube-first embed reorder + blog article typography work.
+Last updated: **05 Nov 2026** — the **"live studio session" visual redesign** (black + brushed gold, art hero with hotspots, cinematic banners on every page) replaces the old purple palette and Space Grotesk. Read **§12 Redesign (Nov 2026)** before touching styles, the home hero, or images.
+
+Previous update: **09 Jul 2026 (evening)** — the full 8-page layout redesign is now LIVE. Credibility-first homepage (HeroHome2 + proof stats + "Featured in" press bar + founders band + ImUsed.ai + CTA), plus rebuilds of About, Services, Artists (featured spotlight + genre/city filter), Music (featured-release banner + type filter/sort), Events (next-show banner + compact archive), Blog listing (featured lead + category filter), and Contact (routing tiles + reason selector + fuller sidebar). New client filter components; centered-newsletter footer site-wide; persistent Home nav link. Builds on the same-day YouTube-first embed reorder + blog article typography work.
 
 ---
 
@@ -10,7 +12,7 @@ Last updated: **09 Jul 2026 (evening)** — the full 8-page layout redesign is n
 
 > I'm continuing work on the 9th Ward Recording website. Repo: `Blaquestalyon/9thward-website` on GitHub. Live at `https://www.9thwardrecording.com`. Please read `HANDOFF.md` in the repo (or the pasted copy below) before doing anything, then help me with: **\<your request\>**.
 >
-> Ground rules: layout-only redesign keeps the dark near-black / NOLA-purple / gold palette and Inter + Space Grotesk fonts. Verify with `tsc --noEmit` + `npm run build` before handing anything off. Follow the commit-message style in the log. **In Claude Cowork, YOU do not push — Jay pushes from gitbash himself** (see §6). Always keep a plain "Home" link in the top nav.
+> Ground rules: the Nov 2026 redesign uses a studio-black + brushed-gold palette, Playfair Display headings + Inter body, dark only (see §12). Verify with `tsc --noEmit` + `npm run build` before handing anything off. Follow the commit-message style in the log. **In Claude Cowork, YOU do not push — Jay pushes from gitbash himself** (see §6). Always keep a plain "Home" link in the top nav.
 
 ---
 
@@ -30,7 +32,7 @@ Last updated: **09 Jul 2026 (evening)** — the full 8-page layout redesign is n
 | **Email** | Resend (optional — falls back gracefully if not configured) |
 | **Package manager** | npm |
 | **Node** | 22.x — pinned by the Railway variable `RAILPACK_NODE_VERSION` (builder: Railpack); sharp 0.35.5 needs Node 20.9+ |
-| **Design tokens** | Dark-first: near-black `#0A0A0B` bg, NOLA-purple primary, gold accent. Fonts: Inter (body), Space Grotesk (display). Do NOT change colors/fonts — the redesign is layout-only. |
+| **Design tokens** | Dark only: studio black `#0b0a08` bg, brushed-gold primary/accent, red "on air" accent (`--live`). Fonts: Inter (body), Playfair Display (display). Set in `app/globals.css` + `lib/fonts.ts`. Superseded the Jul 2026 "layout-only, keep purple" rule on 05 Nov 2026 at Jay's direction — see §12. |
 
 ---
 
@@ -295,7 +297,7 @@ Railway build command: `npm run build`. Start: `npm start`.
 14. **Release-embed platform preference is YouTube-first.** `app/music/[slug]/page.tsx` (and the `/music` featured banner) pick the primary embed in this order: explicit Airtable `Embed URL` → `youtubeUrl` → `appleMusicUrl` → `soundcloudUrl` → `spotifyUrl`. YouTube is preferred because its 16:9 iframe fills the container cleanly and Spotify's plain embed does not (see gotcha #13). The `Where to stream` button row still shows all four platforms so listeners can click through to their preferred one. See commit `7ce770c`.
 15. **Slugs in Airtable must be URL-safe.** `toPost()` sanitizes them, but an Airtable slug containing `?`, spaces, or other unsafe characters will still route as the sanitized version — meaning old shared links to the raw slug will 404. On 09 Jul 2026 a blog post authored with slug `what-happened-to-hip-hop?-1` 404'd because the `?` was parsed as a query string. Fixed by editing the Airtable slug to `what-happened-to-hip-hop-pt-1` AND adding the sanitizer safety net (commit `6bca95e`). Rule of thumb for authors: **lowercase letters, digits, and hyphens only.**
 16. **Airtable long-text ≠ markdown.** Authors don't type `\n\n` between paragraphs; they press Enter once. The blog renderer in `components/site/markdown.tsx` treats every non-empty line as a paragraph and auto-splits paragraphs longer than ~500 chars on sentence boundaries so pasted walls of text look like prose. Do NOT tell authors to "use markdown syntax" — they won't. Fix rendering, not the CMS.
-17. **Redesign is layout-only.** The 8-page redesign changed structure/hierarchy only — same palette, same fonts. Filter/sort UIs are client components (`artist-roster`, `music-catalog`, `blog-list`); if you add another, follow the same shape (derive chips from values present, filter with `useState`). Framer-motion entrance animations start at opacity 0, so when screenshotting full pages, inject `[style*="opacity"]{opacity:1!important}[style*="transform"]{transform:none!important}` first.
+17. **Filter/sort UIs are client components** (`artist-roster`, `music-catalog`, `blog-list`); if you add another, follow the same shape (derive chips from values present, filter with `useState`). Framer Motion is gone (Nov 2026): scroll reveals are the CSS `.reveal` class (see §12), and they never hide content without JS.
 
 ---
 
@@ -391,6 +393,46 @@ git pull --no-edit && git push
 # Local dev
 npm run dev  # http://localhost:3000
 ```
+
+---
+
+## 12. Redesign (Nov 2026): "live studio session"
+
+Built in Claude Code (desktop) on branch `claude/9thward-site-redesign-fa96b5`, merged to `main`. Jay's design reference is the home hero art itself.
+
+**Decisions**
+- Palette/type from the art: studio black, brushed gold, one red "on air" dot; Playfair Display headings, Inter body. Purple and Space Grotesk removed. Light theme + toggle removed (`next-themes`, `framer-motion` uninstalled).
+- The original art said "ROOTS IN NEW ORLEANS", which breaks §1a. It was regenerated (GPT Image 2, 4k) with "SHAPED BY NEW ORLEANS" (canonical tagline wording); everything else in the art is unchanged.
+- "Independent Film" / "Film" have no page yet: their hotspots and the phone card show a "coming soon" toast (sonner). When a film page exists, add `href` to those two entries in `SPOTS` and to the `CARDS` entry in `hero-art.tsx`.
+- The old hero (headline, 4 stats, latest-release card) now sits directly under the art as a band (`hero-home2.tsx`); its headline is an `h2`. The page `h1` is screen-reader-only in `hero-art.tsx`.
+
+**Fragile: home hero hotspots** (`components/site/hero-art.tsx`)
+- `SPOTS[].box` = `[left, top, width, height]` in **% of `public/img/hero-9thward.webp` (2200×1238)**. `HERO_W/HERO_H` must equal the file's real pixel size; the container's `aspect-ratio` uses them, so the hotspots can't drift.
+- Re-measure if the art changes: overlay a 2.5% grid on the image (sharp + an SVG of lines works; see git history of this section's commit) or, in the browser, run `document.querySelectorAll('.hotspot').forEach(h=>h.style.outline='2px solid cyan')` and adjust.
+- Below 760px the hotspots are hidden (`max-[759px]:hidden`) and the HTML cards below the art take over (`min-[760px]:hidden`). Keep both breakpoints in sync.
+
+**Images** (`public/img/`, all WebP q80 at 2200 px wide except OG)
+- `hero-9thward.webp`: the regenerated feature art. `og-9thward.jpg`: 1200×630 crop of it (JPEG on purpose, scrapers handle it best).
+- `banner-{about,artists,music,events,services,blog,contact,submit}.webp`: GPT Image 2 (`gpt_image_2`, 2k, high, 21:9) on Higgsfield with the feature art uploaded as a **style-only** reference. Every banner has **no people** (no invented likeness of real artists), subject on the right, left half dark for headlines. Legal pages reuse `blog`; detail pages reuse their parent's banner.
+- Sources live in `design/source/` (gitignored, Jay's machine only). Rebuild web files with `node scripts/build-images.mjs`. Cost: 74 credits (2 hero variants × 11 + 8 banners × 6.5).
+
+**Design tokens** (`app/globals.css` `:root`, mapped in `tailwind.config.ts`)
+- Token **names** (`--background`, `--primary`, `--gold`, `--live`, `--border`…) are used everywhere: **not rename-safe**. Values are safe to tune.
+- Utility classes: `.eyebrow`, `.text-metal` (alias `.text-gradient`), `.lift` (hover lift), `.rule-gold`, `.stage` (spotlight CTA), `.banner-img` (mask fade), `.hotspot`, `.dust` (via `<GoldDust/>`), `.eq` / `.on-air` (header). `.bg-card` is extended with a gold edge + top light, so every card picks up the look.
+
+**Rules not to break**
+- `[hidden]{display:none !important}` stays.
+- Reveal-on-scroll: content is hidden only under `html.js` (inline script in `layout.tsx` head) and until `RevealObserver` adds `.in`. Anything on screen at load is revealed immediately; reduced motion and print force everything visible. The Claude browser pane may stop painting when hidden, so verify reveals by measuring classes, not screenshots.
+- Banner fades use `mask-image` on the image, never a colour overlay (the page background has spotlights, a flat overlay leaves a seam).
+- Nav collapses to the menu below `xl` (1280px) and links are `whitespace-nowrap`, so the bar never wraps (header stays 65px). Adding a nav item? Re-measure at 1280.
+- Logo: the mark has its white sticker outline plus a gold glow, and the wordmark is metallic gold, in both header and footer. Don't swap in a dark-only logo.
+- Use root-absolute paths (`/img/...`) for any CSS `url()`.
+- Caching: `next.config.mjs` sends `Cache-Control: no-cache` (ETag revalidation) for HTML and everything in `/public`; `/_next/static` stays content-hashed + immutable, so no `?v=` query is needed. If you ever serve a CSS/JS file from `/public`, add `?v=N` and bump it on change.
+- `absoluteUrl()` falls back to `https://www.9thwardrecording.com` in production, so og:image is always absolute https even if `NEXT_PUBLIC_SITE_URL` is unset.
+
+**Local preview without secrets:** `npm run dev:preview` starts `scripts/dev-airtable-stub.mjs` (fake Airtable on :4010, borrows the live site's current image URLs, accepts form writes without storing) and `next dev` pointed at it via `AIRTABLE_API_ROOT`. Stub data is not real (photos are not matched to the right artist names). `.claude/launch.json` runs it in the Claude desktop browser pane.
+
+**Verified 05 Nov 2026** at 1440 / 1280 / 1024 / 375: no horizontal scroll on any page, header 65px everywhere, one `h1` per page, hero ratio 1.7771 = 2200/1238, all 15 hotspots line up, toast fires. Fixed a pre-existing phone overflow in the Events "Past shows" grid (`grid-cols-1`).
 
 ---
 

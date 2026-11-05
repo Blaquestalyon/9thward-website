@@ -24,6 +24,7 @@ export default function PrivacyPage() {
         ])}
       />
       <PageHeader
+        banner="blog"
         eyebrow="Legal"
         title={PRIVACY.title}
         description={`Effective ${PRIVACY.effectiveDate}. Last updated ${PRIVACY.lastUpdated}.`}

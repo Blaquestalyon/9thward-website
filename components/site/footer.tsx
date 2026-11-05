@@ -3,7 +3,7 @@ import { SITE, NAV_LINKS, SOCIAL_LINKS } from "@/lib/site";
 import { Logo } from "./logo";
 import { SocialIcon } from "./social-icons";
 import { NewsletterForm } from "./newsletter-form";
-import { Separator } from "@/components/ui/separator";
+import { GoldDust } from "./gold-dust";
 
 /**
  * Site footer.
@@ -29,7 +29,7 @@ export function Footer({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={social.label}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary hover:text-foreground"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-gold hover:text-gold hover:shadow-[0_0_18px_-4px_hsl(var(--gold)/0.6)]"
           >
             <SocialIcon keyName={social.key} />
           </a>
@@ -55,7 +55,7 @@ export function Footer({
 
   const exploreNav = (
     <nav aria-label="Footer navigation">
-      <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-foreground">
+      <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.3em] text-gold">
         Explore
       </h3>
       <ul
@@ -66,7 +66,7 @@ export function Footer({
           <li key={link.href}>
             <Link
               href={link.href}
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="text-sm text-muted-foreground transition-colors hover:text-gold"
             >
               {link.label}
             </Link>
@@ -108,11 +108,13 @@ export function Footer({
 
   if (newsletterCentered) {
     return (
-      <footer className="border-t border-border bg-card/40">
+      <footer className="stage relative mt-8 bg-gradient-to-b from-transparent to-black/70">
+        <div className="rule-gold" aria-hidden />
+        <GoldDust count={12} />
         <div className="container py-14">
           {/* Centered newsletter */}
           <div className="mx-auto max-w-xl text-center">
-            <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-foreground">
+            <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.3em] text-gold">
               Newsletter
             </h3>
             <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground">
@@ -123,7 +125,7 @@ export function Footer({
             </div>
           </div>
 
-          <Separator className="my-10" />
+          <div className="rule-gold my-10" aria-hidden />
 
           {/* Brand + explore */}
           <div className="grid gap-10 md:grid-cols-[2fr_1fr]">
@@ -137,7 +139,7 @@ export function Footer({
             {exploreNav}
           </div>
 
-          <Separator className="my-8" />
+          <div className="rule-gold my-8" aria-hidden />
           {bottomBar}
         </div>
       </footer>
@@ -145,7 +147,8 @@ export function Footer({
   }
 
   return (
-    <footer className="border-t border-border bg-card/40">
+    <footer className="stage relative mt-8 bg-gradient-to-b from-transparent to-black/70">
+      <div className="rule-gold" aria-hidden />
       <div className="container py-14">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
@@ -162,7 +165,7 @@ export function Footer({
 
           {/* Newsletter */}
           <div>
-            <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-foreground">
+            <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.3em] text-gold">
               Newsletter
             </h3>
             <p className="mt-4 text-sm text-muted-foreground">
@@ -174,7 +177,7 @@ export function Footer({
           </div>
         </div>
 
-        <Separator className="my-8" />
+        <div className="rule-gold my-8" aria-hidden />
         {bottomBar}
       </div>
     </footer>

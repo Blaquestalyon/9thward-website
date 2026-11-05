@@ -17,7 +17,7 @@ export function PressStrip() {
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex h-full flex-col justify-between gap-4 rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary/60"
+              className="group flex h-full flex-col justify-between gap-4 rounded-xl border border-border bg-card p-5 lift"
             >
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-gold">

@@ -69,7 +69,7 @@ function PostCard({ post }: { post: BlogPost }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary/60"
+      className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card lift"
     >
       <div className="relative aspect-[16/9] w-full overflow-hidden">
         <Artwork

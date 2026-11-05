@@ -3,15 +3,14 @@ import type { Release } from "@/lib/airtable/types";
 import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Artwork } from "./artwork";
-import { HoverLift } from "./motion";
 
 export function ReleaseCard({ release }: { release: Release }) {
   const artists = release.artistNames?.join(", ");
   return (
-    <HoverLift>
+    <>
       <Link
         href={`/music/${release.slug}`}
-        className="group block overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary/60"
+        className="group block overflow-hidden rounded-lg border border-border bg-card lift"
       >
         <div className="relative aspect-square w-full overflow-hidden">
           <Artwork
@@ -46,6 +45,6 @@ export function ReleaseCard({ release }: { release: Release }) {
           )}
         </div>
       </Link>
-    </HoverLift>
+    </>
   );
 }

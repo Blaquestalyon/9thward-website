@@ -34,7 +34,11 @@ export function formatDateTime(input?: string | null): string {
 /** Absolute URL helper for canonical/OG tags. Tolerates missing scheme so a
  *  misconfigured NEXT_PUBLIC_SITE_URL never crashes rendering. */
 export function absoluteUrl(path = ""): string {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const raw =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.NODE_ENV === "production"
+      ? "https://www.9thwardrecording.com"
+      : "http://localhost:3000");
   const withScheme = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
   const base = withScheme.replace(/\/$/, "");
   return `${base}${path.startsWith("/") ? path : `/${path}`}`;

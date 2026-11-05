@@ -33,3 +33,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 gws.err
+
+# design source art (large; regenerate web assets with scripts/build-images.mjs)
+/design/

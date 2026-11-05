@@ -49,7 +49,7 @@ export function ServiceCard({ service }: { service: Service }) {
           : "Inquire";
 
   return (
-    <div className="flex h-full flex-col rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary/50">
+    <div className="flex h-full flex-col rounded-lg border border-border bg-card p-6 lift">
       <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
         <Icon className="h-6 w-6" aria-hidden />
       </div>

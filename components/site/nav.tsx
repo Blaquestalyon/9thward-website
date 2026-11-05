@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/site";
 import { Button } from "@/components/ui/button";
 import { Logo } from "./logo";
-import { ThemeToggle } from "./theme-toggle";
 import {
   Sheet,
   SheetClose,
@@ -34,29 +33,29 @@ export function Nav() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 w-full border-b transition-colors duration-300",
+        "sticky top-0 z-40 w-full transition-colors duration-300",
         scrolled
-          ? "border-border bg-background/85 backdrop-blur-md"
-          : "border-transparent bg-background/40 backdrop-blur-sm"
+          ? "bg-background/85 shadow-[0_10px_30px_-12px_rgb(0_0_0/0.9)] backdrop-blur-md"
+          : "bg-background/50 backdrop-blur-sm"
       )}
     >
       <nav
         className="container flex h-16 items-center justify-between gap-4"
         aria-label="Main navigation"
       >
-        <Link href="/" aria-label="9th Ward home" className="rounded-md">
+        <Link href="/" aria-label="9th Ward home" className="shrink-0 rounded-md">
           <Logo />
         </Link>
 
         {/* Desktop links */}
-        <ul className="hidden items-center gap-1 lg:flex">
+        <ul className="hidden items-center gap-0.5 xl:flex">
           <li>
             <Link
               href="/"
               aria-current={isActive("/") ? "page" : undefined}
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
-                isActive("/") ? "text-foreground" : "text-muted-foreground"
+                "relative whitespace-nowrap rounded-md px-3 py-2 text-[13px] font-medium uppercase tracking-[0.16em] transition-colors hover:text-gold after:absolute after:inset-x-3 after:-bottom-0.5 after:h-px after:origin-left after:bg-gold after:transition-transform after:duration-300 hover:after:scale-x-100",
+                isActive("/") ? "text-gold after:scale-x-100" : "text-muted-foreground after:scale-x-0"
               )}
             >
               Home
@@ -68,10 +67,10 @@ export function Nav() {
                 href={link.href}
                 aria-current={isActive(link.href) ? "page" : undefined}
                 className={cn(
-                  "rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
+                  "relative whitespace-nowrap rounded-md px-3 py-2 text-[13px] font-medium uppercase tracking-[0.16em] transition-colors hover:text-gold after:absolute after:inset-x-3 after:-bottom-0.5 after:h-px after:origin-left after:bg-gold after:transition-transform after:duration-300 hover:after:scale-x-100",
                   isActive(link.href)
-                    ? "text-foreground"
-                    : "text-muted-foreground"
+                    ? "text-gold after:scale-x-100"
+                    : "text-muted-foreground after:scale-x-0"
                 )}
               >
                 {link.label}
@@ -80,11 +79,14 @@ export function Nav() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex shrink-0 items-center gap-3">
+          <span className="hidden items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground md:inline-flex" aria-hidden>
+            <span className="on-air" />
+            <span className="eq"><i /><i /><i /><i /><i /></span>
+          </span>
           <Button asChild size="sm" className="hidden sm:inline-flex">
             <Link href="/submit">Submit Music</Link>
           </Button>
-          <ThemeToggle />
 
           {/* Mobile menu */}
           <Sheet>
@@ -92,7 +94,7 @@ export function Nav() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="lg:hidden"
+                className="xl:hidden"
                 aria-label="Open menu"
               >
                 <Menu className="h-5 w-5" />
@@ -147,6 +149,7 @@ export function Nav() {
           </Sheet>
         </div>
       </nav>
+      <div className="rule-gold" aria-hidden />
     </header>
   );
 }

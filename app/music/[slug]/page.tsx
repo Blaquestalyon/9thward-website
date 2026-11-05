@@ -70,7 +70,7 @@ export default async function ReleaseDetailPage({
         ]}
       />
 
-      <PageHeader eyebrow={release.type || "Release"} title={release.title}>
+      <PageHeader eyebrow={release.type || "Release"} title={release.title} banner="music">
         {linkedArtists.length > 0 && (
           <p className="text-lg text-muted-foreground">
             by{" "}

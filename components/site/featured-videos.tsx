@@ -24,7 +24,7 @@ export function FeaturedVideos() {
             type="button"
             onClick={() => setActive(video)}
             className={cn(
-              "group relative overflow-hidden rounded-xl border border-border bg-card text-left transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_20px_50px_-24px_rgba(139,92,246,0.55)]",
+              "group relative overflow-hidden rounded-xl border border-border bg-card text-left lift",
               i === 0 && "sm:col-span-2 lg:col-span-2 lg:row-span-2"
             )}
             aria-label={`Play ${video.title}`}

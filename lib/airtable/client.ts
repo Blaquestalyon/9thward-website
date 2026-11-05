@@ -16,7 +16,8 @@ import "server-only";
 import type { AirtableListResponse, AirtableRecord } from "./types";
 import type { CacheTag } from "./config";
 
-const API_ROOT = "https://api.airtable.com/v0";
+// AIRTABLE_API_ROOT is only for local preview (scripts/dev-airtable-stub.mjs).
+const API_ROOT = process.env.AIRTABLE_API_ROOT || "https://api.airtable.com/v0";
 const MAX_RETRIES = 3;
 
 function creds(): { pat: string; baseId: string } | null {

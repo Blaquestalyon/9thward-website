@@ -9,6 +9,7 @@ import { StaggerGrid, StaggerItem, FadeUp } from "@/components/site/motion";
 import { JsonLd } from "@/components/site/json-ld";
 import { breadcrumbLd } from "@/lib/jsonld";
 import { Button } from "@/components/ui/button";
+import { GoldDust } from "@/components/site/gold-dust";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -97,6 +98,7 @@ export default async function ServicesPage() {
         ])}
       />
       <PageHeader
+        banner="services"
         eyebrow="What we do"
         title="Services"
         description="Three ways we help independent artists move. Every engagement is built around the artist, so we start with a conversation, not a price sheet. Tell us where you are and where you want to go."
@@ -156,7 +158,8 @@ export default async function ServicesPage() {
 
       {/* Closing CTA */}
       <Section className="pt-0">
-        <FadeUp className="flex flex-col items-start justify-between gap-6 rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/12 via-card to-card p-8 md:flex-row md:items-center md:p-12">
+        <FadeUp className="stage flex flex-col items-start justify-between gap-6 rounded-2xl border border-gold/40 bg-card p-8 md:flex-row md:items-center md:p-12">
+          <GoldDust count={14} />
           <div>
             <h2 className="font-display text-2xl font-bold sm:text-3xl">
               Tell us what you need

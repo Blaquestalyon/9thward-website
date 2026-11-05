@@ -67,7 +67,7 @@ export default async function BlogPostPage({
         ]}
       />
 
-      <PageHeader eyebrow="Article" title={post.title}>
+      <PageHeader eyebrow="Article" title={post.title} banner="blog">
         <p className="text-sm text-muted-foreground">
           {post.publishedDate && formatDate(post.publishedDate)}
           {post.author ? ` · ${post.author}` : ""}

@@ -47,6 +47,7 @@ export default async function MusicPage() {
         ])}
       />
       <PageHeader
+        banner="music"
         eyebrow="Releases"
         title="Music"
         description="Every release from the label and its artists. Newest first."
@@ -79,7 +80,7 @@ export default async function MusicPage() {
                   />
                 </div>
                 <div>
-                  <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-gold">
+                  <p className="eyebrow mb-4">
                     Featured release
                   </p>
                   <h2 className="font-display text-3xl font-bold sm:text-4xl">

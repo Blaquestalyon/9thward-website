@@ -55,6 +55,7 @@ export default async function ContactPage() {
         ])}
       />
       <PageHeader
+        banner="contact"
         eyebrow="Say hello"
         title="Contact"
         description="Questions, collaborations, press, or booking — we're all ears."
@@ -67,7 +68,7 @@ export default async function ContactPage() {
             <FadeUp key={r.title}>
               <a
                 href={r.href}
-                className="group flex h-full flex-col rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/60"
+                className="group flex h-full flex-col rounded-xl border border-border bg-card p-6 lift"
               >
                 <span className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <r.icon className="h-5 w-5" />

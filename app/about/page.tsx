@@ -109,6 +109,7 @@ export default function AboutPage() {
         ])}
       />
       <PageHeader
+        banner="about"
         eyebrow="9th Ward Production & Promotions"
         title="Indie artists, built from the ground up."
         description="Born to protect independent artists. New Orleans gave the name meaning. Houston gave the mission a home. El Paso proved the model could scale. Today, 9th Ward reaches wherever serious artists are building without compromise."
@@ -117,7 +118,7 @@ export default function AboutPage() {
       {/* Founders */}
       <Section className="pb-0">
         <FadeUp>
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-gold">
+          <p className="eyebrow mb-4">
             The people
           </p>
           <h2 className="font-display text-2xl font-bold sm:text-3xl">
@@ -151,7 +152,7 @@ export default function AboutPage() {
       {/* Timeline — the spine of the story */}
       <Section>
         <FadeUp className="max-w-2xl">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-gold">
+          <p className="eyebrow mb-4">
             The journey
           </p>
           <h2 className="font-display text-2xl font-bold sm:text-3xl">
@@ -196,7 +197,7 @@ export default function AboutPage() {
       {/* International reach */}
       <Section className="pt-0">
         <FadeUp className="rounded-2xl border border-border bg-card p-6 sm:p-8">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-gold">
+          <p className="eyebrow mb-4">
             International reach
           </p>
           <p className="max-w-3xl text-muted-foreground">

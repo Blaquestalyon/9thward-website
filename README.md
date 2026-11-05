@@ -4,7 +4,7 @@ The official website and electronic press kit (EPK) hub for **9th Ward Productio
 
 Its #1 job is to showcase the roster and the music. Secondary jobs: capture new artist submissions, take booking requests, and field service inquiries. **The site sells nothing — no store, no pricing, no checkout.**
 
-Built with **Next.js 15 (App Router) + TypeScript**, **Tailwind CSS + shadcn/ui**, **Framer Motion**, and **Airtable** as the single content + intake backend. Deploys to **Railway** (Node, `output: "standalone"`).
+Built with **Next.js 15 (App Router) + TypeScript**, **Tailwind CSS + shadcn/ui** and **Airtable** as the single content + intake backend. Deploys to **Railway** (Node, `output: "standalone"`).
 
 ---
 
@@ -15,9 +15,9 @@ Built with **Next.js 15 (App Router) + TypeScript**, **Tailwind CSS + shadcn/ui*
 | Framework     | Next.js 15.5.x, App Router, React 19, TypeScript (strict)     |
 | Styling       | Tailwind CSS v3, shadcn/ui, CSS custom-property design tokens |
 | Icons         | lucide-react                                                  |
-| Animation     | Framer Motion (reduced-motion aware)                          |
+| Animation     | CSS reveal + ambient effects (reduced-motion aware)           |
 | Validation    | Zod                                                           |
-| Theme         | next-themes (dark default, light toggle, persisted)           |
+| Theme         | Dark only (studio black + gold)                               |
 | CMS + intake  | Airtable REST API (server-side only, via Personal Access Token) |
 | Email         | Resend (optional, degrades gracefully)                        |
 | Deploy target | Railway                                                       |
@@ -58,6 +58,7 @@ cp .env.example .env.local
 
 # 3. Run the dev server
 npm run dev            # http://localhost:3000
+npm run dev:preview    # same, with a fake Airtable so every page has sample content
 
 # Other scripts
 npm run build          # production build (output: "standalone")
@@ -167,6 +168,12 @@ lib/
   rate-limit.ts         # in-memory IP rate limiter
   jsonld.ts, site.ts, embed.ts, fonts.ts, utils.ts
 ```
+
+---
+
+## Redesign (Nov 2026)
+
+The site's look comes from the home hero art: studio black, brushed gold, Playfair Display + Inter, dark only. The home hero is that image with invisible % hotspot links (HTML cards on phones), and every other page opens with a people-free cinematic banner. What's fragile (hotspot positions, image sources, token names, reveal and caching rules) is written up in **HANDOFF.md §12**. Read it before changing styles or images.
 
 ---
 

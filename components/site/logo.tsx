@@ -24,15 +24,15 @@ export function Logo({
         width={size * 2}
         height={size * 2}
         style={{ width: size, height: size }}
-        className="shrink-0 object-contain"
+        className="shrink-0 object-contain drop-shadow-[0_0_10px_rgba(233,196,111,0.35)]"
         priority
       />
       {showWordmark && (
         <span className="flex flex-col leading-none">
-          <span className="font-display text-base font-bold tracking-tight">
+          <span className="text-metal font-display text-lg font-bold tracking-wide">
             9th Ward
           </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="whitespace-nowrap text-[9px] font-medium uppercase tracking-[0.24em] text-gold/80">
             Production &amp; Promotions
           </span>
         </span>

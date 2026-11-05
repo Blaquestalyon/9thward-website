@@ -13,6 +13,8 @@ import {
 } from "@/lib/airtable/read";
 import { YOUTUBE_CHANNEL } from "@/lib/site";
 import { HeroHome2 } from "@/components/site/hero-home2";
+import { HeroArt } from "@/components/site/hero-art";
+import { GoldDust } from "@/components/site/gold-dust";
 import { PressBar } from "@/components/site/press-bar";
 import { Section, SectionHeader } from "@/components/site/section";
 import { ArtistCard } from "@/components/site/artist-card";
@@ -38,6 +40,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <HeroArt />
       <HeroHome2 release={featuredRelease} />
 
       {/* Press trust bar — highest-trust real estate, right under the hero */}
@@ -47,7 +50,7 @@ export default async function HomePage() {
       <Section className="py-14 md:py-16">
         <FadeUp className="grid items-center gap-8 rounded-2xl border border-border bg-card p-8 md:grid-cols-[1.2fr_0.8fr] md:p-10">
           <div>
-            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-gold">
+            <p className="eyebrow mb-4">
               Who we are
             </p>
             <h2 className="font-display text-2xl font-bold sm:text-3xl">
@@ -167,7 +170,8 @@ export default async function HomePage() {
 
       {/* Closing CTA — work with us, not just follow us */}
       <Section className="pt-4">
-        <FadeUp className="flex flex-col items-start justify-between gap-6 rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/12 via-card to-card p-8 md:flex-row md:items-center md:p-12">
+        <FadeUp className="stage flex flex-col items-start justify-between gap-6 rounded-2xl border border-gold/40 bg-card p-8 md:flex-row md:items-center md:p-12">
+          <GoldDust count={14} />
           <div>
             <h2 className="font-display text-2xl font-bold sm:text-3xl">
               Work with 9th Ward

@@ -20,7 +20,7 @@ export function HeroRelease({ release }: { release: Release | null }) {
       <div className="container relative z-10 py-20 md:py-28">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <FadeUp>
-            <p className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-gold">
+            <p className="mb-4 flex items-center gap-2 eyebrow">
               <Sparkles className="h-4 w-4" />
               {release ? "Latest release" : "Houston-based indie label"}
             </p>
@@ -98,7 +98,7 @@ export function HeroRelease({ release }: { release: Release | null }) {
               </div>
             ) : (
               <div className="relative mx-auto grid aspect-square w-full max-w-md place-items-center">
-                {/* Subtle purple glow behind the logo, respects reduced motion */}
+                {/* Subtle gold glow behind the logo, respects reduced motion */}
                 <div
                   aria-hidden
                   className="absolute inset-8 rounded-full bg-primary/20 blur-3xl"
@@ -110,7 +110,7 @@ export function HeroRelease({ release }: { release: Release | null }) {
                   height={640}
                   priority
                   sizes="(max-width: 1024px) 80vw, 480px"
-                  className="relative z-10 h-auto w-[80%] max-w-md object-contain drop-shadow-[0_10px_40px_rgba(124,58,237,0.35)]"
+                  className="relative z-10 h-auto w-[80%] max-w-md object-contain drop-shadow-[0_10px_40px_rgba(212,162,76,0.35)]"
                 />
               </div>
             )}

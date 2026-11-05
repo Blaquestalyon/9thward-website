@@ -48,6 +48,7 @@ export default async function ArtistsPage() {
         ])}
       />
       <PageHeader
+        banner="artists"
         eyebrow="The roster"
         title="Artists"
         description="Independent talent with the work ethic to go the distance. Tap in."
@@ -80,7 +81,7 @@ export default async function ArtistsPage() {
                   />
                 </div>
                 <div>
-                  <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-gold">
+                  <p className="eyebrow mb-4">
                     Featured artist
                   </p>
                   <h2 className="font-display text-3xl font-bold sm:text-4xl">

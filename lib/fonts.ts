@@ -1,4 +1,4 @@
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 
 /** Body font — clean, highly legible variable sans. */
 export const fontSans = Inter({
@@ -7,10 +7,11 @@ export const fontSans = Inter({
   display: "swap",
 });
 
-/** Display font — strong, characterful headings. */
-export const fontDisplay = Space_Grotesk({
+/** Display font — high-contrast serif matching the hero art's "9TH WARD" lettering. */
+export const fontDisplay = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  variable: "--font-display",
   display: "swap",
   weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });

@@ -28,6 +28,7 @@ export default function SubmitPage() {
         ])}
       />
       <PageHeader
+        banner="submit"
         eyebrow="Work with us"
         title="Submit your music"
         description="If you're an indie artist who's serious about the work, we want to hear you."
