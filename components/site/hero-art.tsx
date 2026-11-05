@@ -8,40 +8,64 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
- * Home hero: the feature art itself, with invisible hotspot links over every
- * card and label baked into it.
+ * Home hero: the feature art itself, with invisible hotspot links traced
+ * around every card and label baked into it (an SVG over the image, so only
+ * the inside of each outline is clickable).
  *
- * FRAGILE: positions are % of public/img/hero-9thward.webp (1920x1080, the
- * intro clip's last frame). If the art changes, re-measure (see "Redesign" in
- * HANDOFF.md) and keep HERO_W/H in sync with the file's real pixel size so the
- * box never drifts from the art.
+ * FRAGILE: points are pixels of public/img/hero-9thward.webp (1920x1080, the
+ * intro clip's last frame), which is also the SVG viewBox. If the art changes,
+ * re-trace (see "Redesign" in HANDOFF.md) and keep HERO_W/H in sync with the
+ * file's real pixel size so the outlines never drift from the art.
  * Below 760px the hotspots hide and the HTML cards underneath take over.
  */
 const HERO_W = 1920;
 const HERO_H = 1080;
 
+type Pt = [x: number, y: number];
+const toward = ([x, y]: Pt, [tx, ty]: Pt, r: number) => {
+  const l = Math.hypot(tx - x, ty - y);
+  return `${+(x + ((tx - x) * r) / l).toFixed(1)} ${+(y + ((ty - y) * r) / l).toFixed(1)}`;
+};
+/** Path through the card's corners, rounded by r like the art's cards. */
+function poly(pts: Pt[], r = 16) {
+  const c = pts.map((p, i, a) => [toward(p, a.at(i - 1)!, r), `${p[0]} ${p[1]}`, toward(p, a[(i + 1) % a.length], r)]);
+  return `M${c[0][2]}` + [...c.slice(1), c[0]].map(([a, p, b]) => `L${a}Q${p} ${b}`).join("") + "Z";
+}
+const rect = (x1: number, y1: number, x2: number, y2: number, r = 12) =>
+  poly([[x1, y1], [x2, y1], [x2, y2], [x1, y2]], r);
+
 type Spot = {
   label: string; // aria-label
   href?: string; // no href = "coming soon"
-  box: [left: number, top: number, width: number, height: number];
+  d: string; // SVG path in hero pixels
 };
 
 const SPOTS: Spot[] = [
-  { label: "9th Ward Production & Promotions: our story", href: "/about", box: [4.3, 6, 25.7, 45] },
-  { label: "Born to protect independent artists: read our story", href: "/about", box: [4.3, 52.5, 27.5, 11.5] },
-  { label: "Production, management and promotion services", href: "/services", box: [2.5, 65, 29, 4.5] },
-  { label: "Artists and roster", href: "/artists", box: [30.8, 5.5, 20.5, 28.5] },
-  { label: "Music releases", href: "/music", box: [52.9, 1.5, 20.7, 32.5] },
-  { label: "Live events", href: "/events", box: [74.3, 3.2, 23.6, 30.5] },
-  { label: "Independent film (coming soon)", box: [32, 35.5, 14.6, 23.1] },
-  { label: "iMused.ai: ethical AI, musical DNA", href: "/about#imused", box: [77.1, 34.5, 20.2, 20.3] },
-  { label: "Production services", href: "/services", box: [4.6, 83, 13.2, 8.4] },
-  { label: "Artist management services", href: "/services", box: [18.4, 83, 13.6, 8.4] },
-  { label: "Promotion services", href: "/services", box: [32.5, 83, 11.4, 8.4] },
-  { label: "Music and video", href: "/music", box: [44.6, 83, 14.3, 8.4] },
-  { label: "Live events and shows", href: "/events", box: [59.6, 83, 12.1, 8.4] },
-  { label: "Film (coming soon)", box: [72.5, 83, 8.6, 8.4] },
-  { label: "Ethical AI: iMused.ai", href: "/about#imused", box: [81.8, 83, 12.5, 8.4] },
+  {
+    label: "9th Ward Production & Promotions: our story",
+    href: "/about",
+    // name plate + crosshair circle as one outline, then the wordmark below it
+    d: "M145 72H497Q505 72 505 80V135H389A150 150 0 1 1 251 135H137V80Q137 72 145 72Z" + rect(83, 435, 575, 550, 10),
+  },
+  { label: "Born to protect independent artists: read our story", href: "/about", d: rect(83, 567, 611, 691) },
+  { label: "Production, management and promotion services", href: "/services", d: rect(48, 702, 605, 750) },
+  { label: "Artists and roster", href: "/artists", d: poly([[583, 102], [980, 61], [985, 352], [588, 368]]) },
+  { label: "Music releases", href: "/music", d: poly([[1017, 72], [1396, 17], [1396, 346], [1021, 357]]) },
+  {
+    label: "Live events",
+    href: "/events",
+    d: poly([[1428, 87], [1851, 37], [1855, 222], [1868, 230], [1868, 325], [1740, 335], [1428, 352]]),
+  },
+  { label: "Independent film (coming soon)", d: poly([[612, 386], [896, 376], [900, 614], [612, 619]]) },
+  { label: "iMused.ai: ethical AI, musical DNA", href: "/about#imused", d: poly([[1477, 384], [1866, 364], [1868, 582], [1478, 586]]) },
+  // bottom bar: one segment per label, between the art's divider lines
+  { label: "Production services", href: "/services", d: rect(78, 898, 342, 986, 24) },
+  { label: "Artist management services", href: "/services", d: rect(349, 898, 606, 986) },
+  { label: "Promotion services", href: "/services", d: rect(614, 898, 844, 986) },
+  { label: "Music and video", href: "/music", d: rect(852, 898, 1118, 986) },
+  { label: "Live events and shows", href: "/events", d: rect(1126, 898, 1369, 986) },
+  { label: "Film (coming soon)", d: rect(1377, 898, 1546, 986) },
+  { label: "Ethical AI: iMused.ai", href: "/about#imused", d: rect(1554, 898, 1814, 986, 24) },
 ];
 
 /** Phone cards: wording reused from the art. */
@@ -112,24 +136,32 @@ export function HeroArt() {
           tabIndex={-1}
           className="hero-intro pointer-events-none absolute inset-0 h-full w-full object-cover"
         />
-        <div className="hero-spots absolute inset-0 max-[759px]:hidden">
+        <svg
+          viewBox={`0 0 ${HERO_W} ${HERO_H}`}
+          className="hero-spots absolute inset-0 h-full w-full max-[759px]:hidden"
+        >
           {SPOTS.map((s) => {
-            const [left, top, width, height] = s.box;
-            const style = { left: `${left}%`, top: `${top}%`, width: `${width}%`, height: `${height}%` };
+            const soon = () => comingSoon(s.label.replace(" (coming soon)", ""));
             return s.href ? (
-              <Link key={s.label} href={s.href} aria-label={s.label} className="hotspot" style={style} />
+              <Link key={s.label} href={s.href} aria-label={s.label} className="hotspot">
+                <path d={s.d} />
+              </Link>
             ) : (
-              <button
+              // SVG has no <button>, so a role=button link with keyboard support
+              <a
                 key={s.label}
-                type="button"
+                role="button"
+                tabIndex={0}
                 aria-label={s.label}
                 className="hotspot cursor-pointer"
-                style={style}
-                onClick={() => comingSoon(s.label.replace(" (coming soon)", ""))}
-              />
+                onClick={soon}
+                onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), soon())}
+              >
+                <path d={s.d} />
+              </a>
             );
           })}
-        </div>
+        </svg>
         {/* Fade the art's bottom edge into the page */}
         <div
           aria-hidden

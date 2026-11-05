@@ -290,17 +290,20 @@ html.js .reveal:not(.in) {
 }
 
 /* ── Home hero hotspots ── */
-.hotspot {
-  position: absolute;
-  border-radius: 0.75rem;
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+/* Each hotspot is an SVG link around a traced <path>; the glow follows it. */
+.hotspot { outline: none; }
+.hotspot path {
+  fill: transparent; /* still clickable: only fill: none would let clicks through */
+  stroke: transparent;
+  stroke-width: 1.5px;
+  vector-effect: non-scaling-stroke;
+  transition: fill 0.3s ease, stroke 0.3s ease, filter 0.3s ease;
 }
-.hotspot:hover,
-.hotspot:focus-visible {
-  background: hsl(var(--gold) / 0.06);
-  box-shadow:
-    0 0 0 1.5px hsl(var(--gold) / 0.75),
-    0 0 32px 4px hsl(var(--gold) / 0.35);
+.hotspot:hover path,
+.hotspot:focus-visible path {
+  fill: hsl(var(--gold) / 0.06);
+  stroke: hsl(var(--gold) / 0.75);
+  filter: drop-shadow(0 0 12px hsl(var(--gold) / 0.45));
 }
 
 /* Intro clip: fades in from black, plays once, then dissolves into the still.

@@ -407,8 +407,8 @@ Built in Claude Code (desktop) on branch `claude/9thward-site-redesign-fa96b5`, 
 - The old hero (headline, 4 stats, latest-release card) now sits directly under the art as a band (`hero-home2.tsx`); its headline is an `h2`. The page `h1` is screen-reader-only in `hero-art.tsx`.
 
 **Fragile: home hero hotspots** (`components/site/hero-art.tsx`)
-- `SPOTS[].box` = `[left, top, width, height]` in **% of `public/img/hero-9thward.webp` (1920×1080)**. `HERO_W/HERO_H` must equal the file's real pixel size; the container's `aspect-ratio` uses them, so the hotspots can't drift.
-- Re-measure if the art changes: overlay a 2.5% grid on the image (sharp + an SVG of lines works; see git history of this section's commit) or, in the browser, run `document.querySelectorAll('.hotspot').forEach(h=>h.style.outline='2px solid cyan')` and adjust.
+- Hotspots are traced outlines, not boxes: an `<svg viewBox="0 0 1920 1080">` over the image, one link per `SPOTS[].d` path, built with `poly()` (card corners, rounded) and `rect()`. Points are **pixels of `public/img/hero-9thward.webp` (1920×1080)**. Only the inside of a shape is clickable; the hover/focus glow is the path's stroke (`.hotspot path` in globals.css). "Coming soon" entries are `<a role="button">` (SVG has no `<button>`) with Enter/Space handled. `HERO_W/HERO_H` must equal the file's real pixel size; the container's `aspect-ratio` and the viewBox use them, so the outlines can't drift.
+- Re-trace if the art changes: draw the paths onto the image with sharp (composite an SVG of `<path d=… stroke=lime fill=none>`) and adjust corners until they sit on the card edges, or, in the browser, add `.hotspot path{stroke:cyan!important}` and adjust.
 - Below 760px the hotspots are hidden (`max-[759px]:hidden`) and the HTML cards below the art take over (`min-[760px]:hidden`). Keep both breakpoints in sync.
 
 **Images** (`public/img/`, all WebP q80 at 2200 px wide except OG)
@@ -433,7 +433,7 @@ Built in Claude Code (desktop) on branch `claude/9thward-site-redesign-fa96b5`, 
 
 **Local preview without secrets:** `npm run dev:preview` starts `scripts/dev-airtable-stub.mjs` (fake Airtable on :4010, borrows the live site's current image URLs, accepts form writes without storing) and `next dev` pointed at it via `AIRTABLE_API_ROOT`. Stub data is not real (photos are not matched to the right artist names). `.claude/launch.json` runs it in the Claude desktop browser pane.
 
-**Verified 05 Nov 2026** at 1440 / 1280 / 1024 / 375: no horizontal scroll on any page, header 65px everywhere, one `h1` per page, hero ratio 1.7771 = 2200/1238, all 15 hotspots line up, toast fires. Fixed a pre-existing phone overflow in the Events "Past shows" grid (`grid-cols-1`).
+**Verified 05 Nov 2026** at 1440 / 1280 / 1024 / 375: no horizontal scroll on any page, header 65px everywhere, one `h1` per page, hero ratio 1.7771 = 2200/1238, all 15 hotspots line up, toast fires (hotspots re-traced as card-shaped outlines 05 Nov 2026: 15/15 click through, gaps between cards click nothing). Fixed a pre-existing phone overflow in the Events "Past shows" grid (`grid-cols-1`).
 
 **Live 05 Nov 2026** (`688f0d9`, pushed straight to `main`, Railway deployed in ~2 min). Checked on the live site: every page and a sample artist/release/blog detail page return 200 with the new markers (art hero on `/`, the right banner elsewhere, one `h1` each); all 10 images return 200 with `image/webp` / `image/jpeg` and `Cache-Control: no-cache`; HTML is `no-cache` (static pages also send an ETag); `/_next/static` CSS is `immutable`; og:image and twitter:image are `https://www.9thwardrecording.com/img/og-9thward.jpg`; contact/submit/newsletter forms still render.
 

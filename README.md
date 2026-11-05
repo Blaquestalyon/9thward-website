@@ -173,7 +173,7 @@ lib/
 
 ## Redesign (Nov 2026)
 
-The site's look comes from the home hero art: studio black, brushed gold, Playfair Display + Inter, dark only. The home hero is that image with invisible % hotspot links (HTML cards on phones), and every other page opens with a people-free cinematic banner. What's fragile (hotspot positions, image sources, token names, reveal and caching rules) is written up in **HANDOFF.md §12**. Read it before changing styles or images.
+The site's look comes from the home hero art: studio black, brushed gold, Playfair Display + Inter, dark only. The home hero is that image with invisible hotspot links traced around each card (HTML cards on phones), and every other page opens with a people-free cinematic banner. What's fragile (hotspot positions, image sources, token names, reveal and caching rules) is written up in **HANDOFF.md §12**. Read it before changing styles or images.
 
 ---
 
