@@ -434,6 +434,8 @@ Built in Claude Code (desktop) on branch `claude/9thward-site-redesign-fa96b5`, 
 
 **Verified 05 Nov 2026** at 1440 / 1280 / 1024 / 375: no horizontal scroll on any page, header 65px everywhere, one `h1` per page, hero ratio 1.7771 = 2200/1238, all 15 hotspots line up, toast fires. Fixed a pre-existing phone overflow in the Events "Past shows" grid (`grid-cols-1`).
 
+**Live 05 Nov 2026** (`688f0d9`, pushed straight to `main`, Railway deployed in ~2 min). Checked on the live site: every page and a sample artist/release/blog detail page return 200 with the new markers (art hero on `/`, the right banner elsewhere, one `h1` each); all 10 images return 200 with `image/webp` / `image/jpeg` and `Cache-Control: no-cache`; HTML is `no-cache` (static pages also send an ETag); `/_next/static` CSS is `immutable`; og:image and twitter:image are `https://www.9thwardrecording.com/img/og-9thward.jpg`; contact/submit/newsletter forms still render.
+
 ---
 
 **End of handoff.** This file lives at the repo root (`HANDOFF.md`). Paste its contents into any new AI coding session to resume.
