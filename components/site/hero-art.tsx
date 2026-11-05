@@ -11,13 +11,14 @@ import { cn } from "@/lib/utils";
  * Home hero: the feature art itself, with invisible hotspot links over every
  * card and label baked into it.
  *
- * FRAGILE: positions are % of public/img/hero-9thward.webp (2200x1238). If the
- * art changes, re-measure (see "Redesign" in HANDOFF.md) and keep HERO_W/H in
- * sync with the file's real pixel size so the box never drifts from the art.
+ * FRAGILE: positions are % of public/img/hero-9thward.webp (1920x1080, the
+ * intro clip's last frame). If the art changes, re-measure (see "Redesign" in
+ * HANDOFF.md) and keep HERO_W/H in sync with the file's real pixel size so the
+ * box never drifts from the art.
  * Below 760px the hotspots hide and the HTML cards underneath take over.
  */
-const HERO_W = 2200;
-const HERO_H = 1238;
+const HERO_W = 1920;
+const HERO_H = 1080;
 
 type Spot = {
   label: string; // aria-label
@@ -26,21 +27,21 @@ type Spot = {
 };
 
 const SPOTS: Spot[] = [
-  { label: "9th Ward Production & Promotions: our story", href: "/about", box: [5, 6, 25.5, 46] },
-  { label: "Born to protect independent artists: read our story", href: "/about", box: [4.5, 53.5, 28.5, 13] },
-  { label: "Production, management and promotion services", href: "/services", box: [2.5, 67, 30, 4.5] },
-  { label: "Artists and roster", href: "/artists", box: [30.8, 5.5, 21.4, 29.5] },
-  { label: "Music releases", href: "/music", box: [53.6, 1.5, 20.2, 32.5] },
-  { label: "Live events", href: "/events", box: [75, 3, 22.8, 31] },
-  { label: "Independent film (coming soon)", box: [32.4, 36, 14, 23] },
-  { label: "iMused.ai: ethical AI, musical DNA", href: "/about#imused", box: [77.6, 34.8, 20.8, 21.4] },
-  { label: "Production services", href: "/services", box: [4.6, 85.5, 13.6, 9] },
-  { label: "Artist management services", href: "/services", box: [18.7, 85.5, 13.6, 9] },
-  { label: "Promotion services", href: "/services", box: [32.7, 85.5, 12.2, 9] },
-  { label: "Music and video", href: "/music", box: [45.1, 85.5, 14.5, 9] },
-  { label: "Live events and shows", href: "/events", box: [60, 85.5, 12.3, 9] },
-  { label: "Film (coming soon)", box: [72.6, 85.5, 8.8, 9] },
-  { label: "Ethical AI: iMused.ai", href: "/about#imused", box: [81.9, 85.5, 13.8, 9] },
+  { label: "9th Ward Production & Promotions: our story", href: "/about", box: [4.3, 6, 25.7, 45] },
+  { label: "Born to protect independent artists: read our story", href: "/about", box: [4.3, 52.5, 27.5, 11.5] },
+  { label: "Production, management and promotion services", href: "/services", box: [2.5, 65, 29, 4.5] },
+  { label: "Artists and roster", href: "/artists", box: [30.8, 5.5, 20.5, 28.5] },
+  { label: "Music releases", href: "/music", box: [52.9, 1.5, 20.7, 32.5] },
+  { label: "Live events", href: "/events", box: [74.3, 3.2, 23.6, 30.5] },
+  { label: "Independent film (coming soon)", box: [32, 35.5, 14.6, 23.1] },
+  { label: "iMused.ai: ethical AI, musical DNA", href: "/about#imused", box: [77.1, 34.5, 20.2, 20.3] },
+  { label: "Production services", href: "/services", box: [4.6, 83, 13.2, 8.4] },
+  { label: "Artist management services", href: "/services", box: [18.4, 83, 13.6, 8.4] },
+  { label: "Promotion services", href: "/services", box: [32.5, 83, 11.4, 8.4] },
+  { label: "Music and video", href: "/music", box: [44.6, 83, 14.3, 8.4] },
+  { label: "Live events and shows", href: "/events", box: [59.6, 83, 12.1, 8.4] },
+  { label: "Film (coming soon)", box: [72.5, 83, 8.6, 8.4] },
+  { label: "Ethical AI: iMused.ai", href: "/about#imused", box: [81.8, 83, 12.5, 8.4] },
 ];
 
 /** Phone cards: wording reused from the art. */
