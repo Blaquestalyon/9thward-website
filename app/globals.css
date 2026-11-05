@@ -312,10 +312,15 @@ html.js .reveal:not(.in) {
 html.js [data-hero="intro"] .hero-still,
 html.js [data-hero="play"] .hero-still { opacity: 0; animation: hero-still-failsafe 0s 6s forwards; }
 @keyframes hero-still-failsafe { to { opacity: 1; } }
+/* Hotspots stay off (no click, hover or tab focus) until the still is up. */
+html.js [data-hero="intro"] .hero-spots,
+html.js [data-hero="play"] .hero-spots { visibility: hidden; animation: hero-spots-failsafe 0s 6s forwards; }
+@keyframes hero-spots-failsafe { to { visibility: visible; } }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-intro { display: none; }
   html.js .hero-still { opacity: 1 !important; animation: none !important; }
+  html.js .hero-spots { visibility: visible !important; animation: none !important; }
   html { scroll-behavior: auto; }
   .reveal, html.js .reveal:not(.in) {
     opacity: 1 !important;
@@ -334,4 +339,5 @@ html.js [data-hero="play"] .hero-still { opacity: 0; animation: hero-still-fails
   }
   .dust, body::after, .hero-intro { display: none !important; }
   html.js .hero-still { opacity: 1 !important; animation: none !important; }
+  html.js .hero-spots { visibility: visible !important; animation: none !important; }
 }

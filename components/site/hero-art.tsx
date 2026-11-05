@@ -111,7 +111,7 @@ export function HeroArt() {
           tabIndex={-1}
           className="hero-intro pointer-events-none absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 max-[759px]:hidden">
+        <div className="hero-spots absolute inset-0 max-[759px]:hidden">
           {SPOTS.map((s) => {
             const [left, top, width, height] = s.box;
             const style = { left: `${left}%`, top: `${top}%`, width: `${width}%`, height: `${height}%` };
