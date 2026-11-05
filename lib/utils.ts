@@ -43,3 +43,13 @@ export function absoluteUrl(path = ""): string {
   const base = withScheme.replace(/\/$/, "");
   return `${base}${path.startsWith("/") ? path : `/${path}`}`;
 }
+
+/** An event counts as over 12h after it starts (it stays "upcoming" while
+ *  it's on). Date-only values ("2026-10-23") get the whole day first. */
+export function eventHasEnded(dateTime?: string | null, now = Date.now()): boolean {
+  if (!dateTime) return false;
+  const start = Date.parse(dateTime);
+  if (isNaN(start)) return false;
+  const graceHours = dateTime.length <= 10 ? 36 : 12;
+  return start + graceHours * 3_600_000 < now;
+}

@@ -12,6 +12,7 @@
 import "server-only";
 import { listRecords } from "./client";
 import { TABLES, FIELDS, CACHE_TAGS, REVALIDATE_SECONDS } from "./config";
+import { eventHasEnded } from "@/lib/utils";
 import type {
   AirtableAttachment,
   AirtableRecord,
@@ -198,7 +199,8 @@ function toEvent(rec: AirtableRecord<Record<string, unknown>>): EventItem | null
     ticketUrl: str(f[F.TicketURL]),
     rsvpUrl: str(f[F.RSVPURL]),
     flyer: firstAttachment(f[F.Flyer]),
-    status: rawStatus === "Past" ? "Past" : "Upcoming",
+    // Airtable Status is set by hand and goes stale; a past date wins.
+    status: rawStatus === "Past" || eventHasEnded(str(f[F.DateTime])) ? "Past" : "Upcoming",
     description: str(f[F.Description]),
   };
 }
@@ -213,7 +215,6 @@ export async function listEvents(): Promise<{
   });
 
   const events = records.map(toEvent).filter((e): e is EventItem => e !== null);
-  const now = Date.now();
 
   const upcoming = events
     .filter((e) => e.status === "Upcoming")
@@ -224,7 +225,7 @@ export async function listEvents(): Promise<{
     });
 
   const past = events
-    .filter((e) => e.status === "Past" || (e.dateTime && new Date(e.dateTime).getTime() < now && e.status !== "Upcoming"))
+    .filter((e) => e.status === "Past")
     .sort((a, b) => {
       const da = a.dateTime ? new Date(a.dateTime).getTime() : 0;
       const db = b.dateTime ? new Date(b.dateTime).getTime() : 0;
