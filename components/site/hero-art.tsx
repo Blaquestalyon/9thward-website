@@ -34,6 +34,9 @@ function poly(pts: Pt[], r = 16) {
 const rect = (x1: number, y1: number, x2: number, y2: number, r = 12) =>
   poly([[x1, y1], [x2, y1], [x2, y2], [x1, y2]], r);
 
+/** The microphone stands in front of the Artists, Film and Music cards: cut out of every hotspot. */
+const MIC = poly([[892, 302], [1022, 302], [1024, 444], [1072, 460], [1080, 540], [1074, 620], [860, 620], [855, 540], [860, 460], [890, 444]], 12);
+
 type Spot = {
   label: string; // aria-label
   href?: string; // no href = "coming soon"
@@ -140,27 +143,34 @@ export function HeroArt() {
           viewBox={`0 0 ${HERO_W} ${HERO_H}`}
           className="hero-spots absolute inset-0 h-full w-full max-[759px]:hidden"
         >
-          {SPOTS.map((s) => {
-            const soon = () => comingSoon(s.label.replace(" (coming soon)", ""));
-            return s.href ? (
-              <Link key={s.label} href={s.href} aria-label={s.label} className="hotspot">
-                <path d={s.d} />
-              </Link>
-            ) : (
-              // SVG has no <button>, so a role=button link with keyboard support
-              <a
-                key={s.label}
-                role="button"
-                tabIndex={0}
-                aria-label={s.label}
-                className="hotspot cursor-pointer"
-                onClick={soon}
-                onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), soon())}
-              >
-                <path d={s.d} />
-              </a>
-            );
-          })}
+          <defs>
+            <clipPath id="hero-no-mic">
+              <path clipRule="evenodd" d={`M0 0H${HERO_W}V${HERO_H}H0Z${MIC}`} />
+            </clipPath>
+          </defs>
+          <g clipPath="url(#hero-no-mic)">
+            {SPOTS.map((s) => {
+              const soon = () => comingSoon(s.label.replace(" (coming soon)", ""));
+              return s.href ? (
+                <Link key={s.label} href={s.href} aria-label={s.label} className="hotspot">
+                  <path d={s.d} />
+                </Link>
+              ) : (
+                // SVG has no <button>, so a role=button link with keyboard support
+                <a
+                  key={s.label}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={s.label}
+                  className="hotspot cursor-pointer"
+                  onClick={soon}
+                  onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), soon())}
+                >
+                  <path d={s.d} />
+                </a>
+              );
+            })}
+          </g>
         </svg>
         {/* Fade the art's bottom edge into the page */}
         <div
